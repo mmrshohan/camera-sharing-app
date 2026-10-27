@@ -2,6 +2,8 @@
 
 Status: **proposed; not authorized or started**. Ten business days from ready prerequisites, not from this document's date. Returned independent Codex and Claude findings have been reconciled; [review limitations](claude-review.md) remain explicit. Baseline decisions remain proposals.
 
+Owner resource update: see [iPhone-first sequencing/readiness](ios-first-sequence.md). The owner has an iPhone 15 Pro, may borrow an iPhone 17 and currently lacks Android hardware. The broader staffing/device campaign below remains a proposal; it is not the current one-owner calendar commitment.
+
 ## Purpose and boundaries
 
 Answer three questions: (1) is main/front public-API still capture good enough without host-library writes; (2) can a minimal recipient-encrypted artifact recover through native transfer/export interruptions without a persistent host photo-decryption key; (3) can the handoff/cleanup/key model be specified and demonstrated without false durability/privacy claims?

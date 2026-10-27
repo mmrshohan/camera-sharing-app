@@ -28,3 +28,5 @@ One host and one designated recipient device per session. No app-created host sy
 ## Final adversarial review — proposed
 
 [Decision memo](reviews/2026-10-27/decision-memo.md), [proposed specification amendments](reviews/2026-10-27/planning-amendments.md), [bounded M0 plan](reviews/2026-10-27/m0-feasibility-plan.md) and [review evidence/status](reviews/2026-10-27/review-evidence.md). These are unapproved proposals. Independent Codex reviews and the [returned Claude conclusions](reviews/2026-10-27/claude-review.md) have been reconciled, with source/response limitations recorded. No development is authorized.
+
+[iPhone-first sequencing and readiness](reviews/2026-10-27/ios-first-sequence.md) records the owner's available iPhone 15 Pro, possible borrowed iPhone 17 and the Xcode prerequisite. It proposes camera feasibility first, physical iPhone delivery next, and Android feasibility before shared-contract freeze.
