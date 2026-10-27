@@ -1,12 +1,12 @@
 # Adversarial architecture and product decision memo
 
-Status: **proposed, interim — Codex reviews complete; Claude review blocked by expired OAuth token**. Planning only; no development authorized. Baseline: `ebf8edf151add1e7308dd68778cca07f02753e4b`.
+Status: **cross-tool documentary findings reconciled; recommendations await owner approval**. Planning only; no development authorized. Baseline: `ebf8edf151add1e7308dd68778cca07f02753e4b`.
 
 ## Recommendation
 
 Keep the native mobile apps, one-recipient model, encrypted temporary relay and modular backend. Authorize no production build yet. The concept is plausible, but four production-blocking design gaps need resolution: durable cloud acknowledgment, expiry/late-upload cleanup, lender account isolation during handover, and authenticated device-key continuity. None demonstrates an implemented vulnerability: there is no app yet.
 
-A separate ten-business-day M0 can answer camera and platform feasibility questions. It would not approve the full architecture, pass release gates or authorize subsequent development. Claude's independent review has not run successfully; complete it before treating this memo as the requested final cross-tool review. See [review evidence](review-evidence.md), [proposed document changes](planning-amendments.md) and [M0 scope](m0-feasibility-plan.md).
+A separate ten-business-day M0 can answer camera and platform feasibility questions. It would not approve the full architecture, pass release gates or authorize subsequent development. Two independent Codex reviews and Claude Code's returned findings summary are incorporated. The [Claude response](claude-review.md) is preserved with its limitations; no separate plan file claimed by that response was verified. See [review evidence](review-evidence.md), [proposed document changes](planning-amendments.md) and [M0 scope](m0-feasibility-plan.md).
 
 ## Material findings and decisions
 
@@ -35,6 +35,12 @@ Start M0 with main/front, processed SDR JPEG and explicit 4:3 framing/selfie mir
 
 **Roadmap:** AI can shorten drafting, bounded implementation, test generation and trace analysis. It cannot replace physical exposures, independent review, a real 72-hour soak, participant recruitment or beta samples. Run two native feasibility tracks concurrently; decouple synthetic transfer experiments from full production auth. Compress M0 from three weeks to ten business days only with ready hardware and approximately 37 specialist person-days. Keep 24–32 weeks as the unvalidated release planning range; re-estimate after M0 and the integrated vertical slice instead of claiming an arbitrary AI speedup.
 
-## Approval requested after the missing Claude review
+## Cross-model disagreements resolved
+
+Claude's “single unreplicated copy” objection is narrowed to B1: define a recoverable safe handoff; do not add another storage system by assumption. S3 Standard already provides provider-managed redundancy, which does not solve missing routing metadata. [AWS durability](https://docs.aws.amazon.com/AmazonS3/latest/userguide/DataDurability.html). A monolith/single region does not inherently contradict 99.9%; runtime redundancy, deploy/failover behavior and cost remain operational validation questions. Minimum-OS matrix hedging is a coverage gap, not evidence that iOS 18 cannot work.
+
+Accepted additions: reproducible host-library audits, calibrated MTF50/SNR methodology, independent memory-preview clearing, one crypto profile/version and a bounded native-HEIF quality/sanitation comparison. Claude suggested 28 M0 person-days and 18–26 weeks overall without an inspectable breakdown; those estimates are not adopted as demonstrated savings or a schedule floor.
+
+## Approval requested
 
 Approve the proposed amendments and the separately capped M0 scope, hardware access, staffing and budget. Decisions B1–B4 need an accepted design before their affected production work, not permission to invent a protocol during implementation. Optional modes and later infrastructure remain outside M0. This review does not approve development or silently mark D01–D15 accepted.

@@ -27,4 +27,4 @@ One host and one designated recipient device per session. No app-created host sy
 
 ## Final adversarial review — proposed
 
-[Decision memo](reviews/2026-10-27/decision-memo.md), [proposed specification amendments](reviews/2026-10-27/planning-amendments.md), [bounded M0 plan](reviews/2026-10-27/m0-feasibility-plan.md) and [review evidence/status](reviews/2026-10-27/review-evidence.md). These are unapproved proposals. The Codex reviews are complete; the requested Claude review is blocked by expired authentication. No development is authorized.
+[Decision memo](reviews/2026-10-27/decision-memo.md), [proposed specification amendments](reviews/2026-10-27/planning-amendments.md), [bounded M0 plan](reviews/2026-10-27/m0-feasibility-plan.md) and [review evidence/status](reviews/2026-10-27/review-evidence.md). These are unapproved proposals. Independent Codex reviews and the [returned Claude conclusions](reviews/2026-10-27/claude-review.md) have been reconciled, with source/response limitations recorded. No development is authorized.

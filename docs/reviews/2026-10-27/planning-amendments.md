@@ -1,6 +1,6 @@
 # Proposed changes to the planning documents
 
-Status: proposed amendments, **not applied to the baseline specifications and not approved**. Claude review remains blocked; integrate any further findings before adoption. Baseline: `ebf8edf151add1e7308dd68778cca07f02753e4b`.
+Status: proposed amendments, **not applied to the baseline specifications and not approved**. Returned Codex and Claude findings have been reconciled; see [Claude response and limitations](claude-review.md). Baseline: `ebf8edf151add1e7308dd68778cca07f02753e4b`.
 
 This companion makes the proposed changes concrete without rewriting accepted-looking specifications before the owner decides. IDs below map to the [decision memo](decision-memo.md). “Before production” means before implementing the affected production subsystem, not a reason to block read-only planning or an explicitly scoped synthetic M0 experiment.
 
@@ -32,7 +32,9 @@ Proposed replacement:
 
 > Prepared atomically records a complete immutable ciphertext, recipient-only key envelope, signed immutable context and recoverable transfer journal. Once that boundary is verified, the compliant host no longer retains a decryptable per-photo content key or a host-local wrapper for it. Retry/reservation/recovery resubmits immutable ciphertext and authorization metadata; it never needs to decrypt or change recipient/context. The last-shot UI may retain a bounded in-memory preview only until the next capture, backgrounding or session end. A crash before Prepared is handled as incomplete preparation, not a falsely durable capture.
 
-This removes a local wrapping-key lifecycle while improving host residual-data exposure. It does not remove the host's device signing key or the recipient's encrypted gallery protection. Validate crash boundaries and reauthorization using immutable context before adoption. Keep fresh per-photo AEAD keys, reviewed recipient key encapsulation and authenticated origin. Consider authenticated HPKE instead of separate signatures only if an independent review establishes equivalent binding, maintained cross-platform support and operational benefit; this review does not select a suite.
+Memory-preview clearing is independent of ciphertext deletion: do not lose the current memory-only review merely because upload completed, and do not restore it from persistent ciphertext after backgrounding/end.
+
+This removes a local wrapping-key lifecycle while improving host residual-data exposure. It does not remove the host's device signing key or the recipient's encrypted gallery protection. Validate crash boundaries and reauthorization using immutable context before adoption. Keep fresh per-photo AEAD keys, reviewed recipient key encapsulation and authenticated origin. Pin one reviewed cryptographic suite per protocol version; unsupported profiles fail explicitly rather than negotiating a weaker suite at runtime. Consider authenticated HPKE instead of separate signatures only if an independent review establishes equivalent binding, maintained cross-platform support and operational benefit; this review does not select a suite.
 
 ## A4 — Make cloud acknowledgment durably reconstructable
 
@@ -90,4 +92,17 @@ Add cost per successfully received photo, egress/retry amplification, recipient 
 
 Replace M0 only if the owner approves [the bounded ten-day plan](m0-feasibility-plan.md). Keep accounts/provider login, polished gallery, production backend, full device qualification and release gates outside M0. Permit parallel standalone capture/transfer research only within M0 authorization. Reduce calendar time through parallel verified work, not by deleting soak/device/security/beta evidence. Re-estimate after M0 and an integrated vertical slice; original 24–32 weeks is neither an achieved forecast nor a permanent minimum.
 
-Record B1–B4 as unresolved design gates and A1–A9 as proposed amendments, not accepted ADRs. Complete the separate Claude review before calling the cross-tool review final. No planning file's acceptance status changes automatically when these drafts are written or published.
+Record B1–B4 as unresolved design gates and A1–A10 as proposed amendments, not accepted ADRs. The returned independent Claude conclusions and their qualifications are preserved; no separate claimed plan artifact is treated as evidence. No planning file's acceptance status changes automatically when these drafts are written or published.
+
+
+## A10 — Reproducible measurement and operational hypotheses
+
+Targets: [01, FR-03/SLOs](../../01-product-requirements.md); [04, Test matrix and gates](../../04-camera-engineering.md); [07, M0 evidence](../../07-delivery-roadmap.md).
+
+Specify a host-library probe before claiming zero additions: use an isolated test library, a separately authorized QA auditor with appropriate read access, before/after inventories and intermediate observations where the OS permits, plus instrumented/static checks of all app library-write interfaces. Include host-role cases where this installation previously received photos and already has library-add permission, not only a fresh denied-permission install. Keep broad read permission out of the shipping host flow; do not inspect personal media or count unrelated sync/stock-camera activity as app output. Combine evidence methods; snapshots alone cannot prove a transient save/delete never happened. M0 qualifies its harness paths only; repeat on the integrated release app.
+
+Pin maintained chart-analysis tooling during authorized M0. Record chart, lux/distance/framing, ROI, resolution normalization, ICC/decoder and tool versions; use ten matched repeats to estimate variability before interpreting MTF50/SNR/clipping thresholds. Report indeterminate if instrumentation/repeatability cannot support the claimed difference. No custom benchmark framework or lowering of thresholds to manufacture a pass.
+
+Add a bounded local native-HEIF comparator on the modern iPhone where supported: ten JPEG/HEIF matched pairs per lighting condition, without host PhotoKit finalization. Inspect fidelity and sanitation; no HEIF transfer/UI feature is implied. If SDR JPEG has a material quality deficit, reopen the canonical-format decision before accepting the camera approach. Unsupported modes are explicitly untested, not claimed supported.
+
+Record exact OS coverage. Testing an older phone on the latest OS does not validate the proposed minimum OS; lack of a physically available older build remains a named coverage gap. Treat 99.9% availability as an approved-to-be-baselined target: define deploy/failover/error-budget probes and a budgeted runtime topology within one region. A modular monolith may run multiple instances; no multi-region/microservice addition is justified solely by the SLO number.
