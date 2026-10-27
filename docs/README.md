@@ -24,3 +24,7 @@ Official sources are linked alongside relevant claims. Research was checked duri
 ## Core policy baseline
 
 One host and one designated recipient device per session. No app-created host system-library assets. Native processed still capture, no deferred host PhotoKit proxy workflow. Device-bound encrypted media with no server key escrow. Durable app receipt and successful system-library save are separate states. Cloud access ends at reservation +72h or earlier on receipt/cancellation; host queue expires at capture +72h. Online authorization is required for upload reservation; offline unreserved captures require renewed consent if their session ends. Ending a session preserves already reserved transfers and permits their grant renewal until absolute expiry; cancellation/revocation blocks new grants. Offline recovery uses a separately signed approval of unchanged original photo context. Revocation cannot recall copied photographs or guarantee immediate action on offline devices.
+
+## Final adversarial review — proposed
+
+[Decision memo](reviews/2026-10-27/decision-memo.md), [proposed specification amendments](reviews/2026-10-27/planning-amendments.md), [bounded M0 plan](reviews/2026-10-27/m0-feasibility-plan.md) and [review evidence/status](reviews/2026-10-27/review-evidence.md). These are unapproved proposals. The Codex reviews are complete; the requested Claude review is blocked by expired authentication. No development is authorized.
