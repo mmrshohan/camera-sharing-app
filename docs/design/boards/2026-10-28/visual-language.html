@@ -1,0 +1,319 @@
+<!doctype html>
+<!-- Archived from the 28 October 2026 design session. Static reference only. -->
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Visual language board — Part 2 (superseded by guideline v0.2)</title>
+<style>:root{--bg-primary:#f5f5f7;--bg-secondary:#fff;--bg-tertiary:#e5e5e7;--border:#d1d1d6;--text-primary:#1d1d1f;--text-secondary:#86868b;--text-tertiary:#aeaeb2;--accent:#0071e3}*{box-sizing:border-box}body{margin:0;padding:32px;background:var(--bg-primary);color:var(--text-primary);font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.5}</style>
+</head><body>
+<style>
+  .vl{--blue:#0071E3;--link:#0066CC;--tint:#E8F1FC;--ink:#1D1D1F;--ink2:#6E6E73;--ink3:#AEAEB2;--sep:#D2D2D7;--surf:#F5F5F7;--field:#86868B;
+      --ok:#248A3D;--wait:#C93400;--bad:#D70015;
+      font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",system-ui,sans-serif;-webkit-font-smoothing:antialiased;max-width:1180px;margin:0 auto;color:var(--text-primary)}
+  .vl-k{font-size:13px;line-height:18px;font-weight:600;color:var(--text-secondary);letter-spacing:.2px;margin:0 0 12px}
+  .vl-h{font-size:30px;line-height:36px;font-weight:700;letter-spacing:-.4px;margin:0 0 6px}
+  .vl-sub{font-size:17px;line-height:24px;color:var(--text-secondary);max-width:780px;margin:0 0 30px}
+  .vl-sec{margin:0 0 44px}
+  .vl-s{font-size:22px;line-height:28px;font-weight:700;margin:0 0 4px}
+  .vl-sd{font-size:15px;line-height:21px;color:var(--text-secondary);margin:0 0 16px;max-width:760px}
+  .vl-rules{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+  .vl-rule{font-size:14px;line-height:19px;padding:7px 12px;border-radius:999px;background:var(--bg-secondary);border:1px solid var(--border)}
+  /* color table */
+  .vl-tab{width:100%;border-collapse:collapse;font-size:14px;line-height:19px}
+  .vl-tab th{text-align:left;font-weight:600;color:var(--text-secondary);font-size:13px;padding:0 12px 8px 0;border-bottom:1px solid var(--border)}
+  .vl-tab td{padding:9px 12px 9px 0;border-bottom:1px solid var(--border);vertical-align:middle}
+  .vl-tok{font:600 14px/19px ui-monospace,"SF Mono",Menlo,monospace}
+  .vl-sw{display:inline-flex;align-items:center;gap:8px;font:13px/18px ui-monospace,"SF Mono",Menlo,monospace;white-space:nowrap}
+  .vl-sw i{width:26px;height:26px;border-radius:7px;display:inline-block;box-shadow:inset 0 0 0 1px rgba(127,127,127,.35)}
+  .vl-ok{color:var(--ok);font-weight:600}
+  .vl-no{color:var(--bad);font-weight:600}
+  @media (prefers-color-scheme:dark){.vl-ok{color:#30D158}.vl-no{color:#FF453A}}
+  .vl-scroll{overflow-x:auto}
+  /* type */
+  .vl-type{border-top:1px solid var(--border)}
+  .vl-tr{display:grid;grid-template-columns:200px 1fr 260px;gap:16px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--border)}
+  .vl-tr .m{font-size:13px;line-height:18px;color:var(--text-secondary)}
+  .vl-tr .m b{display:block;color:var(--text-primary);font-weight:600;font-size:14px}
+  @media (max-width:760px){.vl-tr{grid-template-columns:1fr;gap:2px}}
+  /* space & shape */
+  .vl-grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+  @media (max-width:760px){.vl-grid2{grid-template-columns:1fr}}
+  .vl-card{background:var(--bg-secondary);border:1px solid var(--border);border-radius:16px;padding:18px}
+  .vl-card h4{margin:0 0 12px;font-size:15px;line-height:20px;font-weight:600}
+  .vl-sp{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap}
+  .vl-sp div{display:flex;flex-direction:column;align-items:center;gap:6px;font:12px/16px ui-monospace,"SF Mono",Menlo,monospace;color:var(--text-secondary)}
+  .vl-sp span{display:block;width:14px;background:var(--blue);border-radius:3px}
+  .demo-light{background:#fff;color:#1D1D1F;border-radius:14px;padding:16px;display:grid;gap:12px}
+  .b{display:flex;align-items:center;justify-content:center;height:50px;border-radius:25px;font-size:17px;font-weight:600;letter-spacing:-.43px}
+  .b.fill{background:#0071E3;color:#fff}.b.tint{background:#E8F1FC;color:#0066CC}.b.text{height:44px;color:#0066CC;font-weight:400}.b.danger{height:44px;color:#D70015;font-weight:400}
+  .fld{height:50px;border-radius:12px;border:1px solid #86868B;display:flex;align-items:center;padding:0 16px;font-size:17px;color:#1D1D1F}
+  .fld.f{box-shadow:0 0 0 3px rgba(0,113,227,.28);border-color:#0071E3}
+  .lbl{font-size:13px;line-height:18px;color:#6E6E73;display:flex;justify-content:space-between}
+  .ann{font:12px/16px ui-monospace,"SF Mono",Menlo,monospace;color:var(--text-secondary)}
+  .row{display:grid;grid-template-columns:30px 1fr 14px;align-items:center;gap:12px;min-height:52px;padding:0 4px;border-bottom:1px solid #D2D2D7}
+  .row:last-child{border-bottom:0}
+  .row .t{font-size:17px;line-height:22px;letter-spacing:-.43px}.row .s{font-size:15px;line-height:20px;color:#6E6E73}
+  .shapes{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+  .shapes div{display:flex;flex-direction:column;align-items:center;gap:6px}
+  /* icons */
+  .vl-icons{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:10px}
+  .ic{background:var(--bg-secondary);border:1px solid var(--border);border-radius:14px;padding:14px 10px 10px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+  .ic svg{width:28px;height:28px;color:var(--text-primary)}
+  .ic b{font-size:13px;line-height:17px;font-weight:600}
+  .ic span{font:11.5px/15px ui-monospace,"SF Mono",Menlo,monospace;color:var(--text-secondary);overflow-wrap:anywhere}
+  .ic-spec{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin:0 0 16px}
+  .ic-big{width:120px;height:120px;border-radius:14px;background:var(--bg-secondary);border:1px solid var(--border);position:relative}
+  .ic-big svg{position:absolute;inset:0;width:120px;height:120px}
+  /* motion */
+  .vl-mo{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+  .mo{background:var(--bg-secondary);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+  .mo-stage{height:210px;background:#fff;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+  .mo-stage.dk{background:#000}
+  .mo-body{padding:14px 16px 16px}
+  .mo-body h4{margin:0 0 4px;font-size:15px;line-height:20px;font-weight:600}
+  .mo-body p{margin:0 0 10px;font-size:14px;line-height:19px;color:var(--text-secondary)}
+  .mo-body dl{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;margin:0;font:12px/16px ui-monospace,"SF Mono",Menlo,monospace}
+  .mo-body dt{color:var(--text-secondary)}
+  .dev-tile{width:120px;height:120px;border-radius:0;background:url(coast.jpg) 30% 60%/300%;animation:develop 3.2s infinite}
+  @keyframes develop{0%{filter:blur(16px) saturate(.2);opacity:.55}25%{filter:blur(16px) saturate(.2);opacity:.55}44%{filter:blur(0) saturate(1);opacity:1}100%{filter:blur(0) saturate(1);opacity:1}}
+  .send-pv{position:absolute;inset:34px 30px 50px;background:url(coast.jpg) center/cover}
+  .send-flash{position:absolute;inset:34px 30px 50px;background:#000;opacity:0;animation:flash 3.2s infinite}
+  @keyframes flash{0%,10%{opacity:0}12%{opacity:.6}17%{opacity:0}100%{opacity:0}}
+  .send-fly{position:absolute;inset:34px 30px 50px;background:url(coast.jpg) center/cover;transform-origin:0 100%;opacity:0;animation:fly 3.2s infinite cubic-bezier(.32,.72,0,1)}
+  @keyframes fly{0%,14%{opacity:0;transform:none}15%{opacity:1;transform:none}36%{opacity:1;transform:translate(-14px,32px) scale(.16)}40%,100%{opacity:0;transform:translate(-14px,32px) scale(.16)}}
+  .send-well{position:absolute;left:16px;bottom:10px;width:30px;height:30px;border-radius:8px;background:url(coast.jpg) 30% 70%/260%;box-shadow:0 0 0 1px rgba(255,255,255,.3)}
+  .send-pill{position:absolute;top:8px;left:50%;transform:translateX(-50%);height:20px;padding:0 9px 0 3px;border-radius:10px;background:rgba(255,255,255,.18);color:#fff;font-size:10.5px;font-weight:600;display:flex;align-items:center;gap:5px;animation:pulse 3.2s infinite}
+  .send-pill i{width:14px;height:14px;border-radius:7px;background:#fff;color:#000;font-style:normal;font-size:8px;display:flex;align-items:center;justify-content:center}
+  @keyframes pulse{0%,38%{transform:translateX(-50%) scale(1)}44%{transform:translateX(-50%) scale(1.08)}52%,100%{transform:translateX(-50%) scale(1)}}
+  .send-count{position:absolute;bottom:16px;right:16px;color:rgba(255,255,255,.75);font-size:10.5px;font-variant-numeric:tabular-nums}
+  .press{width:190px;animation:press 2.4s infinite}
+  @keyframes press{0%,30%{transform:scale(1)}36%{transform:scale(.97)}50%{transform:scale(.97)}62%{transform:scale(1.005)}70%,100%{transform:scale(1)}}
+  .sheet-dim{position:absolute;inset:0;background:url(coast.jpg) center 30%/cover}
+  .sheet-dim::after{content:"";position:absolute;inset:0;background:#000;animation:dim 3.2s infinite}
+  @keyframes dim{0%,12%{opacity:0}30%,78%{opacity:.4}92%,100%{opacity:0}}
+  .sheet-up{position:absolute;left:0;right:0;bottom:0;height:62%;background:#fff;border-radius:18px 18px 0 0;padding:14px 16px;animation:up 3.2s infinite cubic-bezier(.32,.72,0,1)}
+  @keyframes up{0%,12%{transform:translateY(100%)}32%,78%{transform:translateY(0)}96%,100%{transform:translateY(100%)}}
+  .sheet-up .g{width:28px;height:4px;border-radius:2px;background:#C7C7CC;margin:0 auto 10px}
+  .sheet-up .l1{height:12px;width:70%;background:#1D1D1F;border-radius:3px;margin-bottom:10px;opacity:.9}
+  .sheet-up .l2{height:8px;width:90%;background:#D2D2D7;border-radius:3px;margin-bottom:6px}
+  .sheet-up .bt{height:26px;border-radius:13px;background:#0071E3;margin-top:14px}
+  @media (prefers-reduced-motion:reduce){.dev-tile,.send-flash,.send-fly,.send-pill,.press,.sheet-dim::after,.sheet-up{animation:none}.sheet-up{transform:none}.send-fly{display:none}}
+  /* light & dark devices */
+  .vl-devs{display:flex;flex-wrap:wrap;gap:36px 44px;justify-content:center}
+  .dv{--s:.62;margin:0;display:flex;flex-direction:column;align-items:center;gap:12px}
+  .bz{padding:10px;border-radius:calc(55px * var(--s) + 10px);background:#1C1C1E;box-shadow:inset 0 0 0 1.5px #3A3A3C,0 26px 56px -24px rgba(0,0,0,.45)}
+  .cl{position:relative;overflow:hidden;width:calc(393px * var(--s));height:calc(852px * var(--s));border-radius:calc(55px * var(--s))}
+  .sc{position:absolute;inset:0 auto auto 0;width:393px;height:852px;transform:scale(var(--s));transform-origin:0 0;overflow:hidden}
+  .sc.lt-t{--bg:#FFFFFF;--fg:#1D1D1F;--fg2:#6E6E73;--sf:#F5F5F7;--tn:#E8F1FC;--lk:#0066CC;background:var(--bg);color:var(--fg)}
+  .sc.dk-t{--bg:#000000;--fg:#F5F5F7;--fg2:#A1A1A6;--sf:#1C1C1E;--tn:#071829;--lk:#2997FF;background:var(--bg);color:var(--fg)}
+  .sc .di{position:absolute;top:11px;left:50%;width:126px;height:37px;margin-left:-63px;border-radius:19px;background:#000;z-index:9}
+  .sc .sbar{position:absolute;top:0;left:0;right:0;height:54px;display:flex;align-items:center;justify-content:space-between;padding:4px 32px 0 54px;font-size:17px;font-weight:600}
+  .sc .hm{position:absolute;bottom:8px;left:50%;width:134px;height:5px;margin-left:-67px;border-radius:3px;background:var(--fg)}
+  .sc .top{position:absolute;top:60px;left:20px;right:20px;display:flex;align-items:center;justify-content:space-between}
+  .sc .lt{font-size:34px;line-height:41px;font-weight:700;letter-spacing:.37px;margin:0}
+  .sc .av{width:36px;height:36px;border-radius:18px;background:var(--sf);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600}
+  .sc .sec{position:absolute;top:122px;left:20px;right:20px;display:flex;justify-content:space-between;align-items:baseline}
+  .sc .sec b{font-size:20px;line-height:25px;font-weight:600}
+  .sc .sec span{font-size:15px;color:var(--fg2)}
+  .sc .gr{position:absolute;top:160px;left:0;right:0;display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+  .sc .gr div{aspect-ratio:1;background:url(coast.jpg) no-repeat;background-size:290%}
+  .sc .bar{position:absolute;left:0;right:0;bottom:0;padding:28px 20px 42px;display:grid;grid-template-columns:1fr 1fr;gap:12px;background:linear-gradient(to bottom,transparent,var(--bg) 34%)}
+  .sc .bt{height:50px;border-radius:25px;background:var(--tn);color:var(--lk);display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600;letter-spacing:-.43px}
+  .dv figcaption{font-size:15px;font-weight:600}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-camera" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="3"/><path d="M8.5 7l1.1-2.1A1.5 1.5 0 0 1 10.9 4h2.2a1.5 1.5 0 0 1 1.3.9L15.5 7"/><circle cx="12" cy="13.5" r="3.5"/></symbol>
+    <symbol id="i-photos" viewBox="0 0 24 24"><rect x="3" y="7" width="15" height="13" rx="2.5"/><path d="M7 4h11.5A2.5 2.5 0 0 1 21 6.5V16"/><path d="M3.5 17l4.25-4.25a1 1 0 0 1 1.4 0L14 17.6"/><circle cx="13" cy="11.2" r="1.4"/></symbol>
+    <symbol id="i-qr" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1.5"/><rect x="14" y="4" width="6" height="6" rx="1.5"/><rect x="4" y="14" width="6" height="6" rx="1.5"/><path d="M14 14h2.5v2.5H14zM17.5 17.5H20V20h-2.5zM14 20h.01M20 14h.01"/></symbol>
+    <symbol id="i-scan" viewBox="0 0 24 24"><path d="M4 8.5V6a2 2 0 0 1 2-2h2.5M15.5 4H18a2 2 0 0 1 2 2v2.5M20 15.5V18a2 2 0 0 1-2 2h-2.5M8.5 20H6a2 2 0 0 1-2-2v-2.5M8 12h8"/></symbol>
+    <symbol id="i-at" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.75"/><path d="M15.75 12v1.25a2.25 2.25 0 0 0 4.5 0V12a8.25 8.25 0 1 0-3.3 6.6"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15.5M13.5 6l6 6-6 6"/></symbol>
+    <symbol id="i-save" viewBox="0 0 24 24"><path d="M12 3.5v11.5M7.5 10.5 12 15l4.5-4.5M4 14.5v3A2.5 2.5 0 0 0 6.5 20h11a2.5 2.5 0 0 0 2.5-2.5v-3"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.75"/><path d="M8.25 12.25l2.5 2.5 5-5.25"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.75"/><path d="M12 7.25V12l3.25 2"/></symbol>
+    <symbol id="i-offline" viewBox="0 0 24 24"><path d="M2.75 8.8a13 13 0 0 1 18.5 0M5.9 12a8.6 8.6 0 0 1 12.2 0M9.05 15.2a4.2 4.2 0 0 1 5.9 0M12 18.6h.01M4 4l16 16"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.3 4.2 2.9 17.4a2 2 0 0 0 1.7 3h14.8a2 2 0 0 0 1.7-3L13.7 4.2a2 2 0 0 0-3.4 0zM12 9.5v4.25M12 16.9h.01"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8.25 10.5V7.75a3.75 3.75 0 0 1 7.5 0v2.75"/></symbol>
+    <symbol id="i-faceid" viewBox="0 0 24 24"><path d="M3.75 8V6A2.25 2.25 0 0 1 6 3.75h2M16 3.75h2A2.25 2.25 0 0 1 20.25 6v2M20.25 16v2A2.25 2.25 0 0 1 18 20.25h-2M8 20.25H6A2.25 2.25 0 0 1 3.75 18v-2M9 9v1.5M15 9v1.5M12 9v3.75h-1M9.25 15.5a4 4 0 0 0 5.5 0"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13.25 2.75 5.5 13.25h6.25l-1 8 7.75-10.5h-6.25z"/></symbol>
+    <symbol id="i-boltoff" viewBox="0 0 24 24"><path d="M13.25 2.75 5.5 13.25h6.25l-1 8 7.75-10.5h-6.25zM3.5 3.5l17 17"/></symbol>
+    <symbol id="i-flip" viewBox="0 0 24 24"><path d="M4.5 10a7.75 7.75 0 0 1 13.4-3.4L20 9M20 4.5V9h-4.5M19.5 14a7.75 7.75 0 0 1-13.4 3.4L4 15M4 19.5V15h4.5"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="M9.5 5.5 16 12l-6.5 6.5"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M14.5 5.5 8 12l6.5 6.5"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><path d="M6 12h.01M12 12h.01M18 12h.01"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4.5 6.5h15M9.5 6.5V4.75A1.25 1.25 0 0 1 10.75 3.5h2.5a1.25 1.25 0 0 1 1.25 1.25V6.5M6.5 6.5l.85 12.1a2 2 0 0 0 2 1.9h5.3a2 2 0 0 0 2-1.9l.85-12.1M10 10.5v6M14 10.5v6"/></symbol>
+    <symbol id="i-person" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.75"/><circle cx="12" cy="10" r="3"/><path d="M6.6 18.4a6.5 6.5 0 0 1 10.8 0"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2.75" width="10" height="18.5" rx="2.5"/><path d="M10.5 5.25h3"/></symbol>
+    <symbol id="i-block" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.75"/><path d="M5.8 5.8l12.4 12.4"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3.25 5 5.75v5.5c0 4.5 3 8 7 9.5 4-1.5 7-5 7-9.5v-5.5zM9.25 12l2 2 3.5-3.75"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.75"/><path d="M9.6 9.4a2.5 2.5 0 0 1 4.8.9c0 1.7-2.4 2.1-2.4 3.7M12 17h.01"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5.5 21V4.5M5.5 4.75h11l-2.5 4 2.5 4h-11"/></symbol>
+    <symbol id="i-drive" viewBox="0 0 24 24"><rect x="3.5" y="13" width="17" height="6.5" rx="2"/><path d="M5.5 13l2.2-6.6A2 2 0 0 1 9.6 5h4.8a2 2 0 0 1 1.9 1.4L18.5 13M16.5 16.25h.01"/></symbol>
+    <symbol id="i-signout" viewBox="0 0 24 24"><path d="M14 4.5H6.5a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2H14M10 12h10M16.5 8.5 20 12l-3.5 3.5"/></symbol>
+  </defs>
+</svg>
+
+<div class="vl">
+  <p class="vl-k">PART 2 OF 3 · VISUAL LANGUAGE</p>
+  <h2 class="vl-h">Quiet by default. Blue means you can tap.</h2>
+  <p class="vl-sub">Every value here is a token engineers use as-is, in light and dark. Contrast ratios are measured against WCAG 2.2 AA (4.5:1 text, 3:1 large text and controls), not estimated.</p>
+
+  <!-- COLOR -->
+  <section class="vl-sec">
+    <h3 class="vl-s">Color</h3>
+    <p class="vl-sd">One accent. Neutrals do the rest, and photos bring the color. Status colors appear only on icons, always next to words.</p>
+    <div class="vl-scroll"><table class="vl-tab">
+      <tr><th>Token</th><th>Light</th><th>Dark</th><th>Used for</th><th>Contrast (light · dark)</th></tr>
+      <tr><td class="vl-tok">accent</td><td><span class="vl-sw"><i style="background:#0071E3"></i>#0071E3</span></td><td><span class="vl-sw"><i style="background:#0071E3"></i>#0071E3</span></td><td>Filled buttons, focus ring, progress</td><td><span class="vl-ok">4.70 ✓</span> white text · iOS default #007AFF <span class="vl-no">4.02 ✗</span></td></tr>
+      <tr><td class="vl-tok">accentText</td><td><span class="vl-sw"><i style="background:#0066CC"></i>#0066CC</span></td><td><span class="vl-sw"><i style="background:#2997FF"></i>#2997FF</span></td><td>Text buttons, links, tinted labels</td><td><span class="vl-ok">5.57 ✓</span> · <span class="vl-ok">6.96 ✓</span></td></tr>
+      <tr><td class="vl-tok">accentTint</td><td><span class="vl-sw"><i style="background:#E8F1FC"></i>#E8F1FC</span></td><td><span class="vl-sw"><i style="background:#071829"></i>#071829</span></td><td>Tinted button fill (Home actions)</td><td>accentText on it <span class="vl-ok">4.88 ✓</span> · <span class="vl-ok">5.94 ✓</span></td></tr>
+      <tr><td class="vl-tok">ink</td><td><span class="vl-sw"><i style="background:#1D1D1F"></i>#1D1D1F</span></td><td><span class="vl-sw"><i style="background:#F5F5F7"></i>#F5F5F7</span></td><td>Titles, body, row titles</td><td><span class="vl-ok">16.8 ✓</span> · <span class="vl-ok">19.3 ✓</span></td></tr>
+      <tr><td class="vl-tok">ink2</td><td><span class="vl-sw"><i style="background:#6E6E73"></i>#6E6E73</span></td><td><span class="vl-sw"><i style="background:#A1A1A6"></i>#A1A1A6</span></td><td>Secondary lines, fine print</td><td><span class="vl-ok">5.07 ✓</span> (4.66 on surface) · <span class="vl-ok">8.16 ✓</span> — never on accentTint (4.45)</td></tr>
+      <tr><td class="vl-tok">ink3</td><td><span class="vl-sw"><i style="background:#AEAEB2"></i>#AEAEB2</span></td><td><span class="vl-sw"><i style="background:#636366"></i>#636366</span></td><td>Disabled and placeholder only</td><td>Never carries information</td></tr>
+      <tr><td class="vl-tok">background</td><td><span class="vl-sw"><i style="background:#FFFFFF"></i>#FFFFFF</span></td><td><span class="vl-sw"><i style="background:#000000"></i>#000000</span></td><td>Screens</td><td>—</td></tr>
+      <tr><td class="vl-tok">surface</td><td><span class="vl-sw"><i style="background:#F5F5F7"></i>#F5F5F7</span></td><td><span class="vl-sw"><i style="background:#1C1C1E"></i>#1C1C1E</span></td><td>Grouped rows, cards, panels in dark</td><td>—</td></tr>
+      <tr><td class="vl-tok">separator</td><td><span class="vl-sw"><i style="background:#D2D2D7"></i>#D2D2D7</span></td><td><span class="vl-sw"><i style="background:#38383A"></i>#38383A</span></td><td>Hairlines (0.5 pt), decorative</td><td>—</td></tr>
+      <tr><td class="vl-tok">fieldBorder</td><td><span class="vl-sw"><i style="background:#86868B"></i>#86868B</span></td><td><span class="vl-sw"><i style="background:#8E8E93"></i>#8E8E93</span></td><td>Text field outline (1 pt)</td><td><span class="vl-ok">3.62 ✓</span> · <span class="vl-ok">5.22 ✓</span> (controls need 3:1)</td></tr>
+      <tr><td class="vl-tok">success</td><td><span class="vl-sw"><i style="background:#248A3D"></i>#248A3D</span></td><td><span class="vl-sw"><i style="background:#30D158"></i>#30D158</span></td><td>Saved, delivered (icon only)</td><td><span class="vl-ok">4.40 ✓</span> · <span class="vl-ok">10.4 ✓</span></td></tr>
+      <tr><td class="vl-tok">waiting</td><td><span class="vl-sw"><i style="background:#C93400"></i>#C93400</span></td><td><span class="vl-sw"><i style="background:#FF9F0A"></i>#FF9F0A</span></td><td>Waiting for internet or Wi-Fi (icon only)</td><td><span class="vl-ok">5.28 ✓</span> · <span class="vl-ok">10.2 ✓</span></td></tr>
+      <tr><td class="vl-tok">danger</td><td><span class="vl-sw"><i style="background:#D70015"></i>#D70015</span></td><td><span class="vl-sw"><i style="background:#FF453A"></i>#FF453A</span></td><td>Destructive text, failed photo</td><td><span class="vl-ok">5.38 ✓</span> · <span class="vl-ok">6.16 ✓</span></td></tr>
+      <tr><td class="vl-tok">cameraScrim</td><td colspan="2"><span class="vl-sw"><i style="background:rgba(0,0,0,.6)"></i>black 60% · selected 70%</span></td><td>Behind white labels drawn over the live preview</td><td>White on it over a white sky <span class="vl-ok">5.74 ✓</span></td></tr>
+    </table></div>
+    <div class="vl-rules"><span class="vl-rule">Blue = interactive. Nothing else is blue.</span><span class="vl-rule">Every status = icon + words. Never color alone.</span><span class="vl-rule">Camera controls are white; color belongs to the photo.</span></div>
+  </section>
+
+  <!-- TYPE -->
+  <section class="vl-sec">
+    <h3 class="vl-s">Type</h3>
+    <p class="vl-sd">San Francisco, the iPhone’s own typeface, in seven styles from Apple’s Dynamic Type scale. Roboto takes its place on Android later.</p>
+    <div class="vl-type">
+      <div class="vl-tr"><div class="m"><b>Large Title</b>34 / 41 · Bold</div><div style="font-size:34px;line-height:41px;font-weight:700;letter-spacing:.37px">Your photos</div><div class="m">Screen titles. One per screen.</div></div>
+      <div class="vl-tr"><div class="m"><b>Title 2</b>22 / 28 · Bold</div><div style="font-size:22px;line-height:28px;font-weight:700;letter-spacing:.35px">Lend your camera to Sarah?</div><div class="m">Panel titles, Lock screen</div></div>
+      <div class="vl-tr"><div class="m"><b>Title 3</b>20 / 25 · Semibold</div><div style="font-size:20px;line-height:25px;font-weight:600;letter-spacing:.38px">Today</div><div class="m">Section headers, verification words</div></div>
+      <div class="vl-tr"><div class="m"><b>Headline</b>17 / 22 · Semibold</div><div style="font-size:17px;line-height:22px;font-weight:600;letter-spacing:-.43px">Sarah’s phone</div><div class="m">Row titles, buttons</div></div>
+      <div class="vl-tr"><div class="m"><b>Body</b>17 / 22 · Regular</div><div style="font-size:17px;line-height:22px;letter-spacing:-.43px">Photos go only to Sarah’s phone.</div><div class="m">Main text, text buttons</div></div>
+      <div class="vl-tr"><div class="m"><b>Subheadline</b>15 / 20 · Regular</div><div style="font-size:15px;line-height:20px;letter-spacing:-.23px;color:var(--text-secondary)">@sarah · iPhone 11</div><div class="m">Second line in rows, counts</div></div>
+      <div class="vl-tr"><div class="m"><b>Footnote</b>13 / 18 · Regular</div><div style="font-size:13px;line-height:18px;letter-spacing:-.08px;color:var(--text-secondary)">Nothing is saved to your Photos.</div><div class="m">Fine print. The smallest size allowed.</div></div>
+    </div>
+    <div class="vl-rules"><span class="vl-rule">Nothing below 13 pt</span><span class="vl-rule">Sentence case everywhere</span><span class="vl-rule">Counts use tabular figures, so numbers never jump</span><span class="vl-rule">Scales to the largest accessibility sizes; rows stack, nothing truncates</span></div>
+  </section>
+
+  <!-- SPACE & SHAPE -->
+  <section class="vl-sec">
+    <h3 class="vl-s">Space, shape and touch</h3>
+    <p class="vl-sd">A 4-point grid, 20-point screen margins, and one size for every tap target: at least 44 × 44 points.</p>
+    <div class="vl-grid2">
+      <div class="vl-card"><h4>Spacing scale</h4>
+        <div class="vl-sp"><div><span style="height:4px"></span>4</div><div><span style="height:8px"></span>8</div><div><span style="height:12px"></span>12</div><div><span style="height:16px"></span>16</div><div><span style="height:20px"></span>20</div><div><span style="height:24px"></span>24</div><div><span style="height:32px"></span>32</div><div><span style="height:48px"></span>48</div></div>
+        <p class="ann" style="margin:14px 0 0">Margin 20 · between related items 8–12 · between groups 24 · sections 32</p>
+      </div>
+      <div class="vl-card"><h4>Buttons</h4>
+        <div class="demo-light">
+          <div class="b fill">Lend camera</div>
+          <div class="b tint">Borrow a camera</div>
+          <div class="b text">Not now</div>
+          <div class="b danger">Delete from this app</div>
+        </div>
+        <p class="ann" style="margin:12px 0 0">Filled and tinted: 50 pt capsule · text: 44 pt · one filled button per screen at most</p>
+      </div>
+      <div class="vl-card"><h4>Fields and rows</h4>
+        <div class="demo-light">
+          <div class="lbl"><span>Username</span><span style="color:#248A3D">✓ Available</span></div>
+          <div class="fld f">sarah</div>
+          <div style="background:#fff">
+            <div class="row"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#1D1D1F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><use href="#i-phone"/></svg><div><div class="t">iPhone 11</div><div class="s">This phone · receiving here</div></div><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#AEAEB2" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-chevron"/></svg></div>
+            <div class="row"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#1D1D1F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><use href="#i-drive"/></svg><div><div class="t">Storage</div><div class="s">240 MB in this app</div></div><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#AEAEB2" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-chevron"/></svg></div>
+          </div>
+        </div>
+        <p class="ann" style="margin:12px 0 0">Field 50 pt, radius 12, 1 pt outline · focus: accent ring · rows 44 pt (52 with a second line)</p>
+      </div>
+      <div class="vl-card"><h4>Shapes</h4>
+        <div class="shapes">
+          <div><span style="width:56px;height:56px;border-radius:12px;background:url(coast.jpg) center/cover;display:block"></span><span class="ann">12 · thumbnail</span></div>
+          <div><span style="width:72px;height:56px;border-radius:16px;background:var(--surf);display:block;box-shadow:inset 0 0 0 1px rgba(127,127,127,.25)"></span><span class="ann">16 · card</span></div>
+          <div><span style="width:72px;height:56px;border-radius:22px 22px 0 0;background:var(--surf);display:block;box-shadow:inset 0 0 0 1px rgba(127,127,127,.25)"></span><span class="ann">38 · panel top</span></div>
+          <div><span style="width:56px;height:56px;border-radius:50%;box-shadow:inset 0 0 0 4px #1D1D1F;display:flex;align-items:center;justify-content:center"><i style="width:44px;height:44px;border-radius:50%;background:#1D1D1F;display:block"></i></span><span class="ann">78 · shutter</span></div>
+          <div><span style="width:56px;height:56px;display:grid;grid-template-columns:1fr 1fr;gap:2px"><i style="background:url(coast.jpg) 10% 20%/300%"></i><i style="background:url(coast.jpg) 70% 40%/300%"></i><i style="background:url(coast.jpg) 30% 90%/300%"></i><i style="background:url(coast.jpg) 90% 70%/300%"></i></span><span class="ann">0 · photo grid</span></div>
+        </div>
+        <p class="ann" style="margin:12px 0 0">Continuous (squircle) corners · photos are never rounded or bordered in the grid</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ICONS -->
+  <section class="vl-sec">
+    <h3 class="vl-s">Icons</h3>
+    <p class="vl-sd">One custom line set, drawn to sit beside San Francisco. In the native app each maps to the named SF Symbol, so the shapes stay identical across the system.</p>
+    <div class="ic-spec">
+      <div class="ic-big"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-primary)"><rect x="2" y="2" width="20" height="20" fill="rgba(0,113,227,.08)" stroke="rgba(0,113,227,.45)" stroke-width=".15" stroke-dasharray=".5 .5"/><g stroke-width="1.75"><use href="#i-camera"/></g></svg></div>
+      <div class="ann" style="font-size:13px;line-height:20px">24-pt grid · 2-pt safe area<br>1.75-pt stroke · round caps and joins<br>Outline at rest · filled only when selected<br>Drawn at 22 pt in rows and 24 pt in bars</div>
+    </div>
+    <div class="vl-icons" style="fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round">
+      <div class="ic"><svg viewBox="0 0 24 24"><use href="#i-camera"/></svg><b>Lend camera</b><span>camera</span></div>
+      <div class="ic"><svg viewBox="0 0 24 24"><use href="#i-photos"/></svg><b>Your photos</b><span>photo.on.rectangle</span></div>
+      <div class="ic"><svg viewBox="0 0 24 24"><use href="#i-qr"/></svg><b>Invitation</b><span>qrcode</span></div>
+      <div class="ic"><svg viewBox="0 0 24 24"><use href="#i-scan"/></svg><b>Scan</b><span>qrcode.viewfinder</span></div>
+      <div class="ic"><svg viewBox="0 0 24 24"><use href="#i-at"/></svg><b>Type username</b><span>at</span></div>
+      <div class="ic"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg><b>Goes to</b><span>arrow.right</span></div>
+      <div class="ic"><svg viewBox="0 0 24 24"><use href="#i-save"/></svg><b>Save to Photos</b><span>square.and.arrow.down</span></div>
+      <div class="ic"><svg viewBox="0 0 24 24" style="color:var(--ok)"><use href="#i-check"/></svg><b>Saved · delivered</b><span>checkmark.circle</span></div>
+      <div class="ic"><svg viewBox="0 0 24 24" style="color:var(--wait)"><use href="#i-clock"/></svg><b>Waiting</b><span>clock</span></div>
+      <div class="ic"><svg viewBox="0 0 24 24" style="color:var(--wait)"><use href="#i-offline"/></svg><b>No internet</b><span>wifi.slash</span></div>
+      <div class="ic"><svg viewBox="0 0 24 24" style="color:var(--bad)"><use href="#i-alert"/></svg><b>Needs attention</b><span>exclamationmark.triangle</span></div>
+      <div class="ic"><svg viewBox="0 0 24 24"><use href="#i-lock"/></svg><b>Locked for owner</b><span>lock</span></div>
+      <div class="ic"><svg viewBox="0 0 24 24"><use href="#i-faceid"/></svg><b>Unlock</b><span>faceid</span></div>
+      <div class="ic"><svg viewBox="0 0 24 24"><use href="#i-bolt"/></svg><b>Flash on</b><span>bolt</span></div>
+      <div class="ic"><svg viewBox="0 0 24 24"><use href="#i-boltoff"/></svg><b>Flash off</b><span>bolt.slash</span></div>
+      <div class="ic"><svg viewBox="0 0 24 24"><use href="#i-flip"/></svg><b>Flip camera</b><span>arrow.triangle.2.circlepath</span></div>
+      <div class="ic"><svg viewBox="0 0 24 24"><use href="#i-close"/></svg><b>Close</b><span>xmark</span></div>
+      <div class="ic"><svg viewBox="0 0 24 24"><use href="#i-back"/></svg><b>Back</b><span>chevron.left</span></div>
+      <div class="ic"><svg viewBox="0 0 24 24"><use href="#i-chevron"/></svg><b>Open</b><span>chevron.right</span></div>
+      <div class="ic"><svg viewBox="0 0 24 24" style="stroke-width:2.6"><use href="#i-more"/></svg><b>More</b><span>ellipsis</span></div>
+      <div class="ic"><svg viewBox="0 0 24 24"><use href="#i-trash"/></svg><b>Delete</b><span>trash</span></div>
+      <div class="ic"><svg viewBox="0 0 24 24"><use href="#i-person"/></svg><b>Account</b><span>person.crop.circle</span></div>
+      <div class="ic"><svg viewBox="0 0 24 24"><use href="#i-phone"/></svg><b>Devices</b><span>iphone</span></div>
+      <div class="ic"><svg viewBox="0 0 24 24"><use href="#i-block"/></svg><b>Blocked</b><span>nosign</span></div>
+      <div class="ic"><svg viewBox="0 0 24 24"><use href="#i-shield"/></svg><b>Privacy</b><span>checkmark.shield</span></div>
+      <div class="ic"><svg viewBox="0 0 24 24"><use href="#i-help"/></svg><b>Help</b><span>questionmark.circle</span></div>
+      <div class="ic"><svg viewBox="0 0 24 24"><use href="#i-flag"/></svg><b>Report</b><span>flag</span></div>
+      <div class="ic"><svg viewBox="0 0 24 24"><use href="#i-drive"/></svg><b>Storage</b><span>internaldrive</span></div>
+      <div class="ic"><svg viewBox="0 0 24 24"><use href="#i-signout"/></svg><b>Sign out</b><span>rectangle.portrait.and.arrow.right</span></div>
+    </div>
+  </section>
+
+  <!-- MOTION -->
+  <section class="vl-sec">
+    <h3 class="vl-s">Motion</h3>
+    <p class="vl-sd">Motion explains what just happened and never delays a photo. Everything uses physical springs and can be interrupted. With Reduce Motion on, all of it becomes a 200 ms cross-fade.</p>
+    <div class="vl-mo">
+      <div class="mo"><div class="mo-stage"><div class="dev-tile"></div></div><div class="mo-body"><h4>Develop · a photo arrives</h4><p>On Sarah’s phone, a new photo resolves from blur like a print developing. It plays once per photo, never on scroll.</p><dl><dt>Blur</dt><dd>16 → 0 pt</dd><dt>Saturation</dt><dd>0.2 → 1</dd><dt>Timing</dt><dd>600 ms, ease-out (0.22, 1, 0.36, 1)</dd><dt>SwiftUI</dt><dd>.easeOut(duration: 0.6)</dd></dl></div></div>
+      <div class="mo"><div class="mo-stage dk"><div class="send-pill"><i>S</i>Sending to Sarah</div><div class="send-pv"></div><div class="send-flash"></div><div class="send-fly"></div><div class="send-well"></div><div class="send-count">5 sent</div></div><div class="mo-body"><h4>Send · the shutter</h4><p>The capture dips the preview, the photo drops into the last-shot well, and the destination pill pulses: proof of where it went.</p><dl><dt>Dip</dt><dd>black 0 → 60% → 0, 140 ms</dd><dt>Drop</dt><dd>spring, response 0.42 s, damping 0.86</dd><dt>Pulse</dt><dd>scale 1 → 1.06 → 1, 240 ms</dd><dt>Haptic</dt><dd>light impact on capture</dd></dl></div></div>
+      <div class="mo"><div class="mo-stage"><div class="b fill press">Lend camera</div></div><div class="mo-body"><h4>Press · every button</h4><p>A small squeeze on touch-down, released with a spring. The action fires on release, so a slide-off cancels it.</p><dl><dt>Down</dt><dd>scale 0.97, 100 ms ease-out</dd><dt>Up</dt><dd>spring, response 0.3 s, damping 0.7</dd><dt>SwiftUI</dt><dd>.spring(response: 0.3, dampingFraction: 0.7)</dd></dl></div></div>
+      <div class="mo"><div class="mo-stage"><div class="sheet-dim"></div><div class="sheet-up"><div class="g"></div><div class="l1"></div><div class="l2"></div><div class="l2" style="width:70%"></div><div class="bt"></div></div></div><div class="mo-body"><h4>Panel · slides up</h4><p>Panels rise over the screen they belong to and follow your finger when dragged down. The screen behind dims to 40%.</p><dl><dt>Rise</dt><dd>spring, response 0.42 s, damping 0.9</dd><dt>Curve (web)</dt><dd>cubic-bezier(0.32, 0.72, 0, 1)</dd><dt>Dim</dt><dd>black 0 → 40%</dd><dt>Native</dt><dd>system sheet with detents</dd></dl></div></div>
+    </div>
+  </section>
+
+  <!-- LIGHT & DARK -->
+  <section class="vl-sec">
+    <h3 class="vl-s">Light and dark</h3>
+    <p class="vl-sd">Same tokens, both themes. The camera is always dark, whatever the phone is set to.</p>
+    <div class="vl-devs">
+      <figure class="dv"><div class="bz"><div class="cl"><div class="sc lt-t">
+        <div class="di"></div><div class="sbar"><span>9:41</span><span></span></div>
+        <div class="top"><h1 class="lt">Your photos</h1><div class="av">S</div></div>
+        <div class="sec"><b>Today</b><span>Alex’s camera · 6</span></div>
+        <div class="gr"><div style="background-position:22% 18%"></div><div style="background-position:78% 40%"></div><div style="background-position:40% 82%"></div><div style="background-position:96% 70%"></div><div style="background-position:8% 60%"></div><div style="background-position:60% 96%"></div><div style="background-position:50% 0%"></div><div style="background-position:0% 35%"></div><div style="background-position:88% 12%"></div></div>
+        <div class="bar"><div class="bt">Borrow a camera</div><div class="bt">Lend my camera</div></div><div class="hm"></div>
+      </div></div></div><figcaption>Light</figcaption></figure>
+      <figure class="dv"><div class="bz"><div class="cl"><div class="sc dk-t">
+        <div class="di"></div><div class="sbar"><span>9:41</span><span></span></div>
+        <div class="top"><h1 class="lt">Your photos</h1><div class="av">S</div></div>
+        <div class="sec"><b>Today</b><span>Alex’s camera · 6</span></div>
+        <div class="gr"><div style="background-position:22% 18%"></div><div style="background-position:78% 40%"></div><div style="background-position:40% 82%"></div><div style="background-position:96% 70%"></div><div style="background-position:8% 60%"></div><div style="background-position:60% 96%"></div><div style="background-position:50% 0%"></div><div style="background-position:0% 35%"></div><div style="background-position:88% 12%"></div></div>
+        <div class="bar"><div class="bt">Borrow a camera</div><div class="bt">Lend my camera</div></div><div class="hm"></div>
+      </div></div></div><figcaption>Dark</figcaption></figure>
+    </div>
+  </section>
+</div>
+
+</body></html>
