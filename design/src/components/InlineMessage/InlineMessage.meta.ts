@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "InlineMessage",
   group: 2,
   layer: "brand",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "A message in the flow of a screen: neutral, waiting or a problem, with at most one way forward.",

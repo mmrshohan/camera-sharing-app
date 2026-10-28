@@ -14,4 +14,5 @@ export interface GroupApproval {
  */
 export const groupApprovals: GroupApproval[] = [
   { group: 1, date: "2026-10-29", note: "Group 1 approved." },
+  { group: 2, date: "2026-10-29", note: "Group 2 approved." },
 ];

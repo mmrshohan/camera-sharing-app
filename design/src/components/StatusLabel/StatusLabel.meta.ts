@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "StatusLabel",
   group: 2,
   layer: "brand",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "A soft tint for status, always with an icon and words: live, sending, saved, waiting and neutral.",

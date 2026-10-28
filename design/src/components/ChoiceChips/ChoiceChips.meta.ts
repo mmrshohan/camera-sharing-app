@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "ChoiceChips",
   group: 2,
   layer: "system",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "Pick one of a few short options, such as what went wrong. Capsules on iOS; Material filter chips on Android.",

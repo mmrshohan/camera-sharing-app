@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "Numeral",
   group: 2,
   layer: "brand",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "The one expressive move: a big number for live counts, such as photos received, with the screen's one live dot.",

@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "Toggle",
   group: 2,
   layer: "system",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "The platform's own switch in a row with its label: UISwitch on iOS, the Material 3 switch on Android.",

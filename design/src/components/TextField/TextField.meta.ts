@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "TextField",
   group: 2,
   layer: "system",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "One line of text, such as a username. The brand field on iOS; Material's outlined field on Android.",

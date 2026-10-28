@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "Toast",
   group: 2,
   layer: "brand",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "A brief confirmation, such as “Connected to Sarah's phone”. It never covers a primary control and never takes a tap.",

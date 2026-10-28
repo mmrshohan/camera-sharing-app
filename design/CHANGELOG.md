@@ -6,8 +6,17 @@ Releases of the Camera Sharing design system. The format follows [Keep a Changel
 
 ### Added
 
-- StatusLabel, Numeral, InlineMessage and Toast (group 2), in review. The Guideline's status labels are now the real component, and a new section shows the numeral.
-- Button, IconButton, Toggle, TextField and ChoiceChips (group 2), in review. Toggle, TextField and ChoiceChips are drawn in each platform's own style.
+- Group 2 approved by the owner on 29 October 2026; its nine components are in the Library at 1.0.0.
+- Button 1.0.0: filled and tinted capsules, plain and destructive text buttons; disabled and loading.
+- IconButton 1.0.0: a full platform touch target, on the app's surfaces or over the camera.
+- Toggle 1.0.0: UISwitch on iOS, the Material 3 switch on Android.
+- TextField 1.0.0: the brand field on iOS, Material's outlined field on Android; checking, valid and invalid.
+- ChoiceChips 1.0.0: one choice, with a checkmark, on both platforms.
+- StatusLabel 1.0.0: live, sending, saved, waiting and neutral.
+- Numeral 1.0.0: the big live count with the screen's one live dot.
+- InlineMessage 1.0.0: neutral, waiting and problem, with one optional action.
+- Toast 1.0.0: at the top or above the controls; never covers one.
+- The Guideline's status labels are the real component, and a new section shows the numeral.
 - Tokens: a `system` group of per-platform metrics (fields, chips, switches), `fill` and `shadow` colors, and icon sizes for rows, bars and chips.
 - Group 1 approved by the owner on 29 October 2026; its six components are in the Library at 1.0.0.
 - Icon 1.0.0: 30 standard icons, with SF Symbol names for iOS and Material Symbols Rounded for Android.

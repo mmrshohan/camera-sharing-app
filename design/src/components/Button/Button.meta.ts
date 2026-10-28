@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "Button",
   group: 2,
   layer: "brand",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "Capsules for decisions, text buttons for lesser actions. At most one filled button per screen.",

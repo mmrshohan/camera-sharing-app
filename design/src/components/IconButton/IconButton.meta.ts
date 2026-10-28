@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "IconButton",
   group: 2,
   layer: "brand",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "An icon with a full touch target and a name for screen readers. Accent on the app's surfaces; white on a scrim over the camera.",
