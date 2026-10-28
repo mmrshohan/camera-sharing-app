@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.releases/
+src/tokens/generated/
+src/workspace/generated/
+test-results/
+playwright-report/
