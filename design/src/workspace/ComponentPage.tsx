@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useParams, useSearchParams } from "react-router";
+import { Link, Navigate, useParams, useSearchParams } from "react-router";
 import type { Surface } from "@shared/surface";
 import { groupApprovals } from "./approvals";
 import usageJson from "./generated/usage.json";
@@ -88,6 +88,11 @@ export function ComponentPage({ mode }: { mode: Mode }) {
   const entry = getComponent(id);
   if (!entry) return <NotFound />;
   if (mode === "library" && entry.meta.status !== "final") return <StillInLab entry={entry} />;
+  // Old Lab links keep working once a component is promoted, with their preview settings.
+  if (mode === "lab" && entry.meta.status === "final") {
+    const search = params.toString();
+    return <Navigate replace to={`/library/${entry.meta.id}${search ? `?${search}` : ""}`} />;
+  }
   const { meta, examples } = entry;
   const screens = usage[meta.id] ?? [];
 

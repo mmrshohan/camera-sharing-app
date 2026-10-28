@@ -1,21 +1,31 @@
 import { expect, gotoAndSettle, test } from "./fixtures";
 
-test("the library lists only final components", async ({ page }) => {
+test("the library lists the final components, and only those", async ({ page }) => {
   await gotoAndSettle(page, "/library");
-  // Nothing is final until the owner approves group 1.
-  await expect(page.getByText("No components are final yet.")).toBeVisible();
-  await expect(page.getByRole("link", { name: /^Icon/ })).toHaveCount(0);
-});
-
-test("the lab lists components in review", async ({ page }) => {
-  await gotoAndSettle(page, "/lab");
+  // Group 1 was approved by the owner on 29 October 2026.
   const card = page.getByRole("link", { name: /^Icon/ });
   await expect(card).toBeVisible();
-  await expect(card).toContainText("In review");
+  await expect(card).toContainText("Final");
+  await expect(page.getByText("In review")).toHaveCount(0);
+  await expect(page.getByText("No components are final yet.")).toHaveCount(0);
+});
+
+test("the lab never lists a final component", async ({ page }) => {
+  await gotoAndSettle(page, "/lab");
+  await expect(page.getByRole("link", { name: /^Icon/ })).toHaveCount(0);
+  await expect(page.locator(".ws-badge--final")).toHaveCount(0);
+});
+
+test("a Lab link to a final component opens it in the Library, keeping its settings", async ({
+  page,
+}) => {
+  await gotoAndSettle(page, "/lab/icon?platform=android");
+  await expect(page).toHaveURL(/\/library\/icon\?platform=android$/);
+  await expect(page.getByRole("heading", { level: 1, name: "Icon" })).toBeVisible();
 });
 
 test("a component page switches its previews to Android", async ({ page }) => {
-  await gotoAndSettle(page, "/lab/icon");
+  await gotoAndSettle(page, "/library/icon");
   await expect(page.getByRole("heading", { level: 1, name: "Icon" })).toBeVisible();
   const previews = page.getByTestId("preview");
   await expect(previews.first()).toHaveAttribute("data-platform", "ios");
@@ -28,8 +38,8 @@ test("a component page switches its previews to Android", async ({ page }) => {
   await expect(page).toHaveURL(/platform=android/);
 });
 
-test("a component page shows its sections in order", async ({ page }) => {
-  await gotoAndSettle(page, "/lab/icon");
+test("a library component page shows its sections in order", async ({ page }) => {
+  await gotoAndSettle(page, "/library/icon");
   const headings = await page.getByRole("heading", { level: 2 }).allTextContents();
   expect(headings).toEqual([
     "States",
@@ -40,7 +50,6 @@ test("a component page shows its sections in order", async ({ page }) => {
     "Versions",
     "Changelog",
     "Native",
-    "Promotion checklist",
   ]);
   await expect(page.getByText("No earlier release yet")).toBeVisible();
 });
@@ -53,7 +62,7 @@ test("an unknown lab component is not found", async ({ page }) => {
 test("small components share a row in the states gallery, centered on their stage", async ({
   page,
 }) => {
-  await gotoAndSettle(page, "/lab/progress-ring");
+  await gotoAndSettle(page, "/library/progress-ring");
   const examples = page.locator(".ws-example");
   await expect(examples).toHaveCount(4);
   const tops = await examples.evaluateAll((els) =>

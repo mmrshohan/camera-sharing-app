@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "RingButton",
   group: 1,
   layer: "brand",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "The signature control: the camera shutter turned into a button. Rings are for camera moments; decisions inside panels use capsule buttons.",

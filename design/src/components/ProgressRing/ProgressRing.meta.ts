@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "ProgressRing",
   group: 1,
   layer: "brand",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "Shows real progress, such as a photo arriving. It fills only as progress happens and never spins.",

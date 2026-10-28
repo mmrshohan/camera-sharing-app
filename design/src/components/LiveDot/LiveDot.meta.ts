@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "LiveDot",
   group: 1,
   layer: "brand",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "Says “this is happening now”. One per screen, next to a live count or inside the Live label.",

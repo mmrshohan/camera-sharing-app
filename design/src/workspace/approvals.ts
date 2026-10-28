@@ -12,4 +12,6 @@ export interface GroupApproval {
  * Owner approvals of Library groups. A component can only be "final" when its group is listed here
  * (enforced by tests/unit/registry.test.ts). Append one entry per approval; never edit past entries.
  */
-export const groupApprovals: GroupApproval[] = [];
+export const groupApprovals: GroupApproval[] = [
+  { group: 1, date: "2026-10-29", note: "Group 1 approved." },
+];

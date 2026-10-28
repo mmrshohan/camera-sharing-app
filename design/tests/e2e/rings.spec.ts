@@ -6,7 +6,7 @@ const example = (page: Page, title: string) =>
 
 test.describe("RingButton presses", () => {
   test.beforeEach(async ({ page }) => {
-    await gotoAndSettle(page, "/lab/ring-button");
+    await gotoAndSettle(page, "/library/ring-button");
   });
 
   test("a press at rest fires once; a double-click is two presses", async ({ page }) => {

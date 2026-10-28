@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "Shutter",
   group: 1,
   layer: "brand",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary: "Takes the photo. White, because color belongs to the photo.",
   anatomy: [

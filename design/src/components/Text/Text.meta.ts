@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "Text",
   group: 1,
   layer: "system",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "Every word in the app, in the platform's own typeface and scale: SF Pro with Dynamic Type on iOS, Roboto with font scale on Android.",

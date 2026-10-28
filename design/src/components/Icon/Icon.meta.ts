@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "Icon",
   group: 1,
   layer: "system",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "Thirty standard icons by meaning. iOS uses the SF Symbol; Android and this workspace draw Material Symbols Rounded.",
