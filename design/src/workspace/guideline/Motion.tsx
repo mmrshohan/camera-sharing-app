@@ -1,3 +1,4 @@
+import { LiveDot } from "@components/LiveDot";
 import { springToMotion, tokens, type SpringName } from "@tokens";
 
 const springUse: Record<SpringName, string> = {
@@ -30,7 +31,7 @@ export function Motion() {
         </figure>
         <figure className="g-demo">
           <div className="g-demo__stage">
-            <span className="g-demo-live" aria-hidden="true" />
+            <LiveDot />
           </div>
           <figcaption>
             <strong>Live dot</strong> — breathes {m.live.min} ↔ 1 every {m.live.periodMs} ms

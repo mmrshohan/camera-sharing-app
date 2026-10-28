@@ -1,22 +1,8 @@
-import { Fragment } from "react";
 import { Icon } from "@components/Icon";
 import { icons, type IconName } from "@icons";
+import { SymbolName } from "../SymbolName";
 
 const names = Object.keys(icons) as IconName[];
-
-/** Long SF Symbol names may wrap only after a dot, never inside a word. */
-function breakAtDots(name: string) {
-  return name.split(".").map((part, i, all) => (
-    <Fragment key={i}>
-      {part}
-      {i < all.length - 1 && (
-        <>
-          .<wbr />
-        </>
-      )}
-    </Fragment>
-  ));
-}
 
 export function Icons() {
   return (
@@ -33,7 +19,9 @@ export function Icons() {
             <Icon name={name} size={28} />
             <strong>{name}</strong>
             <span>
-              <code className="g-sf">{breakAtDots(icons[name].sf)}</code>
+              <code className="g-sf">
+                <SymbolName name={icons[name].sf} />
+              </code>
               <code>{icons[name].material}</code>
             </span>
           </li>

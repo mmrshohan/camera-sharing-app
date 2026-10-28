@@ -1,5 +1,6 @@
 import { icons, type IconName } from "@icons";
 import type { Platform } from "@tokens";
+import { SymbolName } from "@workspace/SymbolName";
 import type { Example } from "@workspace/types";
 import { Icon } from "./Icon";
 
@@ -12,7 +13,9 @@ function IconGrid({ filled, platform }: { filled: boolean; platform: Platform })
         <li key={name}>
           <Icon name={name} filled={filled} platform={platform} />
           <span>{name}</span>
-          <code>{icons[name].sf}</code>
+          <code>
+            <SymbolName name={icons[name].sf} />
+          </code>
         </li>
       ))}
     </ul>

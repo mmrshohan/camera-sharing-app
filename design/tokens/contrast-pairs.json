@@ -114,6 +114,12 @@
       "bg": "label.neutral.bg",
       "min": 4.5,
       "note": "Only in this app label"
+    },
+    {
+      "fg": "color.live",
+      "bg": "label.live.bg",
+      "min": 3,
+      "note": "Live dot inside the Live label (graphic)"
     }
   ]
 }

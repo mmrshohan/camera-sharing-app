@@ -91,6 +91,16 @@
       },
       "$description": "Hairlines; decorative."
     },
+    "track": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [0.1137, 0.1137, 0.1216],
+        "hex": "#1D1D1F",
+        "alpha": 0.1
+      },
+      "$description": "Progress ring track: ink at 10%. Decorative; the arc carries the value."
+    },
     "fieldBorder": {
       "$type": "color",
       "$value": {

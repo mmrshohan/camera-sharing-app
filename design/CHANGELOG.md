@@ -6,6 +6,9 @@ Releases of the Camera Sharing design system. The format follows [Keep a Changel
 
 ### Added
 
+- Text, LiveDot and ProgressRing (group 1), in review.
+- `track` color for the progress ring: ink at 10%.
+- States gallery puts small components side by side, centered on their stage.
 - Overview with the design-system version, components by status and the latest changes; this changelog; and "where used" on every component page, read from the prototype's imports.
 - Living Guideline: color with live WCAG 2.2 contrast in both themes, status labels, iOS and Android type, space, shape, the 30 standard icons, platform rules, motion, writing and accessibility, all read from the tokens.
 - `onAccent` color for text and icons on the accent.

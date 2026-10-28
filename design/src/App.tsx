@@ -1,4 +1,6 @@
-import { createBrowserRouter, RouterProvider } from "react-router";
+import { createBrowserRouter } from "react-router";
+// The DOM build of RouterProvider, so navigations can use flushSync.
+import { RouterProvider } from "react-router/dom";
 import { PrototypePage } from "@prototype/shell/PrototypePage";
 import { WorkspaceLayout } from "@workspace/WorkspaceLayout";
 import { Changelog } from "@workspace/pages/Changelog";

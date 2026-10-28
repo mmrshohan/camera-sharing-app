@@ -1,0 +1,35 @@
+.live-dot {
+  display: inline-block;
+  flex: none;
+  width: var(--live-dot-size);
+  height: var(--live-dot-size);
+  border-radius: 50%;
+  background: var(--color-live);
+  vertical-align: middle;
+  animation: live-dot-breathe var(--motion-live-duration) ease-in-out infinite;
+}
+
+.live-dot--in-label {
+  width: var(--live-dot-size-in-label);
+  height: var(--live-dot-size-in-label);
+}
+
+@keyframes live-dot-breathe {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: var(--motion-live-min);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-dot {
+    animation: none;
+  }
+}
+
+[data-reduce-motion="true"] .live-dot {
+  animation: none;
+}

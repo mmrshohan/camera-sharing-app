@@ -102,6 +102,7 @@ Every package here was reviewed **before** it was installed, as the engineering 
 - **Purpose:** unit tests for tokens, the prototype model, scenarios and copy rules, run in Node with no browser.
 - **Alternatives:** Node's built-in test runner (no TypeScript path aliases or Vite config reuse); Jest (separate transform pipeline from Vite).
 - **Peer requirements:** Vite ^6, ^7 or ^8 and `@types/node` ≥ 24, satisfied.
+- **Configuration (29 Oct 2026):** `fsModuleCache` is off. Its default file-system module cache kept stale `import.meta.glob` results, so components added after the first run were missing from the registry under test. Unit runs take seconds without it.
 
 ### @playwright/test 1.61.1
 

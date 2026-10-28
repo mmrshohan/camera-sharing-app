@@ -1,0 +1,36 @@
+.progress-ring {
+  display: inline-flex;
+  flex: none;
+  vertical-align: middle;
+}
+
+.progress-ring svg {
+  display: block;
+}
+
+.progress-ring__track,
+.progress-ring__arc {
+  fill: none;
+  stroke-width: var(--progress-ring-stroke);
+}
+
+.progress-ring__track {
+  stroke: var(--color-track);
+}
+
+/* Square ends: a rounded cap would close the ring visually before the task is done. */
+.progress-ring__arc {
+  stroke: var(--color-accent);
+  stroke-linecap: butt;
+  transition: stroke-dasharray var(--motion-fade-duration) ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress-ring__arc {
+    transition: none;
+  }
+}
+
+[data-reduce-motion="true"] .progress-ring__arc {
+  transition: none;
+}

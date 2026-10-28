@@ -49,3 +49,24 @@ test("an unknown lab component is not found", async ({ page }) => {
   await gotoAndSettle(page, "/lab/nope");
   await expect(page.getByRole("heading", { level: 1, name: "Not found" })).toBeVisible();
 });
+
+test("small components share a row in the states gallery, centered on their stage", async ({
+  page,
+}) => {
+  await gotoAndSettle(page, "/lab/progress-ring");
+  const examples = page.locator(".ws-example");
+  await expect(examples).toHaveCount(4);
+  const tops = await examples.evaluateAll((els) =>
+    els.map((el) => Math.round(el.getBoundingClientRect().top)),
+  );
+  expect(new Set(tops).size).toBe(1);
+  const offset = await page
+    .getByRole("progressbar")
+    .first()
+    .evaluate((ring) => {
+      const stage = ring.closest(".preview")!.getBoundingClientRect();
+      const box = ring.getBoundingClientRect();
+      return Math.abs(box.left + box.width / 2 - (stage.left + stage.width / 2));
+    });
+  expect(offset).toBeLessThan(1);
+});

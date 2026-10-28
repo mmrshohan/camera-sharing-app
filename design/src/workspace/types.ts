@@ -43,6 +43,8 @@ export interface Example {
   /** Must match one of the component's meta.states. */
   state: string;
   render: (ctx: PreviewContext) => ReactNode;
+  /** "compact" examples share a row and sit centered on their stage; others span the full width. */
+  layout?: "compact" | "wide";
 }
 
 export interface ComponentEntry {

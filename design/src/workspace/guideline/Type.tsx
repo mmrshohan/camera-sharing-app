@@ -1,3 +1,4 @@
+import { Text } from "@components/Text";
 import { tokens, type Platform, type TypeStyle } from "@tokens";
 
 const samples: Record<TypeStyle, string> = {
@@ -27,7 +28,7 @@ const use: Record<TypeStyle, string> = {
 };
 
 const styles = Object.keys(samples) as TypeStyle[];
-const kebab = (s: string) => s.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+const secondary = new Set<TypeStyle>(["subheadline", "footnote"]);
 /** Android's non-linear scale yields fractions; one decimal is enough to check a layout. */
 const fmt = (n: number) => String(Math.round(n * 10) / 10);
 
@@ -42,7 +43,9 @@ function Column({ platform }: { platform: Platform }) {
       <ul className="g-type-list" data-platform={platform}>
         {styles.map((style) => (
           <li key={style}>
-            <span className={`g-type g-type--${kebab(style)}`}>{samples[style]}</span>
+            <Text style={style} tone={secondary.has(style) ? "ink2" : "ink"}>
+              {samples[style]}
+            </Text>
             <span className="g-type-meta">
               <strong>{style}</strong> {def[style].size}/{def[style].line} · {def[style].weight}
               {" → "}largest {fmt(big[style].size)}/{fmt(big[style].line)}

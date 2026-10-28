@@ -95,7 +95,8 @@ export function ComponentPage({ mode }: { mode: Mode }) {
     const next = new URLSearchParams(params);
     if (value === fallback) next.delete(param);
     else next.set(param, value);
-    setParams(next, { replace: true });
+    // Synchronous, so a controlled radio never snaps back while a transition is pending.
+    setParams(next, { replace: true, flushSync: true });
     setSeen((prev) => new Set(prev).add(value));
   };
 
@@ -163,7 +164,12 @@ export function ComponentPage({ mode }: { mode: Mode }) {
         <h2>States</h2>
         <div className="ws-examples">
           {examples.map((example) => (
-            <figure key={example.id} className="ws-example">
+            <figure
+              key={example.id}
+              className={
+                example.layout === "compact" ? "ws-example ws-example--compact" : "ws-example"
+              }
+            >
               <figcaption>
                 <span>{example.title}</span>
                 <code>{example.state}</code>
