@@ -1,5 +1,5 @@
-import { NotFound } from "./NotFound";
+import { ComponentPage } from "../ComponentPage";
 
 export function LabComponent() {
-  return <NotFound />;
+  return <ComponentPage mode="lab" />;
 }

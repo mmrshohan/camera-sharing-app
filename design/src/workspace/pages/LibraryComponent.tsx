@@ -1,5 +1,5 @@
-import { NotFound } from "./NotFound";
+import { ComponentPage } from "../ComponentPage";
 
 export function LibraryComponent() {
-  return <NotFound />;
+  return <ComponentPage mode="library" />;
 }

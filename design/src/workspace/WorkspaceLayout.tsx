@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { NavLink, Outlet, useLocation } from "react-router";
+import "./workspace.css";
 
 const sections = [
   { to: "/", label: "Overview", end: true },
