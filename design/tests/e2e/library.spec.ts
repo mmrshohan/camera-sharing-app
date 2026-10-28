@@ -3,7 +3,7 @@ import { expect, gotoAndSettle, test } from "./fixtures";
 test("the library lists the final components, and only those", async ({ page }) => {
   await gotoAndSettle(page, "/library");
   // Group 1 was approved by the owner on 29 October 2026.
-  const card = page.getByRole("link", { name: /^Icon/ });
+  const card = page.getByRole("link", { name: /^Icon\s/ });
   await expect(card).toBeVisible();
   await expect(card).toContainText("Final");
   await expect(page.getByText("In review")).toHaveCount(0);
@@ -12,7 +12,7 @@ test("the library lists the final components, and only those", async ({ page }) 
 
 test("the lab never lists a final component", async ({ page }) => {
   await gotoAndSettle(page, "/lab");
-  await expect(page.getByRole("link", { name: /^Icon/ })).toHaveCount(0);
+  await expect(page.getByRole("link", { name: /^Icon\s/ })).toHaveCount(0);
   await expect(page.locator(".ws-badge--final")).toHaveCount(0);
 });
 

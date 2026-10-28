@@ -71,6 +71,30 @@
         "unit": "px"
       }
     },
+    "iconRow": {
+      "$type": "dimension",
+      "$value": {
+        "value": 22,
+        "unit": "px"
+      },
+      "$description": "Icons in list rows."
+    },
+    "iconBar": {
+      "$type": "dimension",
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      },
+      "$description": "Icons in bars and icon buttons."
+    },
+    "iconChip": {
+      "$type": "dimension",
+      "$value": {
+        "value": 18,
+        "unit": "px"
+      },
+      "$description": "Icons inside chips and status lines."
+    },
     "ringIcon": {
       "$type": "dimension",
       "$value": {
@@ -157,19 +181,142 @@
       }
     }
   },
-  "fieldHeight": {
-    "ios": {
-      "$type": "dimension",
-      "$value": {
-        "value": 50,
-        "unit": "px"
+  "system": {
+    "$description": "System components follow each platform's metrics: iOS (UIKit/SwiftUI) and Android (Material 3).",
+    "fieldHeight": {
+      "$description": "Brand field on iOS; Material outlined field on Android.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 50,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 56,
+          "unit": "px"
+        }
       }
     },
-    "android": {
-      "$type": "dimension",
-      "$value": {
-        "value": 56,
-        "unit": "px"
+    "fieldRadius": {
+      "$description": "iOS brand field; Material outlined field (extra-small corner).",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 12,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 4,
+          "unit": "px"
+        }
+      }
+    },
+    "chipHeight": {
+      "$description": "Choice chips; the touch target still meets 44 pt and 48 dp.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 36,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 32,
+          "unit": "px"
+        }
+      }
+    },
+    "chipRadius": {
+      "$description": "A capsule on iOS; Material's small corner on Android.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 18,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 8,
+          "unit": "px"
+        }
+      }
+    },
+    "switchWidth": {
+      "$description": "UISwitch; Material 3 switch.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 51,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 52,
+          "unit": "px"
+        }
+      }
+    },
+    "switchHeight": {
+      "$description": "UISwitch; Material 3 switch.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 31,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 32,
+          "unit": "px"
+        }
+      }
+    },
+    "switchThumbOff": {
+      "$description": "The knob is constant on iOS; Material's thumb grows when on.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 27,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 16,
+          "unit": "px"
+        }
+      }
+    },
+    "switchThumbOn": {
+      "$description": "The knob is constant on iOS; Material's thumb grows when on.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 27,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 24,
+          "unit": "px"
+        }
       }
     }
   }

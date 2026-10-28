@@ -38,7 +38,8 @@ export interface TokenModel {
   margin: Record<Platform, number>;
   target: Record<Platform, number>;
   shape: Record<string, number>;
-  fieldHeight: Record<Platform, number>;
+  /** System components keep each platform's own metrics (switches, fields, chips). */
+  system: Record<string, Record<Platform, number>>;
   motion: {
     spring: Record<string, { response: number; dampingFraction: number }>;
     pressScale: { ring: number; button: number };
@@ -216,10 +217,15 @@ export function buildModel(src: TokenSources): TokenModel {
     shape: Object.fromEntries(
       keysOf(src.shape, "shape").map((k) => [k, dimension(src.shape, `shape.${k}`)]),
     ),
-    fieldHeight: {
-      ios: dimension(src.shape, "fieldHeight.ios"),
-      android: dimension(src.shape, "fieldHeight.android"),
-    },
+    system: Object.fromEntries(
+      keysOf(src.shape, "system").map((k) => [
+        k,
+        {
+          ios: dimension(src.shape, `system.${k}.ios`),
+          android: dimension(src.shape, `system.${k}.android`),
+        },
+      ]),
+    ),
     motion: {
       spring: Object.fromEntries(keysOf(m, "motion.spring").map((k) => [k, spring(k)])),
       pressScale: {
@@ -278,7 +284,7 @@ export function renderCss(model: TokenModel): string {
     ...typeVars(model.type[p].default),
     ["margin", px(model.margin[p])],
     ["target", px(model.target[p])],
-    ["field-height", px(model.fieldHeight[p])],
+    ...Object.entries(model.system).map(([k, v]): [string, string] => [kebab(k), px(v[p])]),
   ];
   const mo = model.motion;
   const shared: [string, string | number][] = [

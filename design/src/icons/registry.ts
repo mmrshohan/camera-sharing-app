@@ -47,13 +47,15 @@ export const icons = {
 
 export type IconName = keyof typeof icons;
 
-/** Glyphs drawn by system-surface mockups (Android status bar, keyboards), not product icons. */
+/** Glyphs drawn inside system components and system-surface mockups (chip checkmarks, the Android
+ * status bar, keyboards), not product icons. */
 export const systemGlyphs = [
   "signal_cellular_alt",
   "battery_full",
   "shift",
   "backspace",
   "keyboard_return",
+  "check",
 ] as const;
 
 /** Every Material glyph the workspace draws; the vendoring script extracts exactly these. */

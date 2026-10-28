@@ -76,24 +76,7 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  rotate: -90deg;
-  animation: ring-button-turn var(--motion-waiting-duration) linear infinite;
-}
-
-.ring-button__arc circle {
-  fill: none;
-  stroke: var(--color-accent);
-  stroke-width: var(--ring-stroke);
-  stroke-linecap: round;
-}
-
-@keyframes ring-button-turn {
-  from {
-    rotate: -90deg;
-  }
-  to {
-    rotate: 270deg;
-  }
+  color: var(--color-accent);
 }
 
 /* Unavailable: neutral, with the reason in words. */
@@ -124,14 +107,4 @@
   letter-spacing: var(--type-footnote-tracking);
   text-align: center;
   text-wrap: balance;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .ring-button__arc {
-    animation: none;
-  }
-}
-
-[data-reduce-motion="true"] .ring-button__arc {
-  animation: none;
 }

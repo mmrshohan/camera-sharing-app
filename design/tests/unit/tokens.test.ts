@@ -87,6 +87,24 @@ describe("tokens", () => {
     expect(tokens.motion.dim).toBe(0.6);
   });
 
+  it("gives system components each platform's own metrics", () => {
+    expect(tokens.system.fieldHeight).toEqual({ ios: 50, android: 56 });
+    expect(tokens.system.fieldRadius).toEqual({ ios: 12, android: 4 });
+    expect(tokens.system.switchWidth).toEqual({ ios: 51, android: 52 });
+    expect(tokens.system.switchThumbOn).toEqual({ ios: 27, android: 24 });
+    expect(tokens.system.chipHeight).toEqual({ ios: 36, android: 32 });
+  });
+
+  it("sizes icons by context: rows, bars, chips and rings", () => {
+    expect(tokens.shape).toMatchObject({ iconRow: 22, iconBar: 24, iconChip: 18, ringIcon: 28 });
+  });
+
+  it("has iOS's system fill and a shadow for raised controls", () => {
+    expect(tokens.color.light.fill).toBe("rgba(120, 120, 128, 0.2)");
+    expect(tokens.color.dark.fill).toBe("rgba(120, 120, 128, 0.36)");
+    expect(tokens.color.light.shadow).toBe("rgba(0, 0, 0, 0.15)");
+  });
+
   it("keeps the minimum text sizes (13 pt iOS, 14 sp Android)", () => {
     for (const spec of Object.values(tokens.type.ios.default)) {
       expect(spec.size).toBeGreaterThanOrEqual(13);
@@ -133,6 +151,15 @@ describe("generated CSS", () => {
     expect(css).toContain("--motion-waiting-duration: 1200ms;");
     expect(css).toContain("--motion-waiting-arc: 0.25;");
     expect(css).toContain("--motion-dim: 0.6;");
+  });
+
+  it("switches system metrics with the platform", () => {
+    const ios = css.slice(css.indexOf('[data-platform="ios"] {'));
+    const android = css.slice(css.indexOf('[data-platform="android"] {'));
+    expect(ios).toContain("--switch-width: 51px;");
+    expect(android).toContain("--switch-width: 52px;");
+    expect(android).toContain("--field-height: 56px;");
+    expect(android).toContain("--field-radius: 4px;");
   });
 
   it("has platform and largest-text blocks", () => {

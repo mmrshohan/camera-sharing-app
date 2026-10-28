@@ -463,3 +463,15 @@
 .ex-camera .ex-count {
   color: var(--color-on-camera);
 }
+
+/* Full-width components at a phone's width (iPhone 16 Pro: 402 pt). */
+.ex-phone {
+  width: min(100%, 402px);
+}
+
+.ex-pressable--stretch {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+  text-align: center;
+}

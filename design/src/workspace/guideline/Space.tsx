@@ -37,7 +37,8 @@ export function Space() {
             <div>
               <dt>Text field height</dt>
               <dd>
-                iOS {tokens.fieldHeight.ios} pt · Android {tokens.fieldHeight.android} dp
+                iOS {tokens.system.fieldHeight.ios} pt · Android {tokens.system.fieldHeight.android}{" "}
+                dp
               </dd>
             </div>
           </dl>

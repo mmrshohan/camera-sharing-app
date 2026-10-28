@@ -6,6 +6,8 @@ Releases of the Camera Sharing design system. The format follows [Keep a Changel
 
 ### Added
 
+- Button, IconButton, Toggle, TextField and ChoiceChips (group 2), in review. Toggle, TextField and ChoiceChips are drawn in each platform's own style.
+- Tokens: a `system` group of per-platform metrics (fields, chips, switches), `fill` and `shadow` colors, and icon sizes for rows, bars and chips.
 - Group 1 approved by the owner on 29 October 2026; its six components are in the Library at 1.0.0.
 - Icon 1.0.0: 30 standard icons, with SF Symbol names for iOS and Material Symbols Rounded for Android.
 - Text 1.0.0: ten type styles and four tones from the tokens.

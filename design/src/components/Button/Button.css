@@ -1,0 +1,93 @@
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--target);
+  padding: var(--space-2) var(--space-5);
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  font-family: var(--type-headline-family);
+  font-size: var(--type-headline-size);
+  line-height: var(--type-headline-line);
+  font-weight: var(--type-headline-weight);
+  letter-spacing: var(--type-headline-tracking);
+  text-align: center;
+  text-wrap: balance;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Capsules: one filled button per screen at most. */
+.button--filled,
+.button--tinted {
+  min-height: var(--button-height);
+}
+
+.button--filled {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.button--tinted {
+  background: var(--color-accent-tint);
+  color: var(--color-accent-text);
+}
+
+/* Text buttons. */
+.button--plain,
+.button--destructive {
+  min-height: max(var(--text-button-height), var(--target));
+  padding-inline: var(--space-3);
+}
+
+.button--plain {
+  color: var(--color-accent-text);
+}
+
+.button--destructive {
+  color: var(--color-danger);
+}
+
+.button--full {
+  display: flex;
+  width: 100%;
+}
+
+.button[aria-disabled="true"] {
+  cursor: default;
+}
+
+.button--filled[aria-disabled="true"],
+.button--tinted[aria-disabled="true"] {
+  background: var(--color-fill);
+  color: var(--color-ink3);
+}
+
+.button--plain[aria-disabled="true"],
+.button--destructive[aria-disabled="true"] {
+  color: var(--color-ink3);
+}
+
+/* Loading keeps the words for screen readers and the width, and shows the arc instead. */
+.button[aria-busy="true"] {
+  cursor: progress;
+}
+
+.button[aria-busy="true"] .button__label {
+  opacity: 0;
+}
+
+.button__spinner {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}

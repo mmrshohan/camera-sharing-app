@@ -1,0 +1,46 @@
+.icon-button {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  min-width: var(--target);
+  min-height: var(--target);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.icon-button__glyph {
+  display: grid;
+  place-items: center;
+}
+
+/* Blue means tappable. */
+.icon-button--on-light {
+  color: var(--color-accent-text);
+}
+
+.icon-button--on-light:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -2px;
+}
+
+/* Over the camera: white on the camera scrim, so it reads on any photo. */
+.icon-button--on-camera {
+  color: var(--color-on-camera);
+}
+
+.icon-button--on-camera .icon-button__glyph {
+  width: calc(var(--target) - var(--space-2));
+  height: calc(var(--target) - var(--space-2));
+  border-radius: 50%;
+  background: var(--color-camera-scrim);
+}
+
+.icon-button--on-camera:focus-visible {
+  outline: 2px solid var(--color-on-camera);
+  outline-offset: -2px;
+}

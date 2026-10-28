@@ -101,6 +101,26 @@
       },
       "$description": "Progress ring track: ink at 10%. Decorative; the arc carries the value."
     },
+    "fill": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [0.4706, 0.4706, 0.502],
+        "hex": "#787880",
+        "alpha": 0.36
+      },
+      "$description": "iOS system fill: the off switch track and unselected chips. Decorative; state is also shown by position or an icon."
+    },
+    "shadow": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [0, 0, 0],
+        "hex": "#000000",
+        "alpha": 0.15
+      },
+      "$description": "Soft shadow under raised system controls, such as the switch knob."
+    },
     "fieldBorder": {
       "$type": "color",
       "$value": {

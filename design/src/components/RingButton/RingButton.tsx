@@ -1,9 +1,11 @@
-import { useId, useState, type KeyboardEvent, type PointerEvent } from "react";
+import { useId } from "react";
 import { motion } from "motion/react";
 import { Icon } from "@components/Icon";
 import type { IconName } from "@icons";
+import { pressMotion, usePress } from "@shared/press";
 import { useShouldReduceMotion, useSurface } from "@shared/surface";
-import { springToMotion, tokens } from "@tokens";
+import { WaitingArc } from "@shared/WaitingArc";
+import { tokens } from "@tokens";
 import "./RingButton.css";
 
 export type RingState = "rest" | "waiting" | "unavailable";
@@ -20,10 +22,6 @@ export interface RingButtonProps {
 }
 
 const { shape, motion: m } = tokens;
-const quick = { duration: m.pressDownMs / 1000, ease: "easeOut" } as const;
-const fade = { duration: m.fadeMs / 1000 } as const;
-const spring = springToMotion(m.spring.press);
-const arcRadius = (shape.ringSize - shape.ringStroke) / 2;
 
 /** The signature control, for camera moments. It acts on release, and only at rest. */
 export function RingButton({
@@ -37,18 +35,10 @@ export function RingButton({
   const { platform } = useSurface();
   const reduceMotion = useShouldReduceMotion();
   const reasonId = useId();
-  const [pressed, setPressed] = useState(false);
   const atRest = state === "rest";
-  const down = pressed && atRest;
+  const { down, handlers } = usePress(atRest);
+  const { animate, transition } = pressMotion(down, reduceMotion, m.pressScale.ring);
   const reason = state === "unavailable" ? unavailableReason : undefined;
-
-  const release = () => setPressed(false);
-  const onPointerDown = (event: PointerEvent) => {
-    if (atRest && event.button === 0) setPressed(true);
-  };
-  const onKeyDown = (event: KeyboardEvent) => {
-    if (atRest && !event.repeat && (event.key === " " || event.key === "Enter")) setPressed(true);
-  };
 
   return (
     <button
@@ -60,38 +50,21 @@ export function RingButton({
       onClick={() => {
         if (atRest) onPress?.();
       }}
-      onPointerDown={onPointerDown}
-      onPointerUp={release}
-      onPointerLeave={release}
-      onPointerCancel={release}
-      onKeyDown={onKeyDown}
-      onKeyUp={release}
-      onBlur={release}
+      {...handlers}
     >
       <span className="ring-button__ring" aria-hidden="true">
         {state === "waiting" && (
-          <svg
+          <WaitingArc
             className="ring-button__arc"
-            viewBox={`0 0 ${shape.ringSize} ${shape.ringSize}`}
-            focusable="false"
-          >
-            <circle
-              cx={shape.ringSize / 2}
-              cy={shape.ringSize / 2}
-              r={arcRadius}
-              pathLength={100}
-              strokeDasharray={`${m.waiting.arc * 100} 100`}
-            />
-          </svg>
+            size={shape.ringSize}
+            stroke={shape.ringStroke}
+          />
         )}
         <motion.span
           className="ring-button__disc"
           initial={false}
-          animate={{
-            scale: down && !reduceMotion ? m.pressScale.ring : 1,
-            opacity: down && reduceMotion ? m.dim : 1,
-          }}
-          transition={{ scale: down ? quick : spring, opacity: down ? quick : fade }}
+          animate={animate}
+          transition={transition}
         >
           <Icon name={icon} filled size={shape.ringIcon} platform={platform} />
         </motion.span>
