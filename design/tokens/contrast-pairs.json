@@ -44,7 +44,7 @@
       "note": "Tinted button label, Borrow ring icon"
     },
     {
-      "fg": "#FFFFFF",
+      "fg": "color.onAccent",
       "bg": "color.accent",
       "min": 4.5,
       "note": "Filled button label"

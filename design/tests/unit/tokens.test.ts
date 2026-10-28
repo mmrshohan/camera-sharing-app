@@ -57,6 +57,11 @@ describe("androidLargestSp (AOSP scale 2.0)", () => {
 });
 
 describe("tokens", () => {
+  it("carries each color's documented use from the token source", () => {
+    expect(tokens.colorUse.accent).toContain("Filled buttons");
+    expect(Object.keys(tokens.colorUse).sort()).toEqual(Object.keys(tokens.color.light).sort());
+  });
+
   it("has the approved accent and dark-mode link color", () => {
     expect(tokens.color.light.accent).toBe("#0071E3");
     expect(tokens.color.dark.accentText).toBe("#2997FF");

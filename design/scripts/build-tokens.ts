@@ -30,6 +30,8 @@ export interface TypeSpec {
 
 export interface TokenModel {
   color: Record<"light" | "dark", Record<string, string>>;
+  /** What each color is for, from its $description in the light token file. */
+  colorUse: Record<string, string>;
   label: Record<"light" | "dark", Record<string, { fg: string; bg: string }>>;
   type: Record<Platform, Record<"default" | "largest", Record<string, TypeSpec>>>;
   space: Record<string, number>;
@@ -184,8 +186,15 @@ export function buildModel(src: TokenSources): TokenModel {
     response: number(m, `motion.spring.${name}.response`),
     dampingFraction: number(m, `motion.spring.${name}.dampingFraction`),
   });
+  const colorUse = Object.fromEntries(
+    keysOf(src.colorLight, "color").map((k) => [
+      k,
+      String(at(src.colorLight, `color.${k}`).$description ?? ""),
+    ]),
+  );
   return {
     color: { light: themeColors(src.colorLight), dark: themeColors(src.colorDark) },
+    colorUse,
     label: { light: themeLabels(src.colorLight), dark: themeLabels(src.colorDark) },
     type: {
       ios: { default: ios("default"), largest: ios("largest") },

@@ -24,9 +24,20 @@ function useWorkspaceTheme(): void {
   }, []);
 }
 
+/**
+ * Opens shared links such as /guideline#motion at their section. The browser looks for the
+ * anchor before React has rendered it, so the scroll has to happen after render.
+ */
+function useHashScroll(hash: string): void {
+  useEffect(() => {
+    if (hash) document.getElementById(decodeURIComponent(hash.slice(1)))?.scrollIntoView();
+  }, [hash]);
+}
+
 export function WorkspaceLayout() {
   useWorkspaceTheme();
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
+  useHashScroll(hash);
   const fullBleed = pathname.startsWith("/prototype");
 
   return (

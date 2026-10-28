@@ -2,7 +2,7 @@
 
 Every package here was reviewed **before** it was installed, as the engineering standards require. The facts below come from the npm registry and from `npm audit` on 28 October 2026. Footprints and advisories were measured from a lockfile resolved with `npm install --package-lock-only --ignore-scripts` before anything was installed.
 
-- **Audit result:** 0 advisories across 167 locked packages (`npm audit`, 28 Oct 2026) after the Vite security bump below. The first `npm install` added three optional WebAssembly helpers (`@emnapi/*`, used only where no native Rolldown binary exists) that the lockfile-only resolution had missed. `npm ci` from the committed lockfile was then verified clean.
+- **Audit result:** 0 advisories across 167 locked packages (`npm audit`, 28 Oct 2026) after the Vite security bump below; still 0 across 166 on 29 Oct 2026, after the `playwright-core` override under @axe-core/playwright removed an unreviewed duplicate. The first `npm install` added three optional WebAssembly helpers (`@emnapi/*`, used only where no native Rolldown binary exists) that the lockfile-only resolution had missed. `npm ci` from the committed lockfile was then verified clean.
 - **Update owner for every package:** the design-system maintainer. Versions are reviewed at each design-system release, and immediately when `npm audit` reports an advisory.
 - **Pinning:** exact versions only. No `^` or `~`. `package-lock.json` is committed.
 
@@ -114,6 +114,7 @@ Every package here was reviewed **before** it was installed, as the engineering 
 - **Purpose:** automated accessibility checks (WCAG 2.2 AA rules) inside the end-to-end tests.
 - **Alternatives:** Lighthouse (page-level only, heavier); hand-written checks (incomplete).
 - **License:** MPL-2.0, file-level copyleft. We use it unmodified as a development tool, so no obligation applies to our code.
+- **Peer dependency (corrected 29 Oct 2026):** it declares `playwright-core >= 1.0.0` as a peer. npm met that with a second, newer copy (1.64.1) beside the 1.61.1 copy inside `@playwright/test`, and that copy was never reviewed. Its runtime code needs only `axe-core` and Node's `assert`, so the extra copy supplied types alone, and they did not match the test runner's `Page`. `package.json` now overrides `playwright-core` to 1.61.1: one reviewed copy, no new code.
 
 ### prettier 3.9.10
 

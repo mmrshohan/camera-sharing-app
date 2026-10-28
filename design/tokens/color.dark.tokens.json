@@ -8,7 +8,16 @@
         "components": [0.0, 0.4431, 0.8902],
         "hex": "#0071E3"
       },
-      "$description": "Filled buttons, rings, focus, progress. White text on it 4.70:1."
+      "$description": "Filled buttons, rings, focus, progress."
+    },
+    "onAccent": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [1, 1, 1],
+        "hex": "#FFFFFF"
+      },
+      "$description": "Text and icons on the accent (filled buttons, filled ring disc)."
     },
     "accentText": {
       "$type": "color",
