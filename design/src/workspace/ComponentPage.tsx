@@ -2,10 +2,14 @@ import { useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router";
 import type { Surface } from "@shared/surface";
 import { groupApprovals } from "./approvals";
+import usageJson from "./generated/usage.json";
 import { NotFound } from "./pages/NotFound";
 import { PreviewScope } from "./PreviewScope";
 import { getComponent } from "./registry";
 import { groupNames, statusNames, type ComponentEntry } from "./types";
+
+/** Component id → prototype files that import it, built by scripts/build-usage.ts. */
+const usage: Record<string, string[]> = usageJson;
 
 type Mode = "library" | "lab";
 
@@ -85,6 +89,7 @@ export function ComponentPage({ mode }: { mode: Mode }) {
   if (!entry) return <NotFound />;
   if (mode === "library" && entry.meta.status !== "final") return <StillInLab entry={entry} />;
   const { meta, examples } = entry;
+  const screens = usage[meta.id] ?? [];
 
   const choose = (param: string, value: string, fallback: string) => {
     const next = new URLSearchParams(params);
@@ -209,7 +214,17 @@ export function ComponentPage({ mode }: { mode: Mode }) {
 
       <section className="ws-section">
         <h2>Where used</h2>
-        <p className="ws-muted">Not used by any prototype screen yet.</p>
+        {screens.length === 0 ? (
+          <p className="ws-muted">Not used by any prototype screen yet.</p>
+        ) : (
+          <ul className="ws-list">
+            {screens.map((screen) => (
+              <li key={screen}>
+                <code>{screen}</code>
+              </li>
+            ))}
+          </ul>
+        )}
       </section>
 
       <section className="ws-section">

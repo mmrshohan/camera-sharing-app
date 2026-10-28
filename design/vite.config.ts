@@ -1,7 +1,8 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import react from "@vitejs/plugin-react";
-import { defineConfig } from "vite";
+import { defineConfig, type Plugin } from "vite";
+import { writeUsage } from "./scripts/build-usage";
 
 const src = (path: string) => fileURLToPath(new URL(`./src/${path}`, import.meta.url));
 const { version } = JSON.parse(
@@ -10,8 +11,20 @@ const { version } = JSON.parse(
   version: string;
 };
 
+/** Keeps "where used" current while screens are edited; `npm run usage` builds it at start. */
+function whereUsed(): Plugin {
+  const root = fileURLToPath(new URL(".", import.meta.url));
+  const prototype = src("prototype/");
+  return {
+    name: "where-used",
+    hotUpdate({ file }) {
+      if (this.environment.name === "client" && file.startsWith(prototype)) writeUsage(root);
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), whereUsed()],
   define: {
     __DESIGN_VERSION__: JSON.stringify(version),
   },

@@ -33,5 +33,5 @@ test("the top navigation links every section", async ({ page }) => {
   for (const name of ["Overview", "Guideline", "Library", "Lab", "Prototype", "Changelog"]) {
     await expect(nav.getByRole("link", { name })).toBeVisible();
   }
-  await expect(page.getByText("v0.1.0")).toBeVisible();
+  await expect(page.getByRole("banner").getByText("v0.1.0")).toBeVisible();
 });

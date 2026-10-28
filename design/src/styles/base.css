@@ -35,6 +35,11 @@ a {
   color: var(--ws-accent);
 }
 
+code {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.9em;
+}
+
 :focus-visible {
   outline: 2px solid var(--ws-focus);
   outline-offset: 2px;
