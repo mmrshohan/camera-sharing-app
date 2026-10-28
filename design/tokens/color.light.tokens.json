@@ -165,6 +165,15 @@
         "alpha": 0.7
       },
       "$description": "Selected control over the live preview."
+    },
+    "onCamera": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [1, 1, 1],
+        "hex": "#FFFFFF"
+      },
+      "$description": "Camera controls and labels over the live preview, in both themes: color belongs to the photo."
     }
   },
   "label": {

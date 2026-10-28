@@ -5,6 +5,7 @@ import { Labels } from "../guideline/Labels";
 import { Motion } from "../guideline/Motion";
 import { Platforms } from "../guideline/Platforms";
 import { Principles } from "../guideline/Principles";
+import { Ring } from "../guideline/Ring";
 import { Shape } from "../guideline/Shape";
 import { Space } from "../guideline/Space";
 import { Type } from "../guideline/Type";
@@ -13,6 +14,7 @@ import "../guideline/guideline.css";
 
 const contents = [
   ["principles", "Principles"],
+  ["ring", "The ring"],
   ["color", "Color"],
   ["labels", "Status labels"],
   ["type", "Type"],
@@ -44,6 +46,7 @@ export function Guideline() {
         ))}
       </nav>
       <Principles />
+      <Ring />
       <Color />
       <Labels />
       <Type />

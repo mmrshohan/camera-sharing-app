@@ -4,8 +4,13 @@
 import "@fontsource/roboto/latin-400.css";
 import "@fontsource/roboto/latin-500.css";
 import "@fontsource/roboto/latin-700.css";
-import { useReducedMotion } from "motion/react";
-import { createContext, useContext, type HTMLAttributes, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useSyncExternalStore,
+  type HTMLAttributes,
+  type ReactNode,
+} from "react";
 import type { Platform, TextSize, Theme } from "@tokens";
 import "./surface.css";
 
@@ -29,10 +34,22 @@ export function useSurface(): Surface {
   return useContext(SurfaceContext);
 }
 
+const reducedMotionQuery = "(prefers-reduced-motion: reduce)";
+
+function subscribeToReducedMotion(onChange: () => void): () => void {
+  const media = window.matchMedia(reducedMotionQuery);
+  media.addEventListener("change", onChange);
+  return () => media.removeEventListener("change", onChange);
+}
+
+const systemReducesMotion = () => window.matchMedia(reducedMotionQuery).matches;
+
 /** True when the operating system or the surface asks for reduced motion. */
 export function useShouldReduceMotion(): boolean {
-  const system = useReducedMotion();
-  return Boolean(system) || useSurface().reduceMotion;
+  // Read directly: motion's own hook logs a development warning whenever the setting is on.
+  const system = useSyncExternalStore(subscribeToReducedMotion, systemReducesMotion, () => false);
+  const { reduceMotion } = useSurface();
+  return system || reduceMotion;
 }
 
 export interface SurfaceScopeProps extends HTMLAttributes<HTMLDivElement> {

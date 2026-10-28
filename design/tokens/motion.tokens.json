@@ -128,12 +128,31 @@
         }
       }
     },
+    "waiting": {
+      "$description": "A ring waiting on someone else: a quarter arc that turns once per period. Steady under Reduce Motion.",
+      "arc": {
+        "$type": "number",
+        "$value": 0.25
+      },
+      "period": {
+        "$type": "duration",
+        "$value": {
+          "value": 1200,
+          "unit": "ms"
+        }
+      }
+    },
     "fade": {
       "$type": "duration",
       "$value": {
         "value": 200,
         "unit": "ms"
       }
+    },
+    "dim": {
+      "$type": "number",
+      "$value": 0.6,
+      "$description": "One dim level for controls: a pressed disc or button when Reduce Motion is on (it replaces the press scale), and the shutter's disc while preparing."
     }
   }
 }

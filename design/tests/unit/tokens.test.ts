@@ -78,6 +78,15 @@ describe("tokens", () => {
     expect(tokens.type.android.largest.body).toMatchObject({ size: 28, line: 36 });
   });
 
+  it("sets the ring's label gap and the waiting arc", () => {
+    expect(tokens.shape.ringLabelGap).toBe(9);
+    expect(tokens.motion.waiting).toEqual({ arc: 0.25, periodMs: 1200 });
+  });
+
+  it("has one dim level: a press under Reduce Motion, a preparing shutter", () => {
+    expect(tokens.motion.dim).toBe(0.6);
+  });
+
   it("keeps the minimum text sizes (13 pt iOS, 14 sp Android)", () => {
     for (const spec of Object.values(tokens.type.ios.default)) {
       expect(spec.size).toBeGreaterThanOrEqual(13);
@@ -116,6 +125,14 @@ describe("generated CSS", () => {
   it("has a dark block with the dark link color", () => {
     const dark = css.slice(css.indexOf('[data-theme="dark"]'));
     expect(dark).toContain("--color-accent-text: #2997FF;");
+  });
+
+  it("exposes the ring label gap, waiting arc, dim level and camera white", () => {
+    expect(css).toContain("--color-on-camera: #FFFFFF;");
+    expect(css).toContain("--ring-label-gap: 9px;");
+    expect(css).toContain("--motion-waiting-duration: 1200ms;");
+    expect(css).toContain("--motion-waiting-arc: 0.25;");
+    expect(css).toContain("--motion-dim: 0.6;");
   });
 
   it("has platform and largest-text blocks", () => {

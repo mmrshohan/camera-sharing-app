@@ -6,6 +6,8 @@ Releases of the Camera Sharing design system. The format follows [Keep a Changel
 
 ### Added
 
+- RingButton and Shutter (group 1), in review. The Guideline's new ring section shows their anatomy, family and states.
+- Tokens: `onCamera` white for controls over the preview, the ring's 9 pt label gap, the waiting arc and one dim level.
 - Text, LiveDot and ProgressRing (group 1), in review.
 - `track` color for the progress ring: ink at 10%.
 - States gallery puts small components side by side, centered on their stage.

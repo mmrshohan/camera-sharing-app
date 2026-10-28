@@ -78,6 +78,14 @@
         "unit": "px"
       }
     },
+    "ringLabelGap": {
+      "$type": "dimension",
+      "$value": {
+        "value": 9,
+        "unit": "px"
+      },
+      "$description": "Between a ring and its label."
+    },
     "shutterSize": {
       "$type": "dimension",
       "$value": {

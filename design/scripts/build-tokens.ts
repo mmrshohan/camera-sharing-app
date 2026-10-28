@@ -47,6 +47,8 @@ export interface TokenModel {
     develop: { blur: number; saturation: number; ms: number; easing: number[] };
     pulse: { scale: number; ms: number };
     live: { min: number; periodMs: number };
+    waiting: { arc: number; periodMs: number };
+    dim: number;
     fadeMs: number;
   };
 }
@@ -234,6 +236,11 @@ export function buildModel(src: TokenSources): TokenModel {
       },
       pulse: { scale: number(m, "motion.pulse.scale"), ms: duration(m, "motion.pulse.duration") },
       live: { min: number(m, "motion.live.min"), periodMs: duration(m, "motion.live.period") },
+      waiting: {
+        arc: number(m, "motion.waiting.arc"),
+        periodMs: duration(m, "motion.waiting.period"),
+      },
+      dim: number(m, "motion.dim"),
       fadeMs: duration(m, "motion.fade"),
     },
   };
@@ -291,6 +298,9 @@ export function renderCss(model: TokenModel): string {
     ["motion-pulse-scale", mo.pulse.scale],
     ["motion-live-duration", `${mo.live.periodMs}ms`],
     ["motion-live-min", mo.live.min],
+    ["motion-waiting-duration", `${mo.waiting.periodMs}ms`],
+    ["motion-waiting-arc", mo.waiting.arc],
+    ["motion-dim", mo.dim],
     ["motion-fade-duration", `${mo.fadeMs}ms`],
   ];
   return [

@@ -428,3 +428,38 @@
   color: var(--color-ink2);
   overflow-wrap: anywhere;
 }
+
+/* Example helpers for interactive components in the states gallery. */
+.ex-pressable {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.ex-count {
+  font:
+    12px/16px ui-monospace,
+    "SF Mono",
+    Menlo,
+    monospace;
+  color: var(--color-ink2);
+  font-variant-numeric: tabular-nums;
+}
+
+/* A stand-in for the live camera preview: the sample photo, darkened like the camera scrim. */
+.ex-camera {
+  display: grid;
+  place-items: center;
+  align-self: stretch;
+  justify-self: stretch;
+  min-height: 180px;
+  border-radius: 12px;
+  background:
+    linear-gradient(var(--color-camera-scrim), var(--color-camera-scrim)),
+    url("/images/coast.jpg") center / cover;
+}
+
+.ex-camera .ex-count {
+  color: var(--color-on-camera);
+}

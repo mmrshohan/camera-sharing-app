@@ -62,3 +62,22 @@ test("a link to a section opens at that section, clear of the sticky bars", asyn
   const box = await heading.boundingBox();
   expect(box!.y).toBeGreaterThanOrEqual(bar!.y + bar!.height);
 });
+
+test("the ring section shows its anatomy from tokens, the family and the states", async ({
+  page,
+}) => {
+  await gotoAndSettle(page, "/guideline#ring");
+  const section = page.getByTestId("guideline-ring");
+  await expect(section.getByRole("img", { name: /anatomy/i })).toBeVisible();
+  const legend = section.getByRole("list", { name: "Ring anatomy" });
+  for (const value of [tokens.shape.ringSize, tokens.shape.ringStroke, tokens.shape.ringGap]) {
+    await expect(legend).toContainText(`${value} pt`);
+  }
+  await expect(legend).toContainText(`${tokens.shape.ringDisc} pt`);
+  await expect(section.getByRole("button", { name: "Take photo" })).toBeVisible();
+  await expect(section.getByRole("progressbar")).toBeVisible();
+  await expect(section.getByRole("button", { name: "Waiting for Sarah" })).toHaveAttribute(
+    "aria-busy",
+    "true",
+  );
+});
