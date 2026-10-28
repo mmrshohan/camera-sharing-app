@@ -1,0 +1,9 @@
+node_modules
+dist
+.releases
+package-lock.json
+src/tokens/generated
+src/workspace/generated
+src/icons/material-paths.ts
+test-results
+playwright-report

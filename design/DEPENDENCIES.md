@@ -8,27 +8,27 @@ Every package here was reviewed **before** it was installed, as the engineering 
 
 ## Summary
 
-| Package | Version | Kind | License | Last publish | Transitive packages |
-| --- | --- | --- | --- | --- | --- |
-| react | 19.2.7 | runtime | MIT | 2026-10-27 | 0 |
-| react-dom | 19.2.7 | runtime | MIT | 2026-10-27 | 1 |
-| react-router | 8.5.1 | runtime (new) | MIT | 2026-10-27 | 2 |
-| motion | 12.42.2 | runtime | MIT | 2026-10-27 | 4 |
-| @radix-ui/react-dialog | 1.1.19 | runtime | MIT | 2026-10-14 | 24 |
-| qrcode | 1.5.4 | runtime | MIT | 2025-11-13 | 28 |
-| @fontsource/roboto | 5.2.10 | runtime (font files) | OFL-1.1 | 2026-07-19 | 0 |
-| typescript | 7.0.2 | dev | Apache-2.0 | 2026-10-28 | 20 (all optional, one per platform) |
-| vite | 8.1.6 | dev | MIT | 2026-10-21 | 42 (29 optional, platform-specific) |
-| @vitejs/plugin-react | 6.0.3 | dev | MIT | 2026-10-05 | 1 |
-| vitest | 5.0.5 | dev (new) | MIT | 2026-10-19 | 22 |
-| @playwright/test | 1.61.1 | dev | Apache-2.0 | 2026-10-28 | 3 |
-| @axe-core/playwright | 4.14.0 | dev (new) | MPL-2.0 | 2026-10-27 | 1 |
-| prettier | 3.9.10 | dev | MIT | 2026-10-10 | 0 |
-| @types/react | 19.2.17 | dev | MIT | 2026-10-04 | 1 |
-| @types/react-dom | 19.2.3 | dev | MIT | 2026-10-04 | 0 |
-| @types/qrcode | 1.5.6 | dev | MIT | 2026-10-04 | 2 |
-| @types/node | 24.19.2 | dev | MIT | 2026-10-09 | 1 |
-| @material-symbols/svg-400 | 0.48.2 | vendored source only (new) | Apache-2.0 | 2026-10-27 | not installed |
+| Package                   | Version | Kind                       | License    | Last publish | Transitive packages                 |
+| ------------------------- | ------- | -------------------------- | ---------- | ------------ | ----------------------------------- |
+| react                     | 19.2.7  | runtime                    | MIT        | 2026-10-27   | 0                                   |
+| react-dom                 | 19.2.7  | runtime                    | MIT        | 2026-10-27   | 1                                   |
+| react-router              | 8.5.1   | runtime (new)              | MIT        | 2026-10-27   | 2                                   |
+| motion                    | 12.42.2 | runtime                    | MIT        | 2026-10-27   | 4                                   |
+| @radix-ui/react-dialog    | 1.1.19  | runtime                    | MIT        | 2026-10-14   | 24                                  |
+| qrcode                    | 1.5.4   | runtime                    | MIT        | 2025-11-13   | 28                                  |
+| @fontsource/roboto        | 5.2.10  | runtime (font files)       | OFL-1.1    | 2026-07-19   | 0                                   |
+| typescript                | 7.0.2   | dev                        | Apache-2.0 | 2026-10-28   | 20 (all optional, one per platform) |
+| vite                      | 8.1.6   | dev                        | MIT        | 2026-10-21   | 42 (29 optional, platform-specific) |
+| @vitejs/plugin-react      | 6.0.3   | dev                        | MIT        | 2026-10-05   | 1                                   |
+| vitest                    | 5.0.5   | dev (new)                  | MIT        | 2026-10-19   | 22                                  |
+| @playwright/test          | 1.61.1  | dev                        | Apache-2.0 | 2026-10-28   | 3                                   |
+| @axe-core/playwright      | 4.14.0  | dev (new)                  | MPL-2.0    | 2026-10-27   | 1                                   |
+| prettier                  | 3.9.10  | dev                        | MIT        | 2026-10-10   | 0                                   |
+| @types/react              | 19.2.17 | dev                        | MIT        | 2026-10-04   | 1                                   |
+| @types/react-dom          | 19.2.3  | dev                        | MIT        | 2026-10-04   | 0                                   |
+| @types/qrcode             | 1.5.6   | dev                        | MIT        | 2026-10-04   | 2                                   |
+| @types/node               | 24.19.2 | dev                        | MIT        | 2026-10-09   | 1                                   |
+| @material-symbols/svg-400 | 0.48.2  | vendored source only (new) | Apache-2.0 | 2026-10-27   | not installed                       |
 
 ## Reviews
 
@@ -89,6 +89,7 @@ Every package here was reviewed **before** it was installed, as the engineering 
   - [GHSA-9jrq-w75r-8gcw](https://github.com/advisories/GHSA-9jrq-w75r-8gcw), low, cross-origin script execution via custom middleware.
 
   8.1.6 is the first patch release outside the affected range. The 27 October prototype still runs 8.1.3; see the note at the end.
+
 - **Footprint:** 42 packages, 29 of them platform-specific optional binaries for the Rolldown bundler.
 
 ### @vitejs/plugin-react 6.0.3
@@ -106,7 +107,7 @@ Every package here was reviewed **before** it was installed, as the engineering 
 
 - **Purpose:** end-to-end tests of routes, screens, states, keyboard behavior and accessibility.
 - **Alternatives:** Cypress (no WebKit, heavier); Puppeteer (no test runner).
-- **Notes:** the browsers are already cached on this Mac (`chromium-1243`); no extra download is needed.
+- **Notes:** Playwright 1.61.1 needs its own Chromium build (1228). The builds already cached on this Mac (1223, 1243) belong to other tools. `npx playwright install chromium` downloaded build 1228 (Chrome Headless Shell 149.0.7827.55, about 94 MB) from Playwright's download host on 28 Oct 2026.
 
 ### @axe-core/playwright 4.14.0 (new)
 

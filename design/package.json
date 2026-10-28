@@ -7,7 +7,21 @@
   "engines": {
     "node": ">=24.12 <25"
   },
-  "scripts": {},
+  "scripts": {
+    "tokens": "node -e \"console.log('tokens: pending (Task 4)')\"",
+    "usage": "node -e \"console.log('usage: pending (Task 8)')\"",
+    "predev": "npm run tokens && npm run usage",
+    "dev": "vite --host 127.0.0.1 --port 4300 --strictPort",
+    "serve:test": "npm run tokens && npm run usage && vite --host 127.0.0.1 --port 4301 --strictPort",
+    "build": "npm run tokens && npm run usage && tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit",
+    "literals": "node scripts/check-literals.ts",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test:unit": "vitest run",
+    "test:e2e": "playwright test",
+    "check": "npm run tokens && npm run usage && npm run typecheck && npm run format:check && npm run literals && npm run test:unit && npm run test:e2e"
+  },
   "dependencies": {
     "@fontsource/roboto": "5.2.10",
     "@radix-ui/react-dialog": "1.1.19",

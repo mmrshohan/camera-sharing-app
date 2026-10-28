@@ -1,0 +1,127 @@
+/* Workspace chrome. Product values come from tokens (src/tokens); the fallbacks only apply
+   before tokens.css loads. The prototype's device screens set their own data-theme. */
+:root {
+  --ws-bg: var(--color-surface, #f5f5f7);
+  --ws-panel: var(--color-background, #ffffff);
+  --ws-border: var(--color-separator, #d2d2d7);
+  --ws-text: var(--color-ink, #1d1d1f);
+  --ws-text-2: var(--color-ink2, #6e6e73);
+  --ws-accent: var(--color-accent-text, #0066cc);
+  --ws-focus: var(--color-accent, #0071e3);
+  --ws-radius: 14px;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--ws-bg);
+  color: var(--ws-text);
+  font-family:
+    -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.45;
+}
+
+a {
+  color: var(--ws-accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--ws-focus);
+  outline-offset: 2px;
+}
+
+.ws-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 12px 24px;
+  background: color-mix(in srgb, var(--ws-panel) 88%, transparent);
+  backdrop-filter: saturate(180%) blur(16px);
+  border-bottom: 1px solid var(--ws-border);
+}
+
+.ws-brand {
+  font-weight: 600;
+  font-size: 15px;
+  white-space: nowrap;
+  color: var(--ws-text);
+  text-decoration: none;
+}
+
+.ws-nav {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.ws-nav a {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 14px;
+  color: var(--ws-text-2);
+  text-decoration: none;
+}
+
+.ws-nav a[aria-current="page"] {
+  background: var(--ws-panel);
+  color: var(--ws-text);
+  box-shadow: inset 0 0 0 1px var(--ws-border);
+}
+
+.ws-version {
+  margin-left: auto;
+  font-size: 13px;
+  color: var(--ws-text-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.ws-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+.ws-main.ws-main--full {
+  max-width: none;
+  padding: 0;
+}
+
+.ws-title {
+  font-size: 34px;
+  line-height: 40px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin: 0 0 8px;
+}
+
+.ws-lede {
+  font-size: 17px;
+  line-height: 24px;
+  color: var(--ws-text-2);
+  max-width: 720px;
+  margin: 0 0 32px;
+}
+
+@media (max-width: 640px) {
+  .ws-header {
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    padding: 10px 16px;
+  }
+  .ws-main {
+    padding: 24px 16px 64px;
+  }
+}
