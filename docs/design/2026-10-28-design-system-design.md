@@ -205,7 +205,7 @@ Rules: blue means tappable and nothing else is blue; tints never carry meaning a
 | Subheadline | 15/20 Regular | 14/20 Regular | Second lines, counts |
 | Footnote | 13/18 Regular | 14/20 Regular | Fine print; the minimum size |
 
-Nothing smaller than 13 pt on iOS or 14 sp on Android. Sentence case everywhere. Counts use tabular figures so numbers never shift. Text scales to the largest accessibility sizes; rows stack rather than truncate. On non-Apple computers the workspace falls back to the system font for iOS mockups; this is a known limitation of rendering SF Pro on the web.
+Nothing smaller than 13 pt on iOS or 14 sp on Android. The numeral does not grow with the text-size setting, because already-large text is exempt (my call). At the largest setting, iOS uses Apple's AX5 sizes and Android its non-linear 200% scale. Sentence case everywhere. Counts use tabular figures so numbers never shift. Text scales to the largest accessibility sizes; rows stack rather than truncate. On non-Apple computers the workspace falls back to the system font for iOS mockups; this is a known limitation of rendering SF Pro on the web.
 
 ### 7.3 Space, shape and touch
 

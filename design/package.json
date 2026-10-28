@@ -8,7 +8,7 @@
     "node": ">=24.12 <25"
   },
   "scripts": {
-    "tokens": "node -e \"console.log('tokens: pending (Task 4)')\"",
+    "tokens": "node scripts/build-tokens.ts",
     "usage": "node -e \"console.log('usage: pending (Task 8)')\"",
     "predev": "npm run tokens && npm run usage",
     "dev": "vite --host 127.0.0.1 --port 4300 --strictPort",

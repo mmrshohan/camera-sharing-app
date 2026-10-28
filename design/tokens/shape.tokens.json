@@ -1,0 +1,168 @@
+{
+  "$description": "Corner radii and component dimensions. Points on iOS equal dp on Android for brand components.",
+  "shape": {
+    "radiusThumb": {
+      "$type": "dimension",
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "radiusField": {
+      "$type": "dimension",
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "radiusCard": {
+      "$type": "dimension",
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "radiusPanel": {
+      "$type": "dimension",
+      "$value": {
+        "value": 38,
+        "unit": "px"
+      }
+    },
+    "buttonHeight": {
+      "$type": "dimension",
+      "$value": {
+        "value": 50,
+        "unit": "px"
+      }
+    },
+    "textButtonHeight": {
+      "$type": "dimension",
+      "$value": {
+        "value": 44,
+        "unit": "px"
+      }
+    },
+    "ringSize": {
+      "$type": "dimension",
+      "$value": {
+        "value": 72,
+        "unit": "px"
+      }
+    },
+    "ringStroke": {
+      "$type": "dimension",
+      "$value": {
+        "value": 2.5,
+        "unit": "px"
+      }
+    },
+    "ringGap": {
+      "$type": "dimension",
+      "$value": {
+        "value": 4.5,
+        "unit": "px"
+      }
+    },
+    "ringDisc": {
+      "$type": "dimension",
+      "$value": {
+        "value": 58,
+        "unit": "px"
+      }
+    },
+    "ringIcon": {
+      "$type": "dimension",
+      "$value": {
+        "value": 28,
+        "unit": "px"
+      }
+    },
+    "shutterSize": {
+      "$type": "dimension",
+      "$value": {
+        "value": 78,
+        "unit": "px"
+      }
+    },
+    "shutterStroke": {
+      "$type": "dimension",
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      }
+    },
+    "shutterDisc": {
+      "$type": "dimension",
+      "$value": {
+        "value": 64,
+        "unit": "px"
+      }
+    },
+    "progressRingSize": {
+      "$type": "dimension",
+      "$value": {
+        "value": 28,
+        "unit": "px"
+      }
+    },
+    "progressRingStroke": {
+      "$type": "dimension",
+      "$value": {
+        "value": 2.5,
+        "unit": "px"
+      }
+    },
+    "liveDotSize": {
+      "$type": "dimension",
+      "$value": {
+        "value": 10,
+        "unit": "px"
+      }
+    },
+    "liveDotSizeInLabel": {
+      "$type": "dimension",
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "gridGap": {
+      "$type": "dimension",
+      "$value": {
+        "value": 2,
+        "unit": "px"
+      }
+    },
+    "labelHeight": {
+      "$type": "dimension",
+      "$value": {
+        "value": 30,
+        "unit": "px"
+      }
+    },
+    "labelPadX": {
+      "$type": "dimension",
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    }
+  },
+  "fieldHeight": {
+    "ios": {
+      "$type": "dimension",
+      "$value": {
+        "value": 50,
+        "unit": "px"
+      }
+    },
+    "android": {
+      "$type": "dimension",
+      "$value": {
+        "value": 56,
+        "unit": "px"
+      }
+    }
+  }
+}

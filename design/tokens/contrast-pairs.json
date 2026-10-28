@@ -1,0 +1,119 @@
+{
+  "$description": "Every foreground/background pair the UI uses, with its WCAG 2.2 AA threshold. Tested in both themes.",
+  "pairs": [
+    {
+      "fg": "color.ink",
+      "bg": "color.background",
+      "min": 4.5,
+      "note": "Body text"
+    },
+    {
+      "fg": "color.ink",
+      "bg": "color.surface",
+      "min": 4.5,
+      "note": "Text on grouped rows"
+    },
+    {
+      "fg": "color.ink2",
+      "bg": "color.background",
+      "min": 4.5,
+      "note": "Secondary lines"
+    },
+    {
+      "fg": "color.ink2",
+      "bg": "color.surface",
+      "min": 4.5,
+      "note": "Secondary lines on grouped rows"
+    },
+    {
+      "fg": "color.accentText",
+      "bg": "color.background",
+      "min": 4.5,
+      "note": "Links and text buttons"
+    },
+    {
+      "fg": "color.accentText",
+      "bg": "color.surface",
+      "min": 4.5,
+      "note": "Links on grouped rows"
+    },
+    {
+      "fg": "color.accentText",
+      "bg": "color.accentTint",
+      "min": 4.5,
+      "note": "Tinted button label, Borrow ring icon"
+    },
+    {
+      "fg": "#FFFFFF",
+      "bg": "color.accent",
+      "min": 4.5,
+      "note": "Filled button label"
+    },
+    {
+      "fg": "color.accent",
+      "bg": "color.background",
+      "min": 3,
+      "note": "Ring stroke and focus ring"
+    },
+    {
+      "fg": "color.fieldBorder",
+      "bg": "color.background",
+      "min": 3,
+      "note": "Text field outline"
+    },
+    {
+      "fg": "color.success",
+      "bg": "color.background",
+      "min": 3,
+      "note": "Saved icon"
+    },
+    {
+      "fg": "color.waiting",
+      "bg": "color.background",
+      "min": 3,
+      "note": "Waiting icon"
+    },
+    {
+      "fg": "color.danger",
+      "bg": "color.background",
+      "min": 4.5,
+      "note": "Destructive text"
+    },
+    {
+      "fg": "color.live",
+      "bg": "color.background",
+      "min": 3,
+      "note": "Live dot"
+    },
+    {
+      "fg": "label.live.fg",
+      "bg": "label.live.bg",
+      "min": 4.5,
+      "note": "Live label"
+    },
+    {
+      "fg": "label.sending.fg",
+      "bg": "label.sending.bg",
+      "min": 4.5,
+      "note": "Sending label"
+    },
+    {
+      "fg": "label.saved.fg",
+      "bg": "label.saved.bg",
+      "min": 4.5,
+      "note": "Saved label"
+    },
+    {
+      "fg": "label.waiting.fg",
+      "bg": "label.waiting.bg",
+      "min": 4.5,
+      "note": "Waiting label"
+    },
+    {
+      "fg": "label.neutral.fg",
+      "bg": "label.neutral.bg",
+      "min": 4.5,
+      "note": "Only in this app label"
+    }
+  ]
+}
