@@ -1,5 +1,16 @@
+import { StatusLabel } from "@components/StatusLabel";
+import { defaultSurface, SurfaceScope } from "@shared/surface";
 import { tokens, type LabelKind, type Theme } from "@tokens";
 import { formatRatio, measure } from "./contrast";
+
+// Words from the photo lifecycle (design spec, Appendix C), and what each kind means.
+const words: Record<LabelKind, string> = {
+  live: "Live",
+  sending: "Sending",
+  saved: "Saved to Photos",
+  waiting: "Waiting for Wi-Fi",
+  neutral: "Only in this app",
+};
 
 const meaning: Record<LabelKind, string> = {
   live: "A session is on",
@@ -17,14 +28,14 @@ export function Labels() {
     <section id="labels" className="g-section" data-testid="guideline-labels">
       <h2>Status labels</h2>
       <p className="g-lede">
-        Soft tints for status, always with an icon and words. Live examples of the StatusLabel
-        component appear here once it is built.
+        Soft tints for status, always with an icon and words. Each one below is the StatusLabel
+        component, drawn in both themes.
       </p>
       <div className="g-table-wrap">
         <table className="g-table">
           <thead>
             <tr>
-              <th scope="col">Label</th>
+              <th scope="col">Kind</th>
               <th scope="col">Light</th>
               <th scope="col">Dark</th>
               <th scope="col">Meaning</th>
@@ -41,9 +52,9 @@ export function Labels() {
                   const { fg, bg } = tokens.label[theme][kind];
                   return (
                     <td key={theme}>
-                      <span className="g-chip" style={{ color: fg, background: bg }}>
-                        {meaning[kind]}
-                      </span>
+                      <SurfaceScope surface={{ ...defaultSurface, theme }} className="g-surface">
+                        <StatusLabel kind={kind}>{words[kind]}</StatusLabel>
+                      </SurfaceScope>
                       <code className="g-chip-values">
                         {fg} on {bg}
                       </code>

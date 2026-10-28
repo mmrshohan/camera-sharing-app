@@ -6,6 +6,7 @@ Releases of the Camera Sharing design system. The format follows [Keep a Changel
 
 ### Added
 
+- StatusLabel, Numeral, InlineMessage and Toast (group 2), in review. The Guideline's status labels are now the real component, and a new section shows the numeral.
 - Button, IconButton, Toggle, TextField and ChoiceChips (group 2), in review. Toggle, TextField and ChoiceChips are drawn in each platform's own style.
 - Tokens: a `system` group of per-platform metrics (fields, chips, switches), `fill` and `shadow` colors, and icon sizes for rows, bars and chips.
 - Group 1 approved by the owner on 29 October 2026; its six components are in the Library at 1.0.0.

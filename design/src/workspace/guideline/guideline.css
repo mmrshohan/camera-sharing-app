@@ -215,20 +215,6 @@
   box-shadow: inset 0 0 0 1px var(--ws-border);
 }
 
-.g-chip {
-  display: inline-flex;
-  align-items: center;
-  height: var(--label-height);
-  padding: 0 var(--label-pad-x);
-  border-radius: 999px;
-  font-family: var(--type-label-family);
-  font-size: var(--type-label-size);
-  line-height: var(--type-label-line);
-  font-weight: var(--type-label-weight);
-  letter-spacing: var(--type-label-tracking);
-  white-space: nowrap;
-}
-
 .g-chip-values {
   display: block;
   margin-top: 6px;
@@ -609,4 +595,25 @@
   height: 100%;
   min-height: 0;
   border-radius: 0;
+}
+
+/* A small piece of a phone surface: the real component, in the theme and platform it names. */
+.g-surface {
+  display: inline-flex;
+  padding: var(--space-2);
+  border-radius: 12px;
+  background: var(--color-background);
+  box-shadow: inset 0 0 0 1px var(--color-separator);
+}
+
+.g-surface--block {
+  display: block;
+  padding: var(--space-5);
+  border-radius: 14px;
+}
+
+.g-numeral-card {
+  display: grid;
+  gap: 10px;
+  margin: 0;
 }

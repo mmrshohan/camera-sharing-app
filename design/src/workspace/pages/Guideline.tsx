@@ -3,6 +3,7 @@ import { Color } from "../guideline/Color";
 import { Icons } from "../guideline/Icons";
 import { Labels } from "../guideline/Labels";
 import { Motion } from "../guideline/Motion";
+import { NumeralSection } from "../guideline/NumeralSection";
 import { Platforms } from "../guideline/Platforms";
 import { Principles } from "../guideline/Principles";
 import { Ring } from "../guideline/Ring";
@@ -17,6 +18,7 @@ const contents = [
   ["ring", "The ring"],
   ["color", "Color"],
   ["labels", "Status labels"],
+  ["numeral", "The numeral"],
   ["type", "Type"],
   ["space", "Space and touch"],
   ["shape", "Shape"],
@@ -49,6 +51,7 @@ export function Guideline() {
       <Ring />
       <Color />
       <Labels />
+      <NumeralSection />
       <Type />
       <Space />
       <Shape />

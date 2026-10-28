@@ -475,3 +475,23 @@
   align-items: stretch;
   text-align: center;
 }
+
+/* A slice of a phone screen, for components that place themselves on it. */
+.ex-screen {
+  position: relative;
+  width: min(100%, 402px);
+  height: 240px;
+  overflow: hidden;
+  border-radius: 16px;
+  background-color: var(--color-background);
+  box-shadow: inset 0 0 0 1px var(--color-separator);
+}
+
+.ex-controls {
+  position: absolute;
+  right: 0;
+  bottom: var(--space-6);
+  left: 0;
+  display: flex;
+  justify-content: center;
+}

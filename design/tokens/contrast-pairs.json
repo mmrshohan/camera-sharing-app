@@ -120,6 +120,12 @@
       "bg": "label.live.bg",
       "min": 3,
       "note": "Live dot inside the Live label (graphic)"
+    },
+    {
+      "fg": "color.background",
+      "bg": "color.ink",
+      "min": 4.5,
+      "note": "Toast text on its inverted capsule"
     }
   ]
 }
