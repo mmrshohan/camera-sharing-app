@@ -423,7 +423,7 @@ Exact component APIs and file names within the folder shape; the design of the w
 | More | ellipsis | more_horiz |
 | Delete | trash | delete |
 | Account | person.crop.circle | account_circle |
-| Devices | iphone | smartphone |
+| Devices | iphone | mobile (formerly smartphone) |
 | Blocked | nosign | block |
 | Privacy | checkmark.shield | verified_user |
 | Help | questionmark.circle | help |
