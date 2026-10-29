@@ -128,7 +128,7 @@ Every package here was reviewed **before** it was installed, as the engineering 
 ### @material-symbols/svg-400 0.48.2 (new, vendored source only)
 
 - **Purpose:** Google's Material Symbols Rounded, the standard Android icon set that the design document requires.
-- **How it is used:** it is **never installed**. `npm pack` downloads it into a scratch folder. `scripts/vendor-icons.ts` extracts only the path data of the glyphs the icon registry lists (38 on 29 Oct 2026: the 30 icons, their iOS look-alikes and system glyphs such as the chip checkmark; outlined and filled), validates that each file is a single `<path>`, and writes `src/icons/material-paths.ts` with the package's license alongside.
+- **How it is used:** it is **never installed**. `npm pack` downloads it into a scratch folder. `scripts/vendor-icons.ts` extracts only the path data of the glyphs the icon registry lists (39 on 29 Oct 2026: the 30 icons, their iOS look-alikes and system glyphs such as the chip checkmark and the notification bell; outlined and filled), validates that each file is a single `<path>`, and writes `src/icons/material-paths.ts` with the package's license alongside.
 - **Alternatives:** the full variable font (about 3 MB, ligature-based, harder to keep offline); hand-drawn icons, which the owner rejected in favor of standard icons.
 - **License:** Apache-2.0.
 

@@ -6,6 +6,7 @@ const radii: { label: string; ios: number; android: number }[] = [
   { label: "Cards", ios: tokens.shape.radiusCard, android: tokens.shape.radiusCard },
   { label: "Text fields", ...tokens.system.fieldRadius },
   { label: "Panel top", ...tokens.system.panelRadius },
+  { label: "Notifications", ...tokens.system.platterRadius },
 ];
 
 const sizes = [

@@ -56,6 +56,7 @@ export const systemGlyphs = [
   "backspace",
   "keyboard_return",
   "check",
+  "notifications",
 ] as const;
 
 /** Every Material glyph the workspace draws; the vendoring script extracts exactly these. */

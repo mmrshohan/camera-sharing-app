@@ -109,6 +109,10 @@ describe("tokens", () => {
     expect(tokens.color.light.scrim).toBe("rgba(0, 0, 0, 0.4)");
   });
 
+  it("rounds notification platters as each platform does", () => {
+    expect(tokens.system.platterRadius).toEqual({ ios: 24, android: 28 });
+  });
+
   it("keeps one source per value: platform radii live only in system", () => {
     expect(Object.keys(tokens.shape)).not.toContain("radiusPanel");
     expect(Object.keys(tokens.shape)).not.toContain("radiusField");

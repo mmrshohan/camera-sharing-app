@@ -1,0 +1,92 @@
+/* Pinned to iOS and dark: the system's own surfaces on the Lock Screen and in the island. */
+.live-activity--lock {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--platter-radius);
+  background: var(--color-elevated);
+  color: var(--color-ink);
+}
+
+.live-activity__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.live-activity__app {
+  display: grid;
+  place-items: center;
+  width: var(--badge-size);
+  height: var(--badge-size);
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.live-activity__title {
+  flex: 1;
+  font-family: var(--type-subheadline-family);
+  font-size: var(--type-subheadline-size);
+  line-height: var(--type-subheadline-line);
+  font-weight: var(--type-headline-weight);
+}
+
+.live-activity__body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0 var(--space-3);
+}
+
+.live-activity__numeral {
+  font-family: var(--type-title2-family);
+  font-size: var(--type-title2-size);
+  line-height: var(--type-title2-line);
+  font-weight: var(--type-title2-weight);
+  font-variant-numeric: tabular-nums;
+}
+
+.live-activity__detail {
+  color: var(--color-ink2);
+  font-family: var(--type-subheadline-family);
+  font-size: var(--type-subheadline-size);
+  line-height: var(--type-subheadline-line);
+}
+
+/*
+ * The compact island: as tall as the island itself, its two sides either side of the camera.
+ * Fixed system text, like the status bar.
+ */
+.live-activity--island {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 230px;
+  height: 37px;
+  padding: 0 var(--space-3);
+  border-radius: 999px;
+  background: var(--color-device-body);
+  color: var(--color-on-camera);
+  font-family: var(--type-headline-family);
+  font-size: var(--status-bar-text);
+  font-weight: var(--type-headline-weight);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.live-activity__glyph,
+.live-activity__count {
+  display: grid;
+  place-items: center;
+}
+
+.live-activity__glyph {
+  color: var(--color-accent-text);
+}
+
+.live-activity__count svg {
+  color: var(--color-success);
+}

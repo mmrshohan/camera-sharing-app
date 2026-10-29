@@ -162,6 +162,24 @@
       "bg": "color.keyboardKeyAlt",
       "min": 4.5,
       "note": "Labels on special keys"
+    },
+    {
+      "fg": "color.onCamera",
+      "bg": "color.deviceBody",
+      "min": 4.5,
+      "note": "Dynamic Island count"
+    },
+    {
+      "fg": "color.accentText",
+      "bg": "color.deviceBody",
+      "min": 3,
+      "note": "Dynamic Island glyph"
+    },
+    {
+      "fg": "color.success",
+      "bg": "color.deviceBody",
+      "min": 3,
+      "note": "Dynamic Island check when all arrived"
     }
   ]
 }

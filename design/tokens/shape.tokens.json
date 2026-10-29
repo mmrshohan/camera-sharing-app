@@ -404,6 +404,23 @@
         }
       }
     },
+    "platterRadius": {
+      "$description": "Corners of system notification surfaces: the Lock Screen Live Activity (approximate); Material's notification card (28 dp).",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 24,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 28,
+          "unit": "px"
+        }
+      }
+    },
     "handleWidth": {
       "$description": "The iOS grabber; Material's drag handle.",
       "ios": {
