@@ -15,6 +15,8 @@ const host = (stage: HostStage): HostPhoto => ({
   reserved: false,
   retry: false,
   capturedAt: 0,
+  stageAt: 0,
+  reservedAt: null,
   expiresAt: 0,
   sample: "coast-01",
 });
@@ -75,6 +77,7 @@ describe("what Sarah's phone says (Appendix C)", () => {
         progress: 0,
         retry: false,
         arrivedAt: 0,
+        stageAt: 0,
         sample: "coast-01",
       }),
     ).toBe(label);

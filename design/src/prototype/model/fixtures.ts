@@ -1,4 +1,4 @@
-import type { Party, SampleImage } from "./types";
+import type { Party, SampleImage, Words } from "./types";
 
 const crop = (position: string): SampleImage => ({ src: "/images/coast.jpg", position, zoom: 2.5 });
 
@@ -24,3 +24,10 @@ export const people: { alex: Party; sarah: Party; maya: Party } = {
   sarah: { name: "Sarah", handle: "@sarah", device: "Galaxy A15" },
   maya: { name: "Maya", handle: "@maya", device: "iPhone 13" },
 };
+
+/** Verification words, a new set for each attempt (R2). */
+export const wordSets: readonly Words[] = [
+  ["maple", "river", "candle", "orbit", "velvet", "sparrow"],
+  ["harbor", "linen", "copper", "meadow", "quartz", "willow"],
+  ["cedar", "lantern", "pebble", "saffron", "tide", "violet"],
+];
