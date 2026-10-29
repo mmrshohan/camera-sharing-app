@@ -1,4 +1,3 @@
-import { useId } from "react";
 import { motion } from "motion/react";
 import { pressMotion, usePress } from "@shared/press";
 import { useShouldReduceMotion } from "@shared/surface";
@@ -25,7 +24,6 @@ const names: Record<ShutterState, string> = {
 /** Takes the photo. White, because color belongs to the photo. */
 export function Shutter({ state, onCapture, message }: ShutterProps) {
   const reduceMotion = useShouldReduceMotion();
-  const messageId = useId();
   const blocked = state === "blocked";
   const { down, handlers } = usePress(!blocked);
   const resting = blocked ? 0 : state === "preparing" ? m.dim : 1;
@@ -35,10 +33,10 @@ export function Shutter({ state, onCapture, message }: ShutterProps) {
     <button
       type="button"
       className={`shutter shutter--${state}`}
-      aria-label={names[state]}
+      // A blocked shutter shows its message inside the button, so the name carries it (WCAG 2.5.3).
+      aria-label={blocked && message ? `${names.blocked}. ${message}` : names[state]}
       aria-busy={state === "preparing" || undefined}
       aria-disabled={blocked || undefined}
-      aria-describedby={blocked && message ? messageId : undefined}
       onClick={() => {
         if (!blocked) onCapture();
       }}
@@ -51,11 +49,7 @@ export function Shutter({ state, onCapture, message }: ShutterProps) {
         animate={animate}
         transition={transition}
       />
-      {blocked && message && (
-        <span id={messageId} className="shutter__message">
-          {message}
-        </span>
-      )}
+      {blocked && message && <span className="shutter__message">{message}</span>}
     </button>
   );
 }

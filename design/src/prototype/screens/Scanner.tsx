@@ -40,7 +40,8 @@ export function Scanner({ id }: { id: DeviceId }) {
   };
 
   return (
-    <div className="scanner">
+    // The camera is dark, so the phone's bars turn light over it.
+    <div className="scanner" data-status-bar="light">
       <Viewfinder state={state} />
       <div className="scanner__top">
         <IconButton

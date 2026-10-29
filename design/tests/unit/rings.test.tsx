@@ -58,12 +58,14 @@ describe("Shutter", () => {
     expect(preparing).toContain('aria-busy="true"');
   });
 
-  test("blocked is never silently disabled: aria-disabled, with its message", () => {
+  test("blocked is never silently disabled: aria-disabled, its message part of its name (WCAG 2.5.3)", () => {
     const html = renderToStaticMarkup(
       <Shutter state="blocked" message="Waiting for internet" onCapture={() => {}} />,
     );
     expect(html).toContain('aria-disabled="true"');
-    const id = /aria-describedby="([^"]+)"/.exec(html)?.[1] ?? "";
-    expect(html).toMatch(new RegExp(`id="${escape(id)}"[^>]*>Waiting for internet<`));
+    // The message is drawn inside the button, so its name must contain it, not only describe it.
+    expect(html).toContain('aria-label="Take photo. Waiting for internet"');
+    expect(html).toContain(">Waiting for internet<");
+    expect(html).not.toContain("aria-describedby");
   });
 });

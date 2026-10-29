@@ -47,6 +47,14 @@ export function Invitation({ id }: { id: DeviceId }) {
             {s.refresh}
           </Button>
         )}
+        {/* Also gives keyboard users a stop in the panel when the code scrolls on small phones. */}
+        <Button
+          variant="plain"
+          fullWidth
+          onPress={() => dispatch({ type: "closePanel", device: id })}
+        >
+          {s.done}
+        </Button>
       </div>
     </Panel>
   );

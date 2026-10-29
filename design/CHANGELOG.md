@@ -6,6 +6,7 @@ Releases of the Camera Sharing design system. The format follows [Keep a Changel
 
 ### Fixed
 
+- Shutter 1.0.1: a blocked shutter's accessible name includes the message it shows (WCAG 2.5.3).
 - HomeIndicator 1.0.1: Android's three buttons sit on a dark scrim over photos and the camera, like the status bar.
 
 ### Added

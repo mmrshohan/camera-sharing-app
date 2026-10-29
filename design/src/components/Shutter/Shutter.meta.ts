@@ -6,7 +6,7 @@ export const meta: ComponentMeta = {
   group: 1,
   layer: "brand",
   status: "final",
-  version: "1.0.0",
+  version: "1.0.1",
   summary: "Takes the photo. White, because color belongs to the photo.",
   anatomy: [
     "78 pt: a 4 pt onCamera ring around a 64 pt onCamera disc, with a 3 pt gap",
@@ -49,6 +49,12 @@ export const meta: ComponentMeta = {
     status: { ios: "not-started", android: "not-started" },
   },
   changelog: [
+    {
+      version: "1.0.1",
+      date: "2026-10-29",
+      summary:
+        "A blocked shutter's name includes its message, which it shows inside the button (WCAG 2.5.3).",
+    },
     {
       version: "1.0.0",
       date: "2026-10-29",
