@@ -27,6 +27,7 @@ export const strings = {
 
 /** Promises about who receives and what is saved (spec §11). */
 export const trust = [
+  "words",
   "hostFinePrint",
   "recipientFinePrint",
   "declinedRecipient",

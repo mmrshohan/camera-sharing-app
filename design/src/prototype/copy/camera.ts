@@ -12,7 +12,8 @@ export const strings = {
   flash: { off: "Flash off", on: "Flash on", auto: "Flash auto" },
   flip: "Switch camera",
   lastPhoto: "Last photo",
-  lastPhotoNote: "Only your latest photo is shown here, and it goes when you leave the camera.",
+  lastPhotoNote:
+    "Only your latest photo is shown here, until you leave the camera or the session ends.",
 } as const;
 
 /** Promises about what stays on Alex's phone (R3). */

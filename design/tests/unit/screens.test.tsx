@@ -3,7 +3,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, test } from "vitest";
 import { strings as camera } from "@prototype/copy/camera";
 import { strings as session } from "@prototype/copy/session";
-import { endingNow, recipientTiles } from "@prototype/model/selectors";
+import { cancelingNow, endingNow, recipientTiles } from "@prototype/model/selectors";
 import type { DeviceId, HostPhoto, World, WorldEvent } from "@prototype/model/types";
 import { limits, reduce, timing, toasts } from "@prototype/model/world";
 import { getScenario } from "@prototype/scenarios/catalog";
@@ -104,6 +104,33 @@ describe("ending a session says what keeps going and what will need both phones 
     expect(session.endMessage(0, 0, "Sarah")).toBe(
       "New photos stop. Nothing is left to send from this phone.",
     );
+  });
+});
+
+describe("canceling unsent photos says what may still arrive (copy review, doc 06)", () => {
+  test("photos that have left Alex's phone may still reach Sarah; the rest won't be sent", () => {
+    const w = run(
+      scenario("camera-ready"),
+      offline("sarah"),
+      capture,
+      tick(timing.captureMs),
+      capture,
+      settle,
+      offline("alex"),
+      capture,
+    );
+    expect(cancelingNow(w)).toEqual({ unsent: 1, onTheirWay: 2 });
+  });
+
+  test("with every photo still on Alex's phone, nothing is on its way", () => {
+    const w = run(
+      scenario("camera-ready"),
+      offline("alex"),
+      capture,
+      tick(timing.captureMs),
+      capture,
+    );
+    expect(cancelingNow(w)).toEqual({ unsent: 2, onTheirWay: 0 });
   });
 });
 
