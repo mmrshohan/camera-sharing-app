@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router";
 // The DOM build of RouterProvider, so navigations can use flushSync.
 import { RouterProvider } from "react-router/dom";
+import { PhonePage } from "@prototype/shell/PhonePage";
 import { PrototypePage } from "@prototype/shell/PrototypePage";
 import { WorkspaceLayout } from "@workspace/WorkspaceLayout";
 import { Changelog } from "@workspace/pages/Changelog";
@@ -13,6 +14,8 @@ import { NotFound } from "@workspace/pages/NotFound";
 import { Overview } from "@workspace/pages/Overview";
 
 const router = createBrowserRouter([
+  // Each phone of the review shell runs in its own document, outside the workspace chrome.
+  { path: "/prototype/phone/:id", element: <PhonePage /> },
   {
     element: <WorkspaceLayout />,
     children: [

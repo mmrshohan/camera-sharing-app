@@ -263,4 +263,7 @@ export type WorldEvent =
   | ({ type: "typeField"; value: string } & On)
   | ({ type: "submitUsername" } & On)
   | ({ type: "signOut" } & On)
-  | ({ type: "deleteAccount" } & On);
+  | ({ type: "deleteAccount" } & On)
+  // The review shell's own controls: how a phone looks, and its system surfaces.
+  | ({ type: "setAppearance"; model?: DeviceModel; theme?: Theme; textSize?: TextSize } & On)
+  | ({ type: "showSystem"; surface: DeviceUi["system"] } & On);

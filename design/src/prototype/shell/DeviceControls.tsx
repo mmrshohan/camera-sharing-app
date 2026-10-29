@@ -1,0 +1,122 @@
+import { useEffect, useRef } from "react";
+import { devices } from "@components/DeviceFrame";
+import type { DeviceId, DeviceModel, DeviceState, WorldEvent } from "@prototype/model/types";
+import { Segmented } from "./Segmented";
+
+const models = Object.values(devices);
+
+/** A phone's name and model, with its review controls in a popover. */
+export function DeviceControls({
+  id,
+  name,
+  device,
+  dispatch,
+}: {
+  id: DeviceId;
+  name: string;
+  device: DeviceState;
+  dispatch: (event: WorldEvent) => void;
+}) {
+  const trigger = useRef<HTMLButtonElement>(null);
+  const popover = useRef<HTMLDivElement>(null);
+  const popoverId = `${id}-controls`;
+
+  // Opens under its button, kept inside the window.
+  useEffect(() => {
+    const node = popover.current;
+    if (!node) return;
+    const place = (event: Event) => {
+      if (!(event instanceof ToggleEvent) || event.newState !== "open" || !trigger.current) return;
+      const anchor = trigger.current.getBoundingClientRect();
+      const left = Math.min(anchor.left, window.innerWidth - node.offsetWidth - 8);
+      node.style.left = `${Math.max(8, left)}px`;
+      node.style.top = `${anchor.bottom + 6}px`;
+    };
+    node.addEventListener("toggle", place);
+    return () => node.removeEventListener("toggle", place);
+  }, []);
+
+  const set = (patch: Omit<Extract<WorldEvent, { type: "setAppearance" }>, "type" | "device">) =>
+    dispatch({ type: "setAppearance", device: id, ...patch });
+
+  return (
+    <header className="proto-phone__head">
+      <h2 className="proto-phone__name">{name}</h2>
+      <span className="proto-phone__model">{devices[device.model].name}</span>
+      <button
+        ref={trigger}
+        type="button"
+        className="proto-button proto-button--quiet"
+        popoverTarget={popoverId}
+        aria-label={`${name}'s phone settings`}
+      >
+        Adjust
+      </button>
+      <div ref={popover} id={popoverId} popover="auto" className="proto-popover">
+        <label className="proto-field">
+          <span>Phone</span>
+          <select
+            value={device.model}
+            onChange={(e) => set({ model: e.target.value as DeviceModel })}
+          >
+            {models.map((spec) => (
+              <option key={spec.model} value={spec.model}>
+                {spec.name}
+              </option>
+            ))}
+          </select>
+        </label>
+        <Segmented
+          legend="Theme"
+          name={`${id}-theme`}
+          options={[
+            ["light", "Light"],
+            ["dark", "Dark"],
+          ]}
+          value={device.theme}
+          onChange={(theme) => set({ theme })}
+        />
+        <Segmented
+          legend="Text size"
+          name={`${id}-text`}
+          options={[
+            ["default", "Default"],
+            ["largest", "Largest"],
+          ]}
+          value={device.textSize}
+          onChange={(textSize) => set({ textSize })}
+        />
+        <Segmented
+          legend="Network"
+          name={`${id}-network`}
+          options={[
+            ["online", "Online"],
+            ["slow", "Slow"],
+            ["offline", "Offline"],
+          ]}
+          value={device.network}
+          onChange={(network) => dispatch({ type: "setNetwork", device: id, network })}
+        />
+        <Segmented
+          legend="Connection"
+          name={`${id}-connection`}
+          options={[
+            ["wifi", "Wi-Fi"],
+            ["cellular", "Cellular"],
+          ]}
+          value={device.connection}
+          onChange={(connection) =>
+            dispatch({ type: "setNetwork", device: id, network: device.network, connection })
+          }
+        />
+        <button
+          type="button"
+          className="proto-button"
+          onClick={() => dispatch({ type: "relaunch", device: id })}
+        >
+          Relaunch the app
+        </button>
+      </div>
+    </header>
+  );
+}

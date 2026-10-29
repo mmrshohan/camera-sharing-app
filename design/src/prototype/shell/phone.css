@@ -1,0 +1,22 @@
+/* A phone's own document inside the review shell: nothing but the phone. */
+html.proto-phone-doc,
+html.proto-phone-doc body {
+  overflow: hidden;
+  background: transparent;
+}
+
+.proto-screen {
+  height: 100%;
+}
+
+/* A route whose screen isn't built yet shows its name. */
+.proto-pending {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  background: var(--color-background);
+  color: var(--color-ink2);
+  font-family: var(--type-headline-family);
+  font-size: var(--type-headline-size);
+  font-weight: var(--type-headline-weight);
+}

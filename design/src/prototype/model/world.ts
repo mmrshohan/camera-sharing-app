@@ -772,5 +772,14 @@ export function reduce(w: World, event: WorldEvent): World {
       return signOut(w, event.device);
     case "deleteAccount":
       return deleteAccount(w, event.device);
+    case "setAppearance":
+      return withDevice(w, event.device, (d) => ({
+        ...d,
+        model: event.model ?? d.model,
+        theme: event.theme ?? d.theme,
+        textSize: event.textSize ?? d.textSize,
+      }));
+    case "showSystem":
+      return withUi(w, event.device, { system: event.surface });
   }
 }
