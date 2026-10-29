@@ -19,6 +19,7 @@ function readSurface(params: URLSearchParams): Surface {
     theme: params.get("theme") === "dark" ? "dark" : "light",
     textSize: params.get("text") === "largest" ? "largest" : "default",
     reduceMotion: params.get("motion") === "reduce",
+    lowMemory: false,
   };
 }
 

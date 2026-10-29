@@ -565,3 +565,12 @@
   grid-auto-flow: column;
   gap: var(--space-6);
 }
+
+.ex-tile {
+  display: block;
+  width: 128px;
+}
+
+.ex-phone--tall {
+  height: 640px;
+}

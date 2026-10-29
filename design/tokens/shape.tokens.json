@@ -157,6 +157,14 @@
       },
       "$description": "The chosen zoom level's circle."
     },
+    "badgeSize": {
+      "$type": "dimension",
+      "$value": {
+        "value": 28,
+        "unit": "px"
+      },
+      "$description": "A status badge in a photo tile's corner."
+    },
     "progressRingSize": {
       "$type": "dimension",
       "$value": {

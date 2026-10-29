@@ -19,6 +19,8 @@ export interface Surface {
   theme: Theme;
   textSize: TextSize;
   reduceMotion: boolean;
+  /** A budget phone (under 4 GB of memory): the develop effect becomes a fade (spec §7.5). */
+  lowMemory: boolean;
 }
 
 export const defaultSurface: Surface = {
@@ -26,6 +28,7 @@ export const defaultSurface: Surface = {
   theme: "light",
   textSize: "default",
   reduceMotion: false,
+  lowMemory: false,
 };
 
 const SurfaceContext = createContext<Surface>(defaultSurface);

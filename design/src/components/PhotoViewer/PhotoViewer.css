@@ -1,0 +1,54 @@
+/* Fills its screen: bar, photo, status, actions. Always dark. */
+.photo-viewer {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  gap: var(--space-3);
+  height: 100%;
+  min-height: 420px;
+  padding-bottom: calc(var(--safe-bottom, 0px) + var(--space-4));
+  background: var(--color-background);
+  color: var(--color-ink);
+}
+
+.photo-viewer__bar {
+  display: grid;
+  grid-template-columns: var(--target) minmax(0, 1fr) var(--target);
+  align-items: center;
+  padding: calc(var(--safe-top, 0px) + var(--space-1)) var(--space-1) 0;
+}
+
+.photo-viewer__title {
+  grid-column: 2;
+  margin: 0;
+  text-align: center;
+  font-family: var(--type-headline-family);
+  font-size: var(--type-headline-size);
+  line-height: var(--type-headline-line);
+  font-weight: var(--type-headline-weight);
+  letter-spacing: var(--type-headline-tracking);
+}
+
+/* The photo fits its row at 3:4 and never spills onto the status or the actions. */
+.photo-viewer__frame {
+  position: relative;
+  min-height: 0;
+}
+
+.photo-viewer__photo {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  aspect-ratio: 3 / 4;
+  background-repeat: no-repeat;
+}
+
+.photo-viewer__status,
+.photo-viewer__footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 0 var(--margin);
+}

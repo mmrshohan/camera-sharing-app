@@ -29,3 +29,7 @@ export interface CameraCounts {
   waitingWifi: number;
   preparing: number;
 }
+
+/** Where one of Sarah's photos is (design spec, Appendix C). */
+export type TileStatus =
+  "arriving" | "onlyInApp" | "saving" | "saved" | "needsChecking" | "expired";

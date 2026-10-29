@@ -6,6 +6,7 @@ Releases of the Camera Sharing design system. The format follows [Keep a Changel
 
 ### Added
 
+- PhotoTile, PhotoGrid and PhotoViewer (group 4), in review. A new photo develops once on arrival; with Reduce Motion or on a phone under 4 GB of memory it fades.
 - Group 3 approved by the owner on 29 October 2026; its sixteen components are in the Library at 1.0.0.
 - TopBar 1.0.0: iOS's large-title bar and Material's large top app bar, expanded or collapsed.
 - SectionHeader 1.0.0: a section's title with an optional count.
