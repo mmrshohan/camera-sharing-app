@@ -2,6 +2,7 @@ import { photos as plural } from "@shared/plural";
 import { hostLabel, recipientLabel, withRetry } from "./photos";
 import type {
   CameraCounts,
+  DeviceId,
   DeviceState,
   HostLabel,
   HostPhoto,
@@ -143,6 +144,11 @@ export function recipientTiles(
       })),
     };
   });
+}
+
+/** One live dot at most: on Sarah's Home while photos can arrive (spec §7, one per screen). */
+export function showsLiveDot(w: World, id: DeviceId): boolean {
+  return id === "sarah" && w.devices.sarah.ui.route === "home" && w.session?.state === "active";
 }
 
 /** Photos saved to Photos stay there whatever happens to the app's copies (R11). */

@@ -9,7 +9,7 @@ export const roleOf = (id: DeviceId): "host" | "recipient" =>
 export function wordsFor(attempt: number): Words {
   const set = wordSets[(attempt - 1) % wordSets.length] ?? wordSets[0];
   if (!set) throw new Error("no verification words");
-  return set;
+  return [...set];
 }
 
 /** A request waiting for both phones. */
@@ -20,7 +20,7 @@ export const isPending = (s: Session | null): s is Session =>
 export const canStartNew = (s: Session | null): boolean =>
   s === null || s.state === "ended" || s.state === "expired" || s.state === "declined";
 
-function nextSessionId(w: World): string {
+export function nextSessionId(w: World): string {
   const ids = [
     w.session?.id,
     w.recovery?.sessionId,
@@ -42,8 +42,9 @@ export function createSession(
   return {
     id: nextSessionId(w),
     attempt: 1,
-    host: people.alex,
-    recipient: people.sarah,
+    // Copies, so no world shares objects with the fixtures.
+    host: { ...people.alex },
+    recipient: { ...people.sarah },
     words: wordsFor(1),
     state,
     approvals: { host: false, recipient: false, attempt: 1 },

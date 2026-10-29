@@ -128,7 +128,9 @@ function finish(w: World, at: number, lock: boolean): World {
           expiresAt: Math.min(...stuck.map((p) => p.expiresAt)),
         }
       : w.recovery;
-  return {
+  // Photos needing recovery ask both phones at once (R7).
+  const panel = stuck.length > 0 ? ("recovery" as const) : null;
+  const ended: World = {
     ...w,
     session: { ...s, state: "ended", endedAt: at },
     recovery,
@@ -141,7 +143,7 @@ function finish(w: World, at: number, lock: boolean): World {
         ui: {
           ...alex.ui,
           route: lock ? "lock" : alex.ui.route,
-          panel: null,
+          panel,
           confirm: null,
           lastShot: null,
           openPhoto: null,
@@ -149,6 +151,7 @@ function finish(w: World, at: number, lock: boolean): World {
       },
     },
   };
+  return panel ? withUi(ended, "sarah", { panel, confirm: null }) : ended;
 }
 
 function startRequest(w: World, state: "requested" | "verifying"): World {
@@ -305,6 +308,7 @@ function navigate(w: World, id: DeviceId, route: Route): World {
     route: shown,
     panel: null,
     confirm: null,
+    notice: null,
     openPhoto: shown === "photo" ? d.ui.openPhoto : null,
   });
 }
@@ -381,13 +385,14 @@ function answerPermission(w: World, id: DeviceId, kind: PromptKind, allow: boole
 
 function unlock(w: World, success: boolean): World {
   const alex = w.devices.alex;
-  if (alex.mode !== "borrowing" || alex.ui.route !== "lock" || !success) return w;
+  if (alex.mode !== "borrowing" || alex.ui.route !== "lock") return w;
+  if (!success) return withUi(w, "alex", { notice: "authCanceled" });
   // Unlocking is the one way back to Alex's own phone; it ends any session still running (R4).
   const ended = finish(w, w.clock, false);
   return withDevice(ended, "alex", (d) => ({
     ...d,
     mode: "normal",
-    ui: { ...d.ui, route: "home", panel: null, confirm: null },
+    ui: { ...d.ui, route: "home", panel: null, confirm: null, notice: null },
   }));
 }
 
@@ -423,7 +428,14 @@ function deleteAccount(w: World, id: DeviceId): World {
     signedIn: false,
     username: null,
     gallery: [],
-    ui: { ...d.ui, route: "welcome", panel: null, confirm: null, openPhoto: null },
+    ui: {
+      ...d.ui,
+      route: "welcome",
+      panel: null,
+      confirm: null,
+      openPhoto: null,
+      notice: "accountDeleted",
+    },
   }));
   return { ...next, session: null, recovery: null };
 }
@@ -664,9 +676,16 @@ export function reduce(w: World, event: WorldEvent): World {
     case "navigate":
       return navigate(w, event.device, event.route);
     case "openPanel":
-      return withUi(w, event.device, { panel: event.panel, confirm: null });
+      return withUi(w, event.device, {
+        panel: event.panel,
+        confirm: null,
+        // An invitation shows a code only with a connection, valid for a few minutes.
+        ...(event.panel === "invitation" && {
+          inviteExpiresAt: online(w.devices[event.device]) ? w.clock + limits.requestMs : null,
+        }),
+      });
     case "closePanel":
-      return withUi(w, event.device, { panel: null });
+      return withUi(w, event.device, { panel: null, inviteExpiresAt: null });
     case "openConfirm":
       return withUi(w, event.device, { confirm: event.confirm });
     case "closeConfirm":
@@ -680,18 +699,24 @@ export function reduce(w: World, event: WorldEvent): World {
     case "permission":
       return answerPermission(w, event.device, event.kind, event.allow);
     case "scanInvitation": {
-      const scanning =
-        w.devices.sarah.ui.panel === "invitation" &&
-        w.devices.alex.permissions.camera === "granted";
-      return canStartNew(w.session) && scanning ? startRequest(w, "verifying") : w;
+      const { alex, sarah } = w.devices;
+      if (!canStartNew(w.session) || alex.permissions.camera !== "granted") return w;
+      if (sarah.ui.panel !== "invitation" || sarah.ui.inviteExpiresAt === null) return w;
+      // An expired code is no longer an invitation.
+      if (w.clock >= sarah.ui.inviteExpiresAt) {
+        return withUi(w, "alex", { notice: "notAnInvitation" });
+      }
+      return withUi(startRequest(w, "verifying"), "alex", { notice: null });
     }
     case "requestByUsername": {
       if (!canStartNew(w.session)) return w;
       if (event.username.replace(/^@/, "").toLowerCase() === people.sarah.handle.slice(1)) {
         return startRequest(w, "requested");
       }
+      // Someone the app knows who can't take a request, or nobody by that name.
+      const known = Object.values(people).some((p) => p.handle === `@${event.username}`);
       const field = { value: event.username, state: "invalid" as const, since: w.clock };
-      return withUi(w, "alex", { field });
+      return withUi(w, "alex", { field, notice: known ? "notAvailable" : "noMatch" });
     }
     case "approve":
       return approve(w, event.by);

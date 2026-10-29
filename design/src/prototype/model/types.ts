@@ -119,6 +119,22 @@ export type PanelId = "invitation" | "connect" | "session" | "recovery";
 export type ConfirmId =
   "endSession" | "cancelUnsent" | "deleteFromApp" | "signOut" | "deleteAccount";
 export type PromptKind = "camera" | "photosAddOnly" | "notifications";
+export type SignInMethod = "apple" | "google" | "passkey";
+
+/** Something that just happened, which the screen explains until the next step. */
+export type Notice =
+  | "signInFailed"
+  | "signInCanceled"
+  | "cameraInUse"
+  | "notAnInvitation"
+  | "noMatch"
+  | "tooManyRequests"
+  | "notAvailable"
+  | "cameraInterrupted"
+  | "authCanceled"
+  | "supportUnavailable"
+  | "reportSent"
+  | "accountDeleted";
 
 /** What a phone shows. Memory-only parts clear when the app relaunches. */
 export interface DeviceUi {
@@ -132,6 +148,13 @@ export interface DeviceUi {
   /** The photo whose save waits for the answer to the Photos prompt. */
   pendingSave: PhotoId | null;
   toast: string | null;
+  notice: Notice | null;
+  /** Sarah's invitation code is valid until then; null while none is shown. */
+  inviteExpiresAt: number | null;
+  /** The camera's controls on Alex's phone. */
+  camera: { flash: "off" | "on" | "auto"; zoom: number; facing: "back" | "front" };
+  /** A system surface over the app: the Lock Screen or the notification shade. */
+  system: "lockScreen" | "notificationShade" | null;
   /** Changes with each capture, dropping the photo into the last-shot well. */
   dropKey: number;
   /** Changes when a photo leaves Alex's phone, pulsing the destination. */
@@ -152,6 +175,8 @@ export interface DeviceState {
   permissions: Record<PromptKind, Permission>;
   settings: { autoSave: boolean; wifiOnly: boolean; notifications: boolean };
   mode: "normal" | "borrowing";
+  /** Sign-in methods, this account's phones and the accounts it has blocked. */
+  account: { methods: SignInMethod[]; devices: string[]; blocked: string[] };
   storageFull: boolean;
   busy: boolean;
   ui: DeviceUi;
