@@ -46,8 +46,52 @@ export function releaseIndex(entries: string[]): string[] {
     });
 }
 
-const run = (command: string, args: string[], cwd: string) =>
-  execFileSync(command, args, { cwd, stdio: "inherit" });
+/** What release:fetch does outside itself; tests pass their own. */
+export interface Effects {
+  run: (command: string, args: string[], cwd: string) => void;
+  exists: (path: string) => boolean;
+  writeIndex: () => void;
+  log: (message: string) => void;
+  error: (message: string) => void;
+}
+
+const message = (error: unknown) => (error instanceof Error ? error.message : String(error));
+
+/** Removes the temporary worktree, and git's record of any worktree whose folder is gone. */
+function clear(plan: ReleasePlan, repoRoot: string, fx: Effects): void {
+  fx.run("git", ["worktree", "prune"], repoRoot);
+  if (fx.exists(plan.worktree))
+    fx.run("git", ["worktree", "remove", "--force", plan.worktree], repoRoot);
+}
+
+/** Builds a release in a temporary worktree, which it always removes. Returns whether it built. */
+export function fetchRelease(plan: ReleasePlan, repoRoot: string, fx: Effects): boolean {
+  try {
+    // Ctrl-C ends the run before its cleanup, so a worktree may be left from last time.
+    clear(plan, repoRoot, fx);
+    fx.run("git", ["rev-parse", "--verify", plan.tag], repoRoot);
+    fx.run("git", ["worktree", "add", "--detach", plan.worktree, plan.tag], repoRoot);
+    fx.run("npm", ["ci"], join(plan.worktree, "design"));
+    fx.run(
+      "npm",
+      ["run", "build", "--", "--base", plan.base, "--outDir", plan.outDir],
+      join(plan.worktree, "design"),
+    );
+    fx.writeIndex();
+    fx.log(`release:fetch: built ${plan.tag} into ${plan.outDir}`);
+    return true;
+  } catch (error) {
+    fx.error(`release:fetch: ${message(error)}`);
+    return false;
+  } finally {
+    // A cleanup that fails is reported after whatever stopped the build, never instead of it.
+    try {
+      clear(plan, repoRoot, fx);
+    } catch (error) {
+      fx.error(`release:fetch: could not remove ${plan.worktree}: ${message(error)}`);
+    }
+  }
+}
 
 function main(): void {
   const version = process.argv[2] ?? "";
@@ -55,28 +99,19 @@ function main(): void {
     encoding: "utf8",
   }).trim();
   const plan = releasePlan(version, repoRoot, tmpdir());
-  try {
-    run("git", ["rev-parse", "--verify", plan.tag], repoRoot);
-    run("git", ["worktree", "add", "--detach", plan.worktree, plan.tag], repoRoot);
-    run("npm", ["ci"], join(plan.worktree, "design"));
-    run(
-      "npm",
-      ["run", "build", "--", "--base", plan.base, "--outDir", plan.outDir],
-      join(plan.worktree, "design"),
-    );
-    const releases = join(repoRoot, "design", ".releases");
-    writeFileSync(
-      join(releases, "index.json"),
-      `${JSON.stringify(releaseIndex(readdirSync(releases)), null, 2)}\n`,
-    );
-    console.log(`release:fetch: built ${plan.tag} into ${plan.outDir}`);
-  } catch (error) {
-    console.error(`release:fetch: ${error instanceof Error ? error.message : String(error)}`);
-    process.exitCode = 1;
-  } finally {
-    if (existsSync(plan.worktree))
-      run("git", ["worktree", "remove", "--force", plan.worktree], repoRoot);
-  }
+  const releases = join(repoRoot, "design", ".releases");
+  const built = fetchRelease(plan, repoRoot, {
+    run: (command, args, cwd) => execFileSync(command, args, { cwd, stdio: "inherit" }),
+    exists: existsSync,
+    writeIndex: () =>
+      writeFileSync(
+        join(releases, "index.json"),
+        `${JSON.stringify(releaseIndex(readdirSync(releases)), null, 2)}\n`,
+      ),
+    log: (line) => console.log(line),
+    error: (line) => console.error(line),
+  });
+  if (!built) process.exitCode = 1;
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();

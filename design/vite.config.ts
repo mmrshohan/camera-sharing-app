@@ -46,7 +46,15 @@ function releases(): Plugin {
     name: "releases",
     configureServer(server) {
       server.middlewares.use("/__releases", (req, res) => {
-        const path = decodeURIComponent(new URL(req.url ?? "/", "http://localhost").pathname);
+        let path: string;
+        try {
+          path = decodeURIComponent(new URL(req.url ?? "/", "http://localhost").pathname);
+        } catch {
+          // A malformed escape such as %E0%A4%A is the client's mistake.
+          res.statusCode = 400;
+          res.end();
+          return;
+        }
         let file = join(dir, path);
         // Never outside .releases.
         if (!file.startsWith(dir)) {
