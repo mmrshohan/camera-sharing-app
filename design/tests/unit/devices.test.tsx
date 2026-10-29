@@ -44,6 +44,12 @@ describe("DeviceFrame", () => {
       </DeviceFrame>,
     );
 
+  test("the keyboard inset has its own name, so the keyboardHeight token never shadows it", () => {
+    const out = frame("iphone16pro");
+    expect(out).toContain("--keyboard-inset:0px");
+    expect(out).not.toContain("--keyboard-height:");
+  });
+
   test("the screen carries the surface for every component inside", () => {
     const out = frame("galaxyA15");
     expect(out).toContain('data-platform="android"');

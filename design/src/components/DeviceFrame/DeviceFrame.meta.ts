@@ -20,7 +20,7 @@ export const meta: ComponentMeta = {
   accessibility: [
     "The frame is decoration; screen readers read only the screen's content",
     "The keyboard is a picture: type with the computer's keyboard",
-    "--keyboard-height lets screens keep fields and messages above the keyboard (D15)",
+    "--keyboard-inset (0 while the keyboard is down) lets screens keep fields and messages above the keyboard (D15)",
   ],
   motion: [],
   native: {

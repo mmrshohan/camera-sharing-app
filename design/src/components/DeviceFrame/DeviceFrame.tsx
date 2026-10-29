@@ -88,7 +88,7 @@ export function DeviceFrame({
     "--safe-top": `${spec.safeTop}px`,
     "--safe-bottom": `${spec.safeBottom}px`,
     "--keyboard-height-full": `${keyboardHeight + spec.safeBottom}px`,
-    "--keyboard-height": keyboard ? `${keyboardHeight + spec.safeBottom}px` : "0px",
+    "--keyboard-inset": keyboard ? `${keyboardHeight + spec.safeBottom}px` : "0px",
   } as CSSProperties;
 
   return (
