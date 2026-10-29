@@ -27,7 +27,6 @@ export function Settings({ id }: { id: DeviceId }) {
   return (
     <>
       <ScreenBody
-        grouped
         top={(scrolled) => (
           <TopBar
             title={s.title}

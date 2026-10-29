@@ -6,13 +6,14 @@ export const meta: ComponentMeta = {
   group: 3,
   layer: "system",
   status: "final",
-  version: "1.0.0",
+  version: "1.0.1",
   summary:
     "A short task on top of the screen: the system sheet on iOS, Material's modal bottom sheet on Android.",
   anatomy: [
     "iOS: a 36 × 5 pt grabber, 38 pt top corners, the elevated background",
-    "Android: a 32 × 4 dp drag handle with a 48 dp touch area, 28 dp corners, the surface color",
-    "The title in title2; the content scrolls inside",
+    "Android: a 32 × 4 dp drag handle with a 48 dp touch area, 28 dp corners, the elevated background",
+    "The title in title2; the content scrolls inside, clear of the home indicator or navigation bar",
+    "Cards inside take color.surfaceElevated, one step above the panel, so they keep their shape in dark",
     "Medium detent is half the screen; large stops just below the status bar",
     "The screen behind dims to 40%",
   ],
@@ -21,7 +22,7 @@ export const meta: ComponentMeta = {
     "system.handleWidth",
     "system.handleHeight",
     "color.elevated",
-    "color.surface",
+    "color.surfaceElevated",
     "color.scrim",
     "color.ink3",
     "type.title2",
@@ -48,6 +49,12 @@ export const meta: ComponentMeta = {
     status: { ios: "not-started", android: "not-started" },
   },
   changelog: [
+    {
+      version: "1.0.1",
+      date: "2026-10-29",
+      summary:
+        "Cards inside stand out from the panel on both platforms and in dark, and the content clears the navigation bar.",
+    },
     {
       version: "1.0.0",
       date: "2026-10-29",

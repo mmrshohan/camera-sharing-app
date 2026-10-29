@@ -31,13 +31,15 @@ test("Sarah's Lock Screen shows her platform's own surface: a Live Activity, or 
   await expect(sarah.locator(".progress-notification")).toHaveCount(0);
 });
 
-test("when every photo has arrived, the Live Activity says so", async ({ page }) => {
+test("when the session ends, the Live Activity says so without claiming every photo arrived", async ({
+  page,
+}) => {
   await gotoAndSettle(
     page,
     "/prototype?scenario=system-live-activity-done&sarahDevice=iphone16pro&play=0",
   );
   await expect(page.locator(".proto-phone[data-ready]")).toHaveCount(2);
-  await expect(phone(page, "Sarah").locator(".live-activity--lock")).toContainText(
-    "All photos arrived",
-  );
+  const activity = phone(page, "Sarah").locator(".live-activity--lock");
+  await expect(activity).toContainText("Session ended");
+  await expect(activity).not.toContainText("All photos arrived");
 });

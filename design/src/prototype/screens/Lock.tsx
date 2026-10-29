@@ -4,8 +4,9 @@ import { Icon } from "@components/Icon";
 import { InlineMessage } from "@components/InlineMessage";
 import { Text } from "@components/Text";
 import { strings as s } from "@prototype/copy/lock";
+import { cameraStatusText } from "@prototype/copy/plural";
 import { people } from "@prototype/model/fixtures";
-import { hostSummary } from "@prototype/model/selectors";
+import { delivery } from "@prototype/model/selectors";
 import type { DeviceId } from "@prototype/model/types";
 import { useDeviceView } from "@prototype/shell/deviceView";
 import { tokens } from "@tokens";
@@ -21,8 +22,21 @@ export function Lock({ id }: { id: DeviceId }) {
   const spec = devices[device.model];
   const owner = people[id].name;
   const to = world.session?.recipient.name ?? "";
-  const counts = hostSummary(world);
-  const sending = counts.preparing + counts.sending + counts.waitingInternet + counts.waitingWifi;
+  const d = delivery(world);
+  const { preparing, sending, waitingInternet, waitingWifi } = d.onPhone;
+  // The first of these that holds: anything later would claim too much.
+  const status =
+    preparing + sending + waitingInternet + waitingWifi > 0
+      ? s.onPhone(cameraStatusText(d.onPhone))
+      : d.needApproval > 0
+        ? s.needApproval(d.needApproval)
+        : d.waiting > 0
+          ? s.waitingFor(d.waiting, to)
+          : d.lost > 0
+            ? s.lost(d.lost, to)
+            : d.reached > 0
+              ? s.reached(d.reached, to)
+              : s.none;
 
   return (
     <ScreenBody
@@ -42,14 +56,11 @@ export function Lock({ id }: { id: DeviceId }) {
           {s.title(owner)}
         </Text>
         <Text style="body" as="p" tone="ink2">
-          {sending > 0 ? s.sending(sending, to) : s.delivered}
-        </Text>
-        <Text style="footnote" as="p" tone="ink2">
-          {s.body(owner)}
+          {status}
         </Text>
         {device.ui.notice === "authCanceled" && (
           <div className="lock__notice">
-            <InlineMessage tone="neutral" icon="lock" title={s.canceled(owner)} />
+            <InlineMessage tone="neutral" icon="lock" title={s.canceled} />
           </div>
         )}
       </div>

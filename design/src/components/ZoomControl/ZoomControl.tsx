@@ -1,3 +1,4 @@
+import { useSurface } from "@shared/surface";
 import "./ZoomControl.css";
 
 export interface ZoomControlProps {
@@ -14,8 +15,16 @@ export function zoomLabel(level: number, chosen: boolean): string {
 
 /** Zoom levels over the camera; the chosen one is larger and pressed. */
 export function ZoomControl({ options, value, onChange }: ZoomControlProps) {
+  const { platform } = useSurface();
   return (
-    <div className="zoom-control" role="group" aria-label="Zoom">
+    // Camera controls keep the default text size, as the system camera's do.
+    <div
+      className="zoom-control"
+      role="group"
+      aria-label="Zoom"
+      data-platform={platform}
+      data-text-size="default"
+    >
       {options.map((level) => {
         const chosen = level === value;
         return (

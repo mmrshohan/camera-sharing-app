@@ -59,7 +59,10 @@
   flex: 1;
   min-height: 0;
   overflow: auto;
-  padding: 0 var(--margin) var(--space-5);
+  /* Clear of the home indicator or Android's navigation bar. */
+  padding: 0 var(--margin) calc(var(--space-5) + var(--safe-bottom, 0px));
+  /* Cards inside are one step above the panel, as iOS draws them in a sheet. */
+  --color-surface: var(--color-surface-elevated);
 }
 
 /* Visible focus inside the portal (D12). */
@@ -72,7 +75,6 @@
 [data-platform="android"] .panel {
   max-width: 640px;
   margin: 0 auto;
-  background: var(--color-surface);
 }
 
 [data-platform="android"] .panel__handle {

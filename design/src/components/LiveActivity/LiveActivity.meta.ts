@@ -6,12 +6,12 @@ export const meta: ComponentMeta = {
   group: 4,
   layer: "system",
   status: "final",
-  version: "1.0.0",
+  version: "1.0.1",
   summary:
     "Counts the photos arriving from Alex's camera while Sarah's app is closed: on her Lock Screen and in the Dynamic Island. iOS only.",
   anatomy: [
     "Lock Screen: a dark card with system.platterRadius corners; whose camera with the live dot, then the count and what's still on the way",
-    "Dynamic Island, compact: as tall as the island; the photos glyph on the leading side and the count on the trailing side, clear of the camera; a check when all have arrived",
+    "Dynamic Island, compact: as tall as the island; the photos glyph on the leading side and the count on the trailing side, clear of the camera; a check when the session has ended",
     "Pinned to iOS and dark, as the system draws its own; the count uses tabular numerals so it doesn't jitter",
     "Text keeps its default size: iOS truncates a Lock Screen Live Activity taller than 160 pt",
   ],
@@ -43,6 +43,12 @@ export const meta: ComponentMeta = {
     status: { ios: "not-started", android: "not-started" },
   },
   changelog: [
+    {
+      version: "1.0.1",
+      date: "2026-10-29",
+      summary:
+        "When the session ends it says “Session ended”, not “All photos arrived”: Sarah's phone can't see what is still on Alex's.",
+    },
     {
       version: "1.0.0",
       date: "2026-10-29",

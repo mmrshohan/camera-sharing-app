@@ -6,7 +6,7 @@ export const meta: ComponentMeta = {
   group: 3,
   layer: "brand",
   status: "final",
-  version: "1.0.0",
+  version: "1.0.1",
   summary:
     "Zoom levels over the camera: “.5”, “1×”, “2”. The chosen level is larger and carries the “×”.",
   anatomy: [
@@ -27,13 +27,21 @@ export const meta: ComponentMeta = {
   accessibility: [
     "A group named “Zoom”; each level is a toggle button named like “Zoom 2×”, pressed when chosen",
     "The chosen level differs in size and words, not color alone",
+    "Keeps the default text size at every text size, as the system camera does; natively a long press shows the label large",
   ],
   motion: ["The chosen circle grows over 200 ms; with Reduce Motion it changes at once"],
   native: {
-    ios: "An HStack of Buttons over the preview, the chosen one with .accessibilityAddTraits(.isSelected)",
+    ios: "An HStack of Buttons over the preview, the chosen one with .accessibilityAddTraits(.isSelected); .dynamicTypeSize(.large) with .accessibilityShowsLargeContentViewer()",
     android:
-      "A Row of circular toggle buttons over the preview with Modifier.semantics { selected = chosen }",
+      "A Row of circular toggle buttons over the preview with Modifier.semantics { selected = chosen }; label sizes in dp, so font scale doesn't grow them",
     status: { ios: "not-started", android: "not-started" },
   },
-  changelog: [{ version: "1.0.0", date: "2026-10-29", summary: "First version." }],
+  changelog: [
+    {
+      version: "1.0.1",
+      date: "2026-10-29",
+      summary: "Keeps the default text size, so the levels never run together at the largest text.",
+    },
+    { version: "1.0.0", date: "2026-10-29", summary: "First version." },
+  ],
 };

@@ -212,6 +212,16 @@ describe("R4: borrowing survives everything but Alex's own unlock", () => {
     expect(unlocked.devices.alex).toMatchObject({ mode: "normal", ui: { route: "home" } });
   });
 
+  test("D4: unlocking while a session runs ends it, so the camera can't resume without a new one", () => {
+    const locked = run(connected(), capture, { type: "navigate", device: "alex", route: "home" });
+    expect(locked.devices.alex.ui.route).toBe("lock");
+    const unlocked = run(locked, { type: "unlock", success: true });
+    expect(must(unlocked.session).state).toBe("ended");
+    expect(unlocked.devices.alex.mode).toBe("normal");
+    const later = run(unlocked, { type: "navigate", device: "alex", route: "camera" }, capture);
+    expect(later.devices.alex.hostPhotos).toHaveLength(1);
+  });
+
   test("a capture outside an active session is refused with a toast, and takes no photo", () => {
     const w = run(connected(), { type: "endSession" }, capture);
     expect(w.devices.alex.hostPhotos).toEqual([]);
@@ -391,6 +401,33 @@ describe("R7: photos stuck offline need both phones to approve recovery", () => 
     const late = run(w, tick(limits.photoMs));
     expect(must(late.recovery).state).toBe("expired");
     expect(hostStages(late)).toEqual(["expired", "expired"]);
+  });
+
+  test.each(["alex", "sarah"] as const)(
+    "relaunching %s's phone keeps the request on it, so the photos aren't stranded",
+    (id) => {
+      expect(run(stuck(), { type: "relaunch", device: id }).devices[id].ui.panel).toBe("recovery");
+    },
+  );
+
+  test("unlocking Alex's phone keeps the request on it", () => {
+    const w = run(stuck(), { type: "unlock", success: true });
+    expect(w.devices.alex.mode).toBe("normal");
+    expect(w.devices.alex.ui.panel).toBe("recovery");
+  });
+
+  test("no new session starts until both phones decide on the stuck photos", () => {
+    const back = run(
+      stuck(),
+      { type: "unlock", success: true },
+      { type: "setNetwork", device: "alex", network: "online" },
+    );
+    const request: WorldEvent = { type: "requestByUsername", username: people.sarah.handle };
+    const refused = run(back, request);
+    expect(refused.session).toEqual(back.session);
+    expect(refused.recovery).toEqual(back.recovery);
+    const decided = run(back, { type: "declineRecovery", by: "alex" }, request);
+    expect(must(decided.session).state).toBe("requested");
   });
 });
 
@@ -590,11 +627,9 @@ describe("selectors", () => {
     const section = must(sections[0]);
     expect(section).toMatchObject({ title: "Today", detail: "2 photos from Alex" });
     expect(section.tiles.map((t) => t.id)).toEqual([second, first]);
-    expect(section.tiles[0]).toMatchObject({
-      status: "onlyInApp",
-      label: "Only in this app",
-      develop: false,
-    });
+    // The tile names its state itself; the label says which photo and when (design review).
+    expect(section.tiles[0]).toMatchObject({ status: "onlyInApp", develop: false });
+    expect(section.tiles[0]?.label).toMatch(/^Photo 2, 9:41\sAM$/);
   });
 
   test("a photo develops only just after it arrives", () => {

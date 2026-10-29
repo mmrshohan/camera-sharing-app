@@ -42,7 +42,7 @@ describe("PermissionPrompt", () => {
 });
 
 describe("LiveActivity and ProgressNotification", () => {
-  test("the Live Activity counts photos and says when all have arrived", () => {
+  test("the Live Activity counts photos, and says the session ended without claiming all arrived", () => {
     const arriving = html(
       <LiveActivity variant="lockScreen" from="Alex" received={14} arriving={2} state="arriving" />,
     );
@@ -53,7 +53,12 @@ describe("LiveActivity and ProgressNotification", () => {
       html(
         <LiveActivity variant="lockScreen" from="Alex" received={16} arriving={0} state="done" />,
       ),
-    ).toContain("All photos arrived");
+    ).toContain("Session ended");
+    expect(
+      html(
+        <LiveActivity variant="lockScreen" from="Alex" received={16} arriving={0} state="done" />,
+      ),
+    ).not.toContain("All photos arrived");
   });
 
   test("the notification shows real progress, or none", () => {

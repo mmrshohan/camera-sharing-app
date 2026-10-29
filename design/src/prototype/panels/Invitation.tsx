@@ -29,6 +29,8 @@ export function Invitation({ id }: { id: DeviceId }) {
       title={s.title}
       onClose={() => dispatch({ type: "closePanel", device: id })}
       container={screen}
+      // The code, its countdown and the actions fit without scrolling on the smallest phones.
+      detent="large"
     >
       <div className="panel-stack">
         <InvitationCode

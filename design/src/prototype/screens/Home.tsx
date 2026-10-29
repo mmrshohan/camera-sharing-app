@@ -60,7 +60,8 @@ export function Home({ id }: { id: DeviceId }) {
             variant="tinted"
             icon="borrow"
             label={s.borrow}
-            state={busy ? "waiting" : "rest"}
+            // A live session makes both rings unavailable; the reason is said once, under Lend.
+            state={live ? "unavailable" : pending ? "waiting" : "rest"}
             onPress={() => dispatch({ type: "openPanel", device: id, panel: "invitation" })}
           />
           <RingButton

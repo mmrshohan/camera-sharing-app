@@ -19,7 +19,8 @@ export function LiveActivity({ variant, from, received, arriving, state }: LiveA
   const count = received === 0 ? "No photos yet" : photos(received);
   const detail =
     state === "done"
-      ? "All photos arrived"
+      ? // Sarah's phone can't see what is still on Alex's, so it never claims all arrived.
+        "Session ended"
       : state === "connected"
         ? "Connected"
         : `${arriving} on the way`;

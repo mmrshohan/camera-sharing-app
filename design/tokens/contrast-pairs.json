@@ -38,6 +38,24 @@
       "note": "Links on grouped rows"
     },
     {
+      "fg": "color.ink",
+      "bg": "color.surfaceElevated",
+      "min": 4.5,
+      "note": "Text on cards inside panels"
+    },
+    {
+      "fg": "color.ink2",
+      "bg": "color.surfaceElevated",
+      "min": 4.5,
+      "note": "Secondary lines on cards inside panels"
+    },
+    {
+      "fg": "color.accentText",
+      "bg": "color.surfaceElevated",
+      "min": 4.5,
+      "note": "Links on cards inside panels"
+    },
+    {
       "fg": "color.accentText",
       "bg": "color.accentTint",
       "min": 4.5,

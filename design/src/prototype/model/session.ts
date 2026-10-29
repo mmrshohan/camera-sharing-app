@@ -20,6 +20,10 @@ export const isPending = (s: Session | null): s is Session =>
 export const canStartNew = (s: Session | null): boolean =>
   s === null || s.state === "ended" || s.state === "expired" || s.state === "declined";
 
+/** A new request also waits until both phones answer for photos stuck in an earlier session (R7). */
+export const canRequest = (w: World): boolean =>
+  canStartNew(w.session) && w.recovery?.state !== "needed";
+
 export function nextSessionId(w: World): string {
   const ids = [
     w.session?.id,

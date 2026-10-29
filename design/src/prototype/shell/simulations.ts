@@ -1,4 +1,4 @@
-import { canStartNew } from "@prototype/model/session";
+import { canRequest } from "@prototype/model/session";
 import type { DeviceId, World, WorldEvent } from "@prototype/model/types";
 
 export interface Simulation {
@@ -26,7 +26,7 @@ export function simulationsFor(world: World, id: DeviceId): Simulation[] {
     device.ui.route === "scanner" &&
     device.permissions.camera === "granted" &&
     world.devices.sarah.ui.panel === "invitation" &&
-    canStartNew(session);
+    canRequest(world);
   if (scannable) {
     return [{ label: "Simulate scan", event: { type: "scanInvitation" } }];
   }

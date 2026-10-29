@@ -1,17 +1,20 @@
+import { clockTime } from "@prototype/copy/time";
 import { photos as plural } from "@shared/plural";
-import { hostLabel, recipientLabel, withRetry } from "./photos";
+import { hostLabel, withRetry } from "./photos";
 import type {
   CameraCounts,
   DeviceId,
   DeviceState,
   HostLabel,
   HostPhoto,
+  HostStage,
   PhotoId,
   RecipientPhoto,
   RecipientStage,
   TileStatus,
   World,
 } from "./types";
+import { reduce } from "./world";
 
 const tiles: Record<RecipientStage, TileStatus> = {
   arriving: "arriving",
@@ -106,6 +109,58 @@ export function hostSummary(w: World): CameraCounts {
   return counts;
 }
 
+/** Where the session's photos are, so the lock claims only what is true of every one (R5–R7). */
+export interface Delivery {
+  /** Still on Alex's phone, by what each one waits for; `sent` stays 0. */
+  onPhone: CameraCounts;
+  /** Left Alex's phone, not yet on Sarah's. */
+  waiting: number;
+  /** On Sarah's phone. */
+  reached: number;
+  /** Expired or canceled before they arrived. */
+  lost: number;
+  /** Waiting for both phones to approve sending them (R7). */
+  needApproval: number;
+}
+
+export function delivery(w: World): Delivery {
+  const onPhone: CameraCounts = {
+    sent: 0,
+    sending: 0,
+    waitingInternet: 0,
+    waitingWifi: 0,
+    preparing: 0,
+  };
+  const d: Delivery = { onPhone, waiting: 0, reached: 0, lost: 0, needApproval: 0 };
+  const recovering = needsRecovery(w);
+  for (const { photo, key } of currentHostPhotos(w)) {
+    if (recovering.has(photo.id)) d.needApproval += 1;
+    else if (photo.stage === "uploaded") d.waiting += 1;
+    else if (photo.stage === "delivered") d.reached += 1;
+    else if (photo.stage === "expired" || photo.stage === "canceled") d.lost += 1;
+    else if (key) onPhone[key] += 1;
+  }
+  return d;
+}
+
+const onAlexsPhone: readonly HostStage[] = ["preparing", "prepared", "reserved", "uploading"];
+
+/**
+ * What ending the session now would leave on Alex's phone: photos that keep sending, and photos
+ * that will need both phones to approve (R6, R7). It asks the model, so the two can't disagree.
+ */
+export function endingNow(w: World): { keepGoing: number; needApproval: number } {
+  const s = w.session;
+  if (s?.state !== "active") return { keepGoing: 0, needApproval: 0 };
+  const ended = reduce(w, { type: "endSession" });
+  const r = ended.recovery;
+  const stuck = new Set(r?.state === "needed" && r.sessionId === s.id ? r.photoIds : []);
+  const left = ended.devices.alex.hostPhotos.filter(
+    (p) => p.sessionId === s.id && onAlexsPhone.includes(p.stage) && !stuck.has(p.id),
+  );
+  return { keepGoing: left.length, needApproval: stuck.size };
+}
+
 /** The session panel's list: a number and a label per photo, never an image (R3, D7). */
 export function hostItems(w: World): { index: number; label: string }[] {
   return currentHostPhotos(w).map(({ label }, i) => ({ index: i + 1, label }));
@@ -124,6 +179,8 @@ export interface TileView {
 export function recipientTiles(
   w: World,
 ): { sectionId: string; title: string; detail: string; tiles: TileView[] }[] {
+  // Each photo's name says which one it is and when it came; its tile adds its state.
+  const number = new Map(w.devices.sarah.gallery.map((p, i) => [p.id, i + 1]));
   const bySession = new Map<string, RecipientPhoto[]>();
   for (const p of w.devices.sarah.gallery)
     bySession.set(p.sessionId, [...(bySession.get(p.sessionId) ?? []), p]);
@@ -140,7 +197,10 @@ export function recipientTiles(
         progress: p.progress,
         develop:
           p.stage !== "arriving" && p.arrivedAt > 0 && w.clock - p.arrivedAt < developWindowMs,
-        label: withRetry(recipientLabel(p), p.retry),
+        label: withRetry(
+          `Photo ${number.get(p.id) ?? 0}, ${clockTime(p.arrivedAt || p.stageAt)}`,
+          p.retry,
+        ),
       })),
     };
   });

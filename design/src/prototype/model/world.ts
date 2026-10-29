@@ -2,7 +2,7 @@ import { devices as specs } from "@components/DeviceFrame/devices";
 import { strings as camera } from "@prototype/copy/camera";
 import { people, samples } from "./fixtures";
 import {
-  canStartNew,
+  canRequest,
   createSession,
   endsAt,
   isPending,
@@ -77,6 +77,9 @@ const unsent: readonly HostStage[] = ["preparing", "prepared", "reserved", "uplo
 const borrowingRoutes: readonly Route[] = ["camera", "lock"];
 
 const isActive = (s: Session | null): s is Session => s?.state === "active";
+
+/** While photos wait for both phones to approve, both phones keep asking, whatever else happens (R7). */
+const recoveryPanel = (w: World) => (w.recovery?.state === "needed" ? ("recovery" as const) : null);
 
 /** A photo may be reserved while its session is active, or once both phones approve its recovery. */
 const authorized = (w: World, p: HostPhoto) =>
@@ -376,7 +379,7 @@ function relaunch(w: World, id: DeviceId): World {
     ui: {
       ...d.ui,
       route: startRoute(w, d),
-      panel: null,
+      panel: recoveryPanel(w),
       confirm: null,
       prompt: null,
       lastShot: null,
@@ -420,7 +423,7 @@ function unlock(w: World, success: boolean): World {
   return withDevice(ended, "alex", (d) => ({
     ...d,
     mode: "normal",
-    ui: { ...d.ui, route: "home", panel: null, confirm: null, notice: null },
+    ui: { ...d.ui, route: "home", panel: recoveryPanel(ended), confirm: null, notice: null },
   }));
 }
 
@@ -755,7 +758,7 @@ export function reduce(w: World, event: WorldEvent): World {
       return answerPermission(w, event.device, event.kind, event.allow);
     case "scanInvitation": {
       const { alex, sarah } = w.devices;
-      if (!canStartNew(w.session) || alex.permissions.camera !== "granted") return w;
+      if (!canRequest(w) || alex.permissions.camera !== "granted") return w;
       if (sarah.ui.panel !== "invitation" || sarah.ui.inviteExpiresAt === null) return w;
       // An expired code is no longer an invitation.
       if (w.clock >= sarah.ui.inviteExpiresAt) {
@@ -764,7 +767,7 @@ export function reduce(w: World, event: WorldEvent): World {
       return withUi(startRequest(w, "verifying"), "alex", { notice: null });
     }
     case "requestByUsername": {
-      if (!canStartNew(w.session)) return w;
+      if (!canRequest(w)) return w;
       if (event.username.replace(/^@/, "").toLowerCase() === people.sarah.handle.slice(1)) {
         return startRequest(w, "requested");
       }

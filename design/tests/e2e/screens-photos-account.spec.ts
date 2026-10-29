@@ -33,7 +33,7 @@ test("D1, R7: offline photos need both phones; there is no Try again", async ({ 
   await page.keyboard.press("Escape");
   await sarah.getByRole("button", { name: "Approve on this phone" }).click();
   await expect.poll(() => sending(page)).toEqual(["reserved", "reserved"]);
-  await expect(alex.getByText("2 photos still sending to Sarah")).toBeVisible();
+  await expect(alex.getByText("Still on this phone: 2 sending")).toBeVisible();
 });
 
 test("D11: with Photos access off, Save explains how to turn it on, and no prompt appears", async ({
@@ -142,3 +142,24 @@ test("over a photo, Android's bars turn dark like the photo: light glyphs, dark 
   const color = await time.evaluate((el) => getComputedStyle(el).color);
   expect(color).toBe("rgb(255, 255, 255)");
 });
+
+for (const [model, theme] of [
+  ["iphone16pro", "light"],
+  ["iphone16pro", "dark"],
+  ["galaxyA15", "light"],
+  ["galaxyA15", "dark"],
+] as const) {
+  test(`Settings: the bar matches the page, and iPhone's grouped rows stand out: ${model}, ${theme}`, async ({
+    page,
+  }) => {
+    await openShell(page, `scenario=settings-list&sarahDevice=${model}&theme=${theme}`);
+    const background = (selector: string) =>
+      phone(page, "Sarah")
+        .locator(selector)
+        .first()
+        .evaluate((el) => getComputedStyle(el).backgroundColor);
+    const screen = await background(".screen");
+    expect(await background(".top-bar")).toBe(screen);
+    if (model === "iphone16pro") expect(await background(".grouped-list__items")).not.toBe(screen);
+  });
+}

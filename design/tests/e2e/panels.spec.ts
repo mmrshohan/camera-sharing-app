@@ -88,3 +88,54 @@ test.describe("Panel", () => {
     expect(await seriousA11yViolations(page)).toEqual([]);
   });
 });
+
+test.describe("panels on the phones (design review, 29 October 2026)", () => {
+  const sarah = (page: Page) => page.frameLocator(`iframe[title="Sarah's phone"]`);
+  async function open(page: Page, search: string) {
+    await gotoAndSettle(page, `/prototype?${search}&play=0`);
+    await expect(page.locator(".proto-phone[data-ready]")).toHaveCount(2);
+  }
+  const looks = [
+    ["galaxyA15", "light"],
+    ["galaxyA15", "dark"],
+    ["iphone16pro", "light"],
+    ["iphone16pro", "dark"],
+  ] as const;
+
+  for (const [model, theme] of looks) {
+    test(`cards stand out from the panel they sit on: ${model}, ${theme}`, async ({ page }) => {
+      const background = (selector: string) =>
+        sarah(page)
+          .locator(selector)
+          .first()
+          .evaluate((el) => getComputedStyle(el).backgroundColor);
+      for (const [scenario, cards] of [
+        ["connect-check-words", [".person-pair", ".verification-words__list li"]],
+        ["connect-words-dont-match", [".inline-message"]],
+      ] as const) {
+        await open(page, `scenario=${scenario}&sarahDevice=${model}&theme=${theme}`);
+        const panel = await background(".panel");
+        for (const card of cards)
+          expect(await background(card), `${scenario} ${card}`).not.toBe(panel);
+      }
+    });
+  }
+
+  test("an expired invitation's action sits above Android's navigation bar", async ({ page }) => {
+    await open(page, "scenario=invitation-expired");
+    const action = await sarah(page).getByRole("button", { name: "Show a new code" }).boundingBox();
+    const nav = await sarah(page).locator(".home-indicator").boundingBox();
+    expect(action && nav && action.y + action.height).toBeLessThanOrEqual(nav?.y ?? 0);
+  });
+
+  test("a showing invitation fits: its countdown and Done show without scrolling", async ({
+    page,
+  }) => {
+    await open(page, "scenario=invitation-showing-code");
+    const body = sarah(page).locator(".panel__body");
+    expect(await body.evaluate((el) => el.scrollHeight - el.clientHeight)).toBeLessThanOrEqual(0);
+    const done = await sarah(page).getByRole("button", { name: "Done" }).boundingBox();
+    const nav = await sarah(page).locator(".home-indicator").boundingBox();
+    expect(done && nav && done.y + done.height).toBeLessThanOrEqual(nav?.y ?? 0);
+  });
+});

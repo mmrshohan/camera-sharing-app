@@ -2,7 +2,7 @@
 
 export const strings = {
   title: "Camera Sharing",
-  body: "Borrow a friend’s better camera. The photos come to your phone.",
+  body: "Borrow a friend’s camera. The photos come to your phone.",
   apple: "Continue with Apple",
   google: "Continue with Google",
   failedTitle: "Couldn’t sign in",

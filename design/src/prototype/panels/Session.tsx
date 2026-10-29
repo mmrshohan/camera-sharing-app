@@ -7,7 +7,7 @@ import { Panel } from "@components/Panel";
 import { Text } from "@components/Text";
 import { cameraStatusText } from "@prototype/copy/plural";
 import { strings as s } from "@prototype/copy/session";
-import { hostItems, hostSummary } from "@prototype/model/selectors";
+import { endingNow, hostItems, hostSummary } from "@prototype/model/selectors";
 import type { DeviceId } from "@prototype/model/types";
 import { minutesSeconds } from "@prototype/screens/parts";
 import { useDeviceView } from "@prototype/shell/deviceView";
@@ -26,6 +26,7 @@ export function Session({ id }: { id: DeviceId }) {
   const counts = hostSummary(world);
   const items = hostItems(world);
   const unsent = counts.preparing + counts.sending + counts.waitingInternet + counts.waitingWifi;
+  const ending = endingNow(world);
   const active = session.state === "active";
   const closeConfirm = () => dispatch({ type: "closeConfirm", device: id });
 
@@ -93,7 +94,7 @@ export function Session({ id }: { id: DeviceId }) {
         open={device.ui.confirm === "endSession"}
         destructive
         title={s.endTitle}
-        message={s.endMessage(unsent, to)}
+        message={s.endMessage(ending.keepGoing, ending.needApproval, to)}
         confirmLabel={s.endSession}
         cancelLabel={s.keepShooting}
         onConfirm={() => dispatch({ type: "endSession" })}

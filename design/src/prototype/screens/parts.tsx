@@ -11,17 +11,15 @@ export function ScreenBody({
   children,
   bar,
   floating = false,
-  grouped = false,
 }: {
   /** Given whether the content has scrolled, for a top bar that collapses. */
   top?: (scrolled: boolean) => ReactNode;
   children: ReactNode;
   bar?: ReactNode;
   floating?: boolean;
-  grouped?: boolean;
 }) {
   const [scrolled, setScrolled] = useState(false);
-  const classes = ["screen", grouped && "screen--grouped", floating && "screen--floating-bar"];
+  const classes = ["screen", floating && "screen--floating-bar"];
   return (
     <div className={classes.filter(Boolean).join(" ")}>
       <div className="screen__top">{top?.(scrolled)}</div>

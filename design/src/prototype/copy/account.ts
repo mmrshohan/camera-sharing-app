@@ -6,12 +6,12 @@ export const strings = {
   signOutMessage: (onlyHere: number) =>
     onlyHere === 0
       ? "Photos you saved to Photos aren’t affected."
-      : `${photos(onlyHere)} ${onlyHere === 1 ? "is" : "are"} only in this app. ${onlyHere === 1 ? "It stays" : "They stay"} locked on this phone until you sign in again. Photos you saved to Photos aren’t affected.`,
+      : `${photos(onlyHere)} ${onlyHere === 1 ? "is" : "are"} only in this app. ${onlyHere === 1 ? "It stays" : "They stay"} locked on this phone until you sign in again here. Signing in on another phone won’t bring ${onlyHere === 1 ? "it" : "them"} back, and deleting the app loses ${onlyHere === 1 ? "it" : "them"}. Photos you saved to Photos aren’t affected.`,
   signOut: "Sign out",
   cancel: "Cancel",
   deleteTitle: "Delete account?",
   deleteMessage:
-    "This deletes your account and the photos kept in this app on this phone. Copies saved to Photos aren’t affected. Phones that are offline are cleaned up when they next connect.",
+    "Your account closes now, and its data is deleted from our servers within 24 hours (backups within 14 days). The photos kept in this app on this phone are deleted. Photos others already received, and copies saved to Photos, aren’t affected.",
   deleteButton: "Delete account…",
   deleteConfirmMessage: (saved: number) =>
     saved === 0

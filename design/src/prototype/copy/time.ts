@@ -12,6 +12,13 @@ export function deadline(clock: number): string {
   return format.format(new Date(start + clock)).replace(" at ", " ");
 }
 
+const timeFormat = new Intl.DateTimeFormat("en", { hour: "numeric", minute: "2-digit" });
+
+/** "9:41 AM" for a moment on the world's clock. */
+export function clockTime(clock: number): string {
+  return timeFormat.format(new Date(start + clock));
+}
+
 const dateFormat = new Intl.DateTimeFormat("en", {
   weekday: "long",
   month: "long",

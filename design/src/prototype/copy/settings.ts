@@ -37,15 +37,16 @@ export const strings = {
   // Storage
   onlyHere: "Only in this app",
   alsoSaved: "Also in Photos",
-  storageNote: "Photos in this app stay on this phone until you delete them.",
+  storageNote:
+    "Photos in this app stay on this phone until you delete them or the app. They aren’t backed up.",
   storageFull: "This phone is out of space",
   storageFullBody: "New photos can’t arrive until there’s room.",
   storageEmpty: "No photos in this app",
   // Privacy
   privacyPoints: [
-    "Photos go only to the phone both of you approved, and only during that session.",
-    "Nothing taken with a lent camera is saved to the lender’s Photos.",
-    "Photos pass through our servers encrypted, and are deleted once they arrive or after 72 hours.",
+    "Photos go only to the phone you both approved for that session.",
+    "This app won’t save photos to the photo library of the phone that takes them.",
+    "Photos pass through our servers end-to-end encrypted. Our copy is removed soon after a photo arrives, and it can’t be downloaded after 72 hours.",
   ],
   // Help
   helpTopics: ["Lending your camera", "Borrowing a camera", "Saving to Photos", "When photos wait"],

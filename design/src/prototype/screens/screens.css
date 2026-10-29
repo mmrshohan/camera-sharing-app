@@ -10,10 +10,6 @@
   color: var(--color-ink);
 }
 
-.screen--grouped {
-  background: var(--color-surface);
-}
-
 .screen__top {
   flex: none;
   padding-top: var(--safe-top);

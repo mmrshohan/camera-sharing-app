@@ -8,6 +8,9 @@ Releases of the Camera Sharing design system. The format follows [Keep a Changel
 
 ### Fixed
 
+- Panel 1.0.1: cards inside stand out from the panel on both platforms and in dark (new token color.surfaceElevated), and the content clears the home indicator or navigation bar.
+- ZoomControl 1.0.1 and DestinationPill 1.0.1: they keep the default text size, as the system camera's controls do, so they never collide at the largest text.
+- LiveActivity 1.0.1: when the session ends it says “Session ended”, not “All photos arrived”, which Sarah's phone can't know.
 - Shutter 1.0.1: a blocked shutter's accessible name includes the message it shows (WCAG 2.5.3).
 - HomeIndicator 1.0.1: Android's three buttons sit on a dark scrim over photos and the camera, like the status bar.
 

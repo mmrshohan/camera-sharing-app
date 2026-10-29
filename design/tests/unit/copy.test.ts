@@ -35,6 +35,26 @@ describe("prototype copy (spec §11)", () => {
     );
   });
 
+  test("no copy promises more than the product does (overclaim review, 29 October 2026)", () => {
+    const overclaims = [
+      /Everything (was|has been) delivered/, // R5: uploaded is not received
+      /only during that session/, // R6, R7: photos keep going after it ends
+      /Nothing (is saved|taken with)/, // absolute: a screenshot still saves one
+      /deleted once they arrive/, // deletion is requested, and finishes later
+      /every photo they take/, // photos can expire or be canceled
+      /keep coming once/, // not once they expire
+      /stay private/, // no blanket privacy guarantee
+      /Only \w+ can unlock/, // anyone with the passcode can
+      /better camera/, // the app never points at the gap (spec §4)
+      /until you delete them\.$/, // deleting the app loses them too, and nothing is backed up
+      /until you sign in again\./, // only on this phone, never on another
+      /cleaned up when they next connect/, // deletion runs on the servers' schedule
+    ];
+    for (const { module, strings } of allCopy)
+      for (const [key, text] of texts(strings))
+        for (const claim of overclaims) expect(text, `${module}.${key}`).not.toMatch(claim);
+  });
+
   test.each(allCopy.map((c) => [c.module, c] as const))(
     "%s: no review words on the phone (D18), and no exclamation marks",
     (_, { strings }) => {

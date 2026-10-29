@@ -91,6 +91,15 @@
       },
       "$description": "Raised surfaces: iOS sheets and alerts (white in light, raised gray in dark)."
     },
+    "surfaceElevated": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [0.9608, 0.9608, 0.9686],
+        "hex": "#F5F5F7"
+      },
+      "$description": "Cards and grouped rows inside panels, which are already raised: one step above them, like iOS's elevated colors."
+    },
     "separator": {
       "$type": "color",
       "$value": {

@@ -34,7 +34,14 @@ export function DestinationPill({ name, onPress, pulseKey }: DestinationPillProp
   }, [pulseKey, reduceMotion]);
 
   return (
-    <button type="button" className="destination-pill" onClick={onPress}>
+    // Camera controls keep the default text size, as the system camera's do.
+    <button
+      type="button"
+      className="destination-pill"
+      onClick={onPress}
+      data-platform={platform}
+      data-text-size="default"
+    >
       <span ref={pill} className="destination-pill__pill">
         <Icon name="sending" size={tokens.shape.iconChip} platform={platform} />
         <span>Sending to {name}</span>

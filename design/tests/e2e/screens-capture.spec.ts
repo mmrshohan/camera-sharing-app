@@ -77,7 +77,7 @@ test("End session asks first, on Keep shooting (D8); the lock then shows what's 
   await confirm.getByRole("button", { name: "End session" }).click();
   await expect(alex.locator("[data-route]")).toHaveAttribute("data-route", "lock");
   await expect(alex.getByRole("heading", { name: "Phone returned to Alex" })).toBeVisible();
-  await expect(alex.getByText("1 photo still sending to Sarah")).toBeVisible();
+  await expect(alex.getByText("Still on this phone: 1 preparing")).toBeVisible();
 });
 
 test("D2: relaunching on the lock stays on the lock", async ({ page }) => {
@@ -91,12 +91,53 @@ test("D2: relaunching on the lock stays on the lock", async ({ page }) => {
   await expect(alex.getByRole("button", { name: "Use Face ID" })).toBeVisible();
 });
 
-test("a canceled unlock says the phone stays private", async ({ page }) => {
+test("a canceled unlock says the phone is still locked, and promises nothing more", async ({
+  page,
+}) => {
   await openShell(page, "lock-authentication-canceled");
-  await expect(
-    phone(page, "Alex").getByText("Still locked. Alex’s photos and account stay private."),
-  ).toBeVisible();
+  await expect(phone(page, "Alex").getByText("Still locked.", { exact: true })).toBeVisible();
 });
+
+for (const model of ["iphoneSE3", "iphone16pro"] as const) {
+  test(`at the largest text the camera's controls keep their size and never collide: ${model}`, async ({
+    page,
+  }) => {
+    await gotoAndSettle(
+      page,
+      `/prototype?scenario=camera-ready&alexDevice=${model}&text=largest&play=0`,
+    );
+    await expect(page.locator(".proto-phone[data-ready]")).toHaveCount(2);
+    const alex = phone(page, "Alex");
+    await expect(alex.getByRole("button", { name: /^Flash/ })).toBeVisible();
+    // Each zoom label fits its disc, and no two run together.
+    const zoom = await alex.locator(".zoom-control__option").evaluateAll((options) =>
+      options.map((option) => {
+        const disc = option.getBoundingClientRect();
+        const label = option.querySelector(".zoom-control__label");
+        return {
+          fits: !!label && label.scrollWidth <= (option as HTMLElement).clientWidth,
+          right: disc.right,
+          left: disc.left,
+        };
+      }),
+    );
+    expect(zoom.map((z) => z.fits)).not.toContain(false);
+    for (const [i, z] of zoom.slice(1).entries())
+      expect(z.left).toBeGreaterThanOrEqual(zoom[i]?.right ?? 0);
+    // The pill stays on one line, clear of the flash button.
+    const words = alex.locator(".destination-pill__pill > span").last();
+    expect(
+      await words.evaluate(
+        (el) => (el as HTMLElement).offsetHeight < 2 * parseFloat(getComputedStyle(el).lineHeight),
+      ),
+    ).toBe(true);
+    const pill = await alex.locator(".destination-pill__pill").boundingBox();
+    const flash = await alex.getByRole("button", { name: /^Flash/ }).boundingBox();
+    expect(
+      pill && flash && (pill.x >= flash.x + flash.width || pill.x + pill.width <= flash.x),
+    ).toBe(true);
+  });
+}
 
 test("D7: the session panel lists each photo by number and label, never an image", async ({
   page,

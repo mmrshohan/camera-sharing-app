@@ -10,10 +10,17 @@ export const strings = {
   endSession: "End session",
   cancelUnsent: "Cancel unsent photos",
   endTitle: "End session?",
-  endMessage: (count: number, to: string) =>
-    count === 0
-      ? "New photos stop. Everything has been delivered."
-      : `New photos stop. ${photos(count)} ${count === 1 ? "keeps" : "keep"} sending to ${to}.`,
+  endMessage: (keepGoing: number, needApproval: number, to: string) =>
+    [
+      "New photos stop.",
+      keepGoing > 0 &&
+        `${photos(keepGoing)} ${keepGoing === 1 ? "keeps" : "keep"} sending to ${to}.`,
+      needApproval > 0 &&
+        `${photos(needApproval)} taken without internet will need both phones to approve.`,
+      keepGoing === 0 && needApproval === 0 && "Nothing is left to send from this phone.",
+    ]
+      .filter(Boolean)
+      .join(" "),
   keepShooting: "Keep shooting",
   cancelTitle: "Cancel unsent photos?",
   cancelMessage: (count: number, to: string) =>

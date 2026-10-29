@@ -6,7 +6,7 @@ import type { DeviceId } from "@prototype/model/types";
 import { useDeviceView } from "@prototype/shell/deviceView";
 import { ScreenBody } from "../parts";
 
-/** A settings page: its title, a way back to Settings, and its content on the grouped background. */
+/** A settings page: its title, a way back to Settings, and its content. */
 export function SettingsPage({
   id,
   title,
@@ -21,7 +21,6 @@ export function SettingsPage({
   const { dispatch } = useDeviceView(id);
   return (
     <ScreenBody
-      grouped
       top={(scrolled) => (
         <TopBar
           title={title}

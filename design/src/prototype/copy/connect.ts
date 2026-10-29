@@ -10,7 +10,7 @@ export const strings = {
   toTitle: "Photos go to",
   words: (other: string) => `${other} should see the same six words`,
   hostFinePrint: (to: string) =>
-    `Photos go only to ${to}’s phone. Nothing is saved to your Photos. Whoever holds this phone can see the preview.`,
+    `Photos go only to ${to}’s phone. This app won’t save them to your photo library. Whoever holds this phone can see the preview and take screenshots.`,
   recipientFinePrint: (from: string) => `Photos from ${from}’s camera come only to this phone.`,
   waiting: (other: string, time: string) => `Waiting for ${other} · expires in ${time}`,
   title: "Connect",
