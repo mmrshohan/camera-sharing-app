@@ -177,6 +177,28 @@ test("one phone at a time, and Present mode hides everything but the phones", as
   await expect(page.locator(".proto-nav")).toBeVisible();
 });
 
+test("Escape leaves Present mode from inside a phone too (code review 8)", async ({ page }) => {
+  await openShell(page);
+  await page.getByRole("button", { name: "Present" }).click();
+  await expect(page.locator(".proto-nav")).toBeHidden();
+  await phone(page, "Sarah").getByRole("button", { name: "Settings" }).focus();
+  await page.keyboard.press("Escape");
+  await expect(page.locator(".proto-nav")).toBeVisible();
+});
+
+test("in Present mode, Escape in a phone with a panel open closes only the panel", async ({
+  page,
+}) => {
+  await openShell(page, "?scenario=session-photo-list");
+  await page.getByRole("button", { name: "Present" }).click();
+  const panel = phone(page, "Alex").getByRole("dialog", { name: "Sending to Sarah" });
+  await expect(panel).toBeVisible();
+  await panel.getByRole("button", { name: "End session" }).focus();
+  await page.keyboard.press("Escape");
+  await expect(panel).toBeHidden();
+  await expect(page.locator(".proto-nav")).toBeHidden();
+});
+
 test.describe("a narrow window in Present mode", () => {
   test.use({ viewport: { width: 640, height: 800 } });
 

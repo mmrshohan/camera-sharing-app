@@ -1,12 +1,9 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { useParams } from "react-router";
 import type { DeviceId, World, WorldEvent } from "@prototype/model/types";
 import { reduce } from "@prototype/model/world";
 import { isToPhone, nextSeq, reconcile, type Pending, type ToShell } from "./bridge";
 import { DeviceHost } from "./DeviceHost";
 import "./phone.css";
-
-const isDeviceId = (id: string | undefined): id is DeviceId => id === "alex" || id === "sarah";
 
 interface PhoneState {
   world: World;
@@ -17,15 +14,13 @@ interface PhoneState {
 const send = (message: ToShell) => window.parent.postMessage(message, window.location.origin);
 
 /** One phone in its own document, inside the review shell's iframe. */
-export function PhonePage() {
-  const { id } = useParams();
+export function PhonePage({ id }: { id: DeviceId }) {
   const [state, setState] = useState<PhoneState | null>(null);
   const seq = useRef(0);
   /** The last event of this phone that the shell has applied, from its latest message. */
   const applied = useRef(0);
 
   useEffect(() => {
-    if (!isDeviceId(id)) return;
     document.documentElement.classList.add("proto-phone-doc");
     const onMessage = (event: MessageEvent<unknown>) => {
       if (event.origin !== window.location.origin || event.source !== window.parent) return;
@@ -75,9 +70,19 @@ export function PhonePage() {
     return () => document.removeEventListener("mousedown", keepTyping, true);
   }, []);
 
+  // A key the phone doesn't use belongs to the review shell, as if pressed there: Escape leaves
+  // Present mode, unless a panel or prompt on the phone has already taken it.
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && !event.defaultPrevented)
+        send({ kind: "key", id, key: "Escape" });
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [id]);
+
   const dispatch = useCallback(
     (event: WorldEvent) => {
-      if (!isDeviceId(id)) return;
       seq.current = nextSeq(seq.current, applied.current);
       const pending = { seq: seq.current, event };
       // Shown at once; the shell confirms it with its next world.
@@ -90,11 +95,11 @@ export function PhonePage() {
   );
 
   // Tells the shell the phone's true size, so it can fit both phones on the stage.
-  const model = isDeviceId(id) ? state?.world.devices[id].model : undefined;
+  const model = state?.world.devices[id].model;
   const scale = state?.scale;
   const reported = useRef("");
   useLayoutEffect(() => {
-    if (!isDeviceId(id) || !scale) return;
+    if (!scale) return;
     const frame = document.querySelector<HTMLElement>(".device");
     if (!frame) return;
     const width = Math.round(frame.offsetWidth / scale);
@@ -105,6 +110,6 @@ export function PhonePage() {
     send({ kind: "size", id, width, height });
   }, [id, model, scale]);
 
-  if (!isDeviceId(id) || !state) return null;
+  if (!state) return null;
   return <DeviceHost id={id} world={state.world} dispatch={dispatch} scale={state.scale} />;
 }
