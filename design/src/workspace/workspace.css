@@ -679,6 +679,7 @@
 /* In the review shell the comparison fills the stage. */
 .proto-main > .ws-compare {
   flex: 1;
+  grid-template-rows: minmax(0, 1fr);
   min-height: 0;
   margin: 0;
   padding: 16px;

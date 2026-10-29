@@ -266,7 +266,7 @@ html.proto-route .ws-main--full {
 }
 
 @media (max-width: 720px) {
-  .proto {
+  .proto:not(.proto--present) {
     grid-template-columns: 200px minmax(0, 1fr);
   }
 }

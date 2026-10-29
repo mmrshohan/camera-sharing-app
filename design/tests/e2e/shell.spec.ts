@@ -158,3 +158,14 @@ test("one phone at a time, and Present mode hides everything but the phones", as
   await page.keyboard.press("Escape");
   await expect(page.locator(".proto-nav")).toBeVisible();
 });
+
+test.describe("a narrow window in Present mode", () => {
+  test.use({ viewport: { width: 640, height: 800 } });
+
+  test("the phones get the whole width: no empty navigator column", async ({ page }) => {
+    await openShell(page);
+    await page.getByRole("button", { name: "Present" }).click();
+    const width = await page.locator(".proto-stage").evaluate((stage) => stage.clientWidth);
+    expect(width).toBe(640);
+  });
+});
