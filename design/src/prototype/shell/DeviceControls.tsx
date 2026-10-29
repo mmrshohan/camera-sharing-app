@@ -118,6 +118,20 @@ export function DeviceControls({
             dispatch({ type: "setNetwork", device: id, network: device.network, connection })
           }
         />
+        <label className="ws-toggle">
+          <input
+            type="checkbox"
+            checked={device.ui.system !== null}
+            onChange={(e) =>
+              dispatch({
+                type: "showSystem",
+                device: id,
+                surface: e.target.checked ? "lockScreen" : null,
+              })
+            }
+          />
+          <span>Show Lock Screen</span>
+        </label>
         <button
           type="button"
           className="proto-button"

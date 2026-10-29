@@ -11,3 +11,14 @@ const format = new Intl.DateTimeFormat("en", {
 export function deadline(clock: number): string {
   return format.format(new Date(start + clock)).replace(" at ", " ");
 }
+
+const dateFormat = new Intl.DateTimeFormat("en", {
+  weekday: "long",
+  month: "long",
+  day: "numeric",
+});
+
+/** "Thursday, October 29": the date a Lock Screen shows. */
+export function dateLine(clock: number): string {
+  return dateFormat.format(new Date(start + clock));
+}

@@ -264,3 +264,64 @@
 .photo-screen {
   height: 100%;
 }
+
+/* The phone's own Lock Screen or shade, over a wallpaper, while the app is closed. */
+.system-surface {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: calc(var(--safe-top) + var(--space-6)) var(--space-3)
+    calc(var(--safe-bottom) + var(--space-8));
+  background-color: var(--color-device-body);
+  background-repeat: no-repeat;
+  color: var(--color-on-camera);
+}
+
+.system-surface::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    var(--color-camera-scrim),
+    transparent 45%,
+    var(--color-camera-scrim)
+  );
+}
+
+.system-surface > * {
+  position: relative;
+}
+
+.system-surface__clock {
+  display: grid;
+  justify-items: center;
+}
+
+.system-surface__date {
+  font-family: var(--type-headline-family);
+  font-size: var(--type-headline-size);
+  font-weight: var(--type-headline-weight);
+}
+
+.system-surface__time {
+  font-family: var(--type-numeral-family);
+  font-size: var(--type-numeral-size);
+  line-height: var(--type-numeral-line);
+  font-weight: var(--type-numeral-weight);
+  font-variant-numeric: tabular-nums;
+}
+
+.system-surface__activity {
+  margin-top: auto;
+}
+
+/* Android's shade: the clock small, the notification right under it. */
+.system-surface--shade .system-surface__clock {
+  justify-items: start;
+  padding: 0 var(--space-2);
+}
+
+.system-surface--shade .system-surface__activity {
+  margin-top: var(--space-4);
+}
