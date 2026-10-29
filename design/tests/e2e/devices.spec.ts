@@ -6,7 +6,7 @@ const example = (page: Page, title: string) =>
 
 test.describe("the keyboard (D21)", () => {
   test("follows focus, and leaves in the same frame as the screen", async ({ page }) => {
-    await gotoAndSettle(page, "/lab/device-frame");
+    await gotoAndSettle(page, "/library/device-frame");
     const phone = example(page, "The keyboard follows focus");
     const keyboard = phone.locator(".keyboard");
     await expect(keyboard).toBeHidden();
@@ -18,7 +18,7 @@ test.describe("the keyboard (D21)", () => {
   });
 
   test("hides when the field loses focus", async ({ page }) => {
-    await gotoAndSettle(page, "/lab/device-frame");
+    await gotoAndSettle(page, "/library/device-frame");
     const phone = example(page, "The keyboard follows focus");
     await phone.getByRole("textbox").click();
     await expect(phone.locator(".keyboard")).toBeVisible();

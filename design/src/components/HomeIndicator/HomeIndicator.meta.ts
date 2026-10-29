@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "HomeIndicator",
   group: 4,
   layer: "system",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "The bottom of the screen: iOS's home indicator, Android's gesture handle or three buttons.",

@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "DeviceFrame",
   group: 4,
   layer: "system",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "A phone at true size: its screen, status bar, cutout and bottom, with a keyboard that follows focus. Screens and the prototype render inside it.",

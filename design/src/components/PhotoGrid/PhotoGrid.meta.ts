@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "PhotoGrid",
   group: 4,
   layer: "brand",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary: "Sarah's photos by session and day: three across, 2 pt apart, edge to edge.",
   anatomy: [

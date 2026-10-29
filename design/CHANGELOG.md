@@ -6,9 +6,19 @@ Releases of the Camera Sharing design system. The format follows [Keep a Changel
 
 ### Added
 
-- PermissionPrompt, LiveActivity and ProgressNotification (group 4), in review: the system's permission prompts in each platform's own words, with focus on the refusal; Sarah's Lock Screen and Dynamic Island count arriving photos on iOS, and an ongoing notification does it on Android, with a bar only while progress is real. New `system.platterRadius` token for notification surfaces.
-- DeviceFrame, StatusBar, HomeIndicator and Keyboard (group 4), in review: four phones at true size; the keyboard follows focus and goes down with its screen (D21). Budget phones under 4 GB fade photos in instead of developing them.
-- PhotoTile, PhotoGrid and PhotoViewer (group 4), in review. A new photo develops once on arrival; with Reduce Motion or on a phone under 4 GB of memory it fades.
+- Group 4 approved by the owner on 29 October 2026; its ten components are in the Library at 1.0.0.
+- PhotoTile 1.0.0: square, never rounded, its state in the corner; a new photo develops once on arrival.
+- PhotoGrid 1.0.0: three across, 2 pt apart, edge to edge, by session and day.
+- PhotoViewer 1.0.0: one photo, large, on a dark surround, with where it is and what to do next.
+- DeviceFrame 1.0.0: four phones at true size; the keyboard follows focus and goes down with its screen (D21).
+- StatusBar 1.0.0: 9:41, drawn the way each platform draws it.
+- HomeIndicator 1.0.0: iOS's home indicator, Android's gesture handle or three buttons.
+- Keyboard 1.0.0: a picture of each platform's keyboard, for checking screens with it up.
+- PermissionPrompt 1.0.0: the system's permission prompts in each platform's own words; focus starts on the refusal.
+- LiveActivity 1.0.0: Sarah's Lock Screen and Dynamic Island count arriving photos on iOS.
+- ProgressNotification 1.0.0: Android's ongoing notification, with a bar only while progress is real.
+- With Reduce Motion or on a phone under 4 GB of memory, new photos fade in instead of developing.
+- New `system.platterRadius` token for notification surfaces.
 - Group 3 approved by the owner on 29 October 2026; its sixteen components are in the Library at 1.0.0.
 - TopBar 1.0.0: iOS's large-title bar and Material's large top app bar, expanded or collapsed.
 - SectionHeader 1.0.0: a section's title with an optional count.

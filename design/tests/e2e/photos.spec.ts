@@ -10,7 +10,7 @@ const arriveAndRead = async (
   reducedMotion: "reduce" | "no-preference",
 ): Promise<Running[]> => {
   await page.emulateMedia({ reducedMotion });
-  await gotoAndSettle(page, "/lab/photo-tile");
+  await gotoAndSettle(page, "/library/photo-tile");
   const example = page
     .locator(".ws-example")
     .filter({ has: page.getByText("Develops on arrival", { exact: true }) });

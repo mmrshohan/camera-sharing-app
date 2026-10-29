@@ -6,7 +6,7 @@ const example = (page: Page, title: string) =>
   page.locator(".ws-example").filter({ has: page.getByText(title, { exact: true }) });
 
 async function ask(page: Page, platform: "ios" | "android", title: string) {
-  await gotoAndSettle(page, `/lab/permission-prompt?platform=${platform}`);
+  await gotoAndSettle(page, `/library/permission-prompt?platform=${platform}`);
   const opener = example(page, title).getByRole("button", { name: "Ask" });
   await opener.focus();
   await page.keyboard.press("Enter");
@@ -57,7 +57,7 @@ test.describe("PermissionPrompt", () => {
   });
 
   test("Android never asks to save photos", async ({ page }) => {
-    await gotoAndSettle(page, "/lab/permission-prompt?platform=android");
+    await gotoAndSettle(page, "/library/permission-prompt?platform=android");
     await expect(example(page, "Saving to Photos")).toContainText("Android doesn’t ask");
     await expect(
       example(page, "Saving to Photos").getByRole("button", { name: "Ask" }),

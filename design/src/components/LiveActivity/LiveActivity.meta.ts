@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "LiveActivity",
   group: 4,
   layer: "system",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "Counts the photos arriving from Alex's camera while Sarah's app is closed: on her Lock Screen and in the Dynamic Island. iOS only.",

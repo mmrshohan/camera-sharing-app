@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "PermissionPrompt",
   group: 4,
   layer: "system",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "The system's permission prompt in each platform's own words, so screens show exactly what people will see.",

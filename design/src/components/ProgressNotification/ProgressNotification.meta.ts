@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "ProgressNotification",
   group: 4,
   layer: "system",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "Android's ongoing notification while photos arrive with the app closed. Android only; iOS uses LiveActivity.",

@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "StatusBar",
   group: 4,
   layer: "system",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary: "The phone's status bar at 9:41, drawn the way each platform draws it.",
   anatomy: [

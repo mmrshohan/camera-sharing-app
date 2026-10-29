@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "PhotoTile",
   group: 4,
   layer: "brand",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "One of Sarah's photos in the grid: square, never rounded, with its state in the corner. A new photo develops once when it arrives.",

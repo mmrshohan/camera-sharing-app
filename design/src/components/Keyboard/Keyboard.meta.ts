@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "Keyboard",
   group: 4,
   layer: "system",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary: "A picture of the platform's keyboard, so screens can be checked with the keyboard up.",
   anatomy: [

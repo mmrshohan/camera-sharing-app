@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "PhotoViewer",
   group: 4,
   layer: "brand",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "One photo, large, on a dark surround so the photo is the color, with where it is and what to do next.",
