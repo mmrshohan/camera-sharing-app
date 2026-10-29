@@ -1,0 +1,34 @@
+.last-shot-well {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: var(--well-size);
+  height: var(--well-size);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-thumb);
+  background: var(--color-camera-scrim);
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.last-shot-well__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-thumb);
+  box-shadow: inset 0 0 0 1px var(--color-camera-scrim);
+  background-repeat: no-repeat;
+}
+
+/* Before the first photo, an empty well holds the place so nothing shifts. */
+.last-shot-well--empty {
+  cursor: default;
+  box-shadow: inset 0 0 0 1px var(--color-camera-scrim-selected);
+}
+
+.last-shot-well:focus-visible {
+  outline: 2px solid var(--color-on-camera);
+  outline-offset: 2px;
+}

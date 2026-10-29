@@ -6,6 +6,7 @@ Releases of the Camera Sharing design system. The format follows [Keep a Changel
 
 ### Added
 
+- DestinationPill, ZoomControl, LastShotWell and CameraStatusLine (group 3), in review, with shared plural rules: “1 photo”, and photos waiting for Wi-Fi are never “sending” (D10, D16). The Guideline's Motion section has a live send demo.
 - PersonPair, VerificationWords, InvitationCode and Viewfinder (group 3), in review. The invitation shows its countdown only while active (D19).
 - Panel and ConfirmDialog (group 3), in review: each platform's sheet and alert; focus starts on the safe answer and returns to whatever opened them. The Guideline's Motion section has a live panel.
 - TopBar, SectionHeader, ListRow, GroupedList, EmptyState and Avatar (group 3), in review.

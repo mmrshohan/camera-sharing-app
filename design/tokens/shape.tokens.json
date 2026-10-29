@@ -133,6 +133,30 @@
       },
       "$description": "The invitation QR code, quiet zone included: large enough to scan from arm's length."
     },
+    "wellSize": {
+      "$type": "dimension",
+      "$value": {
+        "value": 48,
+        "unit": "px"
+      },
+      "$description": "The last-shot well beside the shutter."
+    },
+    "zoomSize": {
+      "$type": "dimension",
+      "$value": {
+        "value": 30,
+        "unit": "px"
+      },
+      "$description": "A zoom level's circle."
+    },
+    "zoomSizeSelected": {
+      "$type": "dimension",
+      "$value": {
+        "value": 38,
+        "unit": "px"
+      },
+      "$description": "The chosen zoom level's circle."
+    },
     "progressRingSize": {
       "$type": "dimension",
       "$value": {

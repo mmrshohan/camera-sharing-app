@@ -554,3 +554,14 @@
   border-radius: 12px;
   --viewfinder-preview: url("/images/coast.jpg") center / cover;
 }
+
+.ex-camera--stack {
+  grid-auto-flow: row;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+}
+
+.ex-camera--row {
+  grid-auto-flow: column;
+  gap: var(--space-6);
+}

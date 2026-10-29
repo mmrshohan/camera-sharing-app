@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { Button } from "@components/Button";
+import { DestinationPill } from "@components/DestinationPill";
+import { LastShotWell } from "@components/LastShotWell";
 import { LiveDot } from "@components/LiveDot";
 import { Panel } from "@components/Panel";
+import { Shutter } from "@components/Shutter";
 import { Text } from "@components/Text";
 import { springToMotion, tokens, type SpringName } from "@tokens";
 import { ExampleScreen } from "../ExampleScreen";
+import { nthSample } from "../samples";
 
 const springUse: Record<SpringName, string> = {
   navigate: "Screen pushes",
@@ -14,6 +18,21 @@ const springUse: Record<SpringName, string> = {
 };
 
 const springs = Object.keys(tokens.motion.spring) as SpringName[];
+
+/** Each capture drops a photo into the well while the destination pill pulses. */
+function SendDemo() {
+  const [photos, setPhotos] = useState(0);
+  return (
+    <div className="ex-camera g-send-demo">
+      <DestinationPill name="Sarah" pulseKey={photos} onPress={() => {}} />
+      <div className="g-send-demo__bar">
+        <LastShotWell image={nthSample(photos)} dropKey={photos} onOpen={() => {}} />
+        <Shutter state="ready" onCapture={() => setPhotos((n) => n + 1)} />
+        <span className="g-send-demo__spacer" />
+      </div>
+    </div>
+  );
+}
 
 /** A live Panel: it rises on spring.panel and closes by drag, Escape or a tap outside. */
 function PanelDemo() {
@@ -77,6 +96,16 @@ export function Motion() {
           </figcaption>
         </figure>
       </div>
+      <figure className="g-demo g-demo--panel">
+        <div className="g-demo__stage g-demo__stage--tall">
+          <SendDemo />
+        </div>
+        <figcaption>
+          <strong>Send</strong> — press the shutter: the photo drops into the well on spring.drop (
+          {m.spring.drop.response} s, {m.spring.drop.dampingFraction}) while “Sending to Sarah”
+          pulses to {m.pulse.scale} over {m.pulse.ms} ms
+        </figcaption>
+      </figure>
       <figure className="g-demo g-demo--panel">
         <div className="g-demo__stage g-demo__stage--tall">
           <PanelDemo />
