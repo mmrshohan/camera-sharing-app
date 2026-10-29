@@ -103,6 +103,8 @@ minutes.
 ## Known limitations
 
 - SF Pro renders only on Apple devices; elsewhere the system's sans-serif stands in.
+- No logo artwork is stored in this public repository. In SignInButton, Apple's logo is a character of
+  Apple's system font, so it shows only on Apple devices, and Google's G is a placeholder.
 - The Android phones use stock Android chrome, not Samsung One UI.
 - Some device values are approximate, and each frame's metadata says which.
 - There is one synthetic sample image (`ASSETS.md`); every photo is a crop of it.

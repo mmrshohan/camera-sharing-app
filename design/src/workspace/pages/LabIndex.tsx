@@ -1,8 +1,6 @@
 import { ComponentCard } from "../ComponentCard";
 import { labEntries } from "../registry";
-import { groupNames, type ComponentGroup } from "../types";
-
-const groups: ComponentGroup[] = [1, 2, 3, 4];
+import { componentGroups, groupNames } from "../types";
 
 export function LabIndex() {
   const entries = labEntries();
@@ -18,7 +16,7 @@ export function LabIndex() {
           <p>Nothing is in the Lab right now.</p>
         </div>
       )}
-      {groups.map((group) => {
+      {componentGroups.map((group) => {
         const inGroup = entries.filter((e) => e.meta.group === group);
         if (inGroup.length === 0) return null;
         return (

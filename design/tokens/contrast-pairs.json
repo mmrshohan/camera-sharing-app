@@ -198,6 +198,30 @@
       "bg": "color.deviceBody",
       "min": 3,
       "note": "Dynamic Island check when all arrived"
+    },
+    {
+      "fg": "color.signInAppleInk",
+      "bg": "color.signInAppleFill",
+      "min": 4.5,
+      "note": "Sign in with Apple's title"
+    },
+    {
+      "fg": "color.signInGoogleInk",
+      "bg": "color.signInGoogleFill",
+      "min": 4.5,
+      "note": "Sign in with Google's title"
+    },
+    {
+      "fg": "color.signInAppleFill",
+      "bg": "color.background",
+      "min": 3,
+      "note": "Sign in with Apple's edge on the screen"
+    },
+    {
+      "fg": "color.signInGoogleStroke",
+      "bg": "color.background",
+      "min": 3,
+      "note": "Sign in with Google's edge on the screen"
     }
   ]
 }

@@ -1,9 +1,7 @@
 import { Link } from "react-router";
 import { ComponentCard } from "../ComponentCard";
 import { labEntries, libraryEntries } from "../registry";
-import { groupNames, type ComponentGroup } from "../types";
-
-const groups: ComponentGroup[] = [1, 2, 3, 4];
+import { componentGroups, groupNames } from "../types";
 
 export function LibraryIndex() {
   const finals = libraryEntries();
@@ -26,7 +24,7 @@ export function LibraryIndex() {
           )}
         </div>
       ) : (
-        groups.map((group) => {
+        componentGroups.map((group) => {
           const entries = finals.filter((e) => e.meta.group === group);
           if (entries.length === 0) return null;
           return (

@@ -7,7 +7,7 @@ copied from the execution ledger, which is not kept in the repository.
 Each ruling says what was decided, why, and what it costs if it is wrong.
 They are the implementer's calls on the owner's behalf: the owner can overturn any of them.
 
-There are 184 rulings and 19 deferred minor findings.
+There are 190 rulings and 19 deferred minor findings.
 
 ## Rulings
 
@@ -296,6 +296,12 @@ There are 184 rulings and 19 deferred minor findings.
 - the code reviewer's "declined to judge" items stand: fades under Reduce Motion (spec §7 allows fades in place of spatial motion); the design-v1.0.0 tag (tagging follows the owner's merge, per the README); small-window fit and focus across a device switch (covered by shell.spec and devices.spec in the full check); the world cloned to both phones every 100 ms (no budget in the spec, fine at prototype scale); npm ci of an older tag running its install scripts (the same reviewed dependencies, from this repository's own tags) — cost if wrong: small, each named in the review.
 - Sarah deleting her account during a live session (code review, declined to judge) is left for a product decision: the model drops the session at once (doc 03 disables routing immediately), so Alex's camera shows its pill with no name until he leaves the camera; his own unlock still returns his phone — cost if wrong: an odd camera state on that path.
 - the final review's fixes go in one commit, because several files carry more than one fix; the ledger and the PR map each fix to its test — cost if wrong: a coarser history.
+- this plan's workspace (ledger) stays until the owner merges PR #2 or answers the sign-in question, instead of being deleted now — a further fix pass on this branch would resume from it; its rulings and minors are already committed in docs/work/2026-10-28-design-system-build-rulings.md — cost if wrong: one git-ignored directory left on disk.
+- SignInButton is a new group 5 ("Sign-in") in the Lab for the owner's approval, and Welcome keeps its current buttons until the group is approved and promoted — the lifecycle puts a component in the Library before a screen uses it — cost if wrong: Welcome stays non-compliant until approval.
+- no logo artwork, as the owner chose on 30 October 2026: Apple's logo is U+F8FF from Apple's system font, shown only on Apple devices, and Google's G is a dashed placeholder — cost if wrong: the review shows placeholders, not the exact marks.
+- both sign-in buttons take our Button's height, capsule and headline type, so neither brand is less prominent (Apple HIG; Google's branding guidelines); natively Apple's system button sizes its own title (43% of its height) and Google's title is Google Sans Medium — cost if wrong: native titles differ slightly from the draft.
+- an unavailable sign-in button dims to motion.dim instead of turning gray like Button, because each brand's colors must stay as the brand defines them — cost if wrong: one disabled style.
+- the Library and the Lab list every group from groupNames instead of a hard-coded [1, 2, 3, 4], which hid group 5; the overview test expects "Unreleased" for an unreleased section — cost if wrong: none.
 
 ## Deferred minor findings
 

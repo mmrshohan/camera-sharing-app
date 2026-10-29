@@ -28,7 +28,9 @@ test("the overview shows the version, components by status, latest changes and l
 
   const firstAdded = latest!.sections.Added[0]!.replaceAll("`", "");
   await expect(page.getByTestId("overview-latest")).toContainText(firstAdded);
-  await expect(page.getByTestId("overview-latest")).toContainText(`v${latest!.version}`);
+  // A release shows its version; the Unreleased section shows its name.
+  const label = latest!.date === null ? latest!.version : `v${latest!.version}`;
+  await expect(page.getByTestId("overview-latest")).toContainText(label);
 
   const links = page.getByTestId("overview-links");
   for (const name of ["Guideline", "Library", "Lab", "Prototype", "Changelog"]) {
