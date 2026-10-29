@@ -153,6 +153,20 @@
       "$type": "number",
       "$value": 0.6,
       "$description": "One dim level for controls: a pressed disc or button when Reduce Motion is on (it replaces the press scale), and the shutter's disc while preparing."
+    },
+    "dismiss": {
+      "$description": "A panel dragged down by its handle closes past this distance, or when flung faster than this (pt per ms).",
+      "distance": {
+        "$type": "dimension",
+        "$value": {
+          "value": 76,
+          "unit": "px"
+        }
+      },
+      "velocity": {
+        "$type": "number",
+        "$value": 0.45
+      }
     }
   }
 }

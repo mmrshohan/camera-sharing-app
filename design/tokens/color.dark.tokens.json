@@ -82,6 +82,15 @@
       },
       "$description": "Grouped rows and cards; panels in dark."
     },
+    "elevated": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [0.1098, 0.1098, 0.1176],
+        "hex": "#1C1C1E"
+      },
+      "$description": "Raised surfaces: iOS sheets and alerts (white in light, raised gray in dark)."
+    },
     "separator": {
       "$type": "color",
       "$value": {
@@ -185,6 +194,16 @@
         "alpha": 0.7
       },
       "$description": "Selected control over the live preview."
+    },
+    "scrim": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [0, 0, 0],
+        "hex": "#000000",
+        "alpha": 0.4
+      },
+      "$description": "Dims the screen behind panels and dialogs."
     },
     "onCamera": {
       "$type": "color",

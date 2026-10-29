@@ -1,5 +1,10 @@
+import { useState } from "react";
+import { Button } from "@components/Button";
 import { LiveDot } from "@components/LiveDot";
+import { Panel } from "@components/Panel";
+import { Text } from "@components/Text";
 import { springToMotion, tokens, type SpringName } from "@tokens";
+import { ExampleScreen } from "../ExampleScreen";
 
 const springUse: Record<SpringName, string> = {
   navigate: "Screen pushes",
@@ -9,6 +14,29 @@ const springUse: Record<SpringName, string> = {
 };
 
 const springs = Object.keys(tokens.motion.spring) as SpringName[];
+
+/** A live Panel: it rises on spring.panel and closes by drag, Escape or a tap outside. */
+function PanelDemo() {
+  const [open, setOpen] = useState(false);
+  return (
+    <ExampleScreen className="g-panel-screen">
+      {(screen) => (
+        <>
+          <div className="ex-screen__center">
+            <Button variant="tinted" onPress={() => setOpen(true)}>
+              Open a panel
+            </Button>
+          </div>
+          <Panel open={open} onClose={() => setOpen(false)} title="Panel" container={screen}>
+            <Text style="body" as="p" tone="ink2">
+              Drag the grabber down, press Escape or tap outside to close it.
+            </Text>
+          </Panel>
+        </>
+      )}
+    </ExampleScreen>
+  );
+}
 
 export function Motion() {
   const m = tokens.motion;
@@ -49,6 +77,16 @@ export function Motion() {
           </figcaption>
         </figure>
       </div>
+      <figure className="g-demo g-demo--panel">
+        <div className="g-demo__stage g-demo__stage--tall">
+          <PanelDemo />
+        </div>
+        <figcaption>
+          <strong>Panel</strong> — rises on spring.panel ({m.spring.panel.response} s,{" "}
+          {m.spring.panel.dampingFraction}) as the screen dims; a drag past {m.dismiss.distance} pt
+          or a fling faster than {m.dismiss.velocity} pt per ms closes it
+        </figcaption>
+      </figure>
       <div className="g-table-wrap">
         <table className="g-table">
           <thead>

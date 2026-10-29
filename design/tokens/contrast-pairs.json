@@ -126,6 +126,30 @@
       "bg": "color.ink",
       "min": 4.5,
       "note": "Toast text on its inverted capsule"
+    },
+    {
+      "fg": "color.ink",
+      "bg": "color.elevated",
+      "min": 4.5,
+      "note": "Panel and dialog text"
+    },
+    {
+      "fg": "color.ink2",
+      "bg": "color.elevated",
+      "min": 4.5,
+      "note": "Dialog messages"
+    },
+    {
+      "fg": "color.accentText",
+      "bg": "color.elevated",
+      "min": 4.5,
+      "note": "Dialog answers"
+    },
+    {
+      "fg": "color.danger",
+      "bg": "color.elevated",
+      "min": 4.5,
+      "note": "Destructive answers"
     }
   ]
 }

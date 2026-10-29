@@ -8,24 +8,10 @@
         "unit": "px"
       }
     },
-    "radiusField": {
-      "$type": "dimension",
-      "$value": {
-        "value": 12,
-        "unit": "px"
-      }
-    },
     "radiusCard": {
       "$type": "dimension",
       "$value": {
         "value": 16,
-        "unit": "px"
-      }
-    },
-    "radiusPanel": {
-      "$type": "dimension",
-      "$value": {
-        "value": 38,
         "unit": "px"
       }
     },
@@ -357,6 +343,91 @@
         "$type": "dimension",
         "$value": {
           "value": 64,
+          "unit": "px"
+        }
+      }
+    },
+    "panelRadius": {
+      "$description": "Top corners of a sheet: the iOS sheet; Material's modal bottom sheet.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 38,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 28,
+          "unit": "px"
+        }
+      }
+    },
+    "handleWidth": {
+      "$description": "The iOS grabber; Material's drag handle.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 36,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 32,
+          "unit": "px"
+        }
+      }
+    },
+    "handleHeight": {
+      "$description": "The iOS grabber; Material's drag handle.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 5,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 4,
+          "unit": "px"
+        }
+      }
+    },
+    "dialogRadius": {
+      "$description": "An alert: UIAlertController; Material's dialog.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 14,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 28,
+          "unit": "px"
+        }
+      }
+    },
+    "dialogWidth": {
+      "$description": "An alert's width on a phone: UIAlertController; Material's dialog.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 270,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 312,
           "unit": "px"
         }
       }

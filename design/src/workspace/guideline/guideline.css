@@ -617,3 +617,17 @@
   gap: 10px;
   margin: 0;
 }
+
+.g-demo--panel {
+  margin-bottom: 18px;
+}
+
+.g-demo__stage--tall {
+  height: auto;
+  padding: var(--space-5);
+}
+
+.g-panel-screen {
+  width: min(100%, 402px);
+  height: 360px;
+}

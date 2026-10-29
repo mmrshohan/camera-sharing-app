@@ -6,6 +6,7 @@ Releases of the Camera Sharing design system. The format follows [Keep a Changel
 
 ### Added
 
+- Panel and ConfirmDialog (group 3), in review: each platform's sheet and alert; focus starts on the safe answer and returns to whatever opened them. The Guideline's Motion section has a live panel.
 - TopBar, SectionHeader, ListRow, GroupedList, EmptyState and Avatar (group 3), in review.
 - Group 2 approved by the owner on 29 October 2026; its nine components are in the Library at 1.0.0.
 - Button 1.0.0: filled and tinted capsules, plain and destructive text buttons; disabled and loading.

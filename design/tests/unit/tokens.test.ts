@@ -101,6 +101,19 @@ describe("tokens", () => {
     expect(tokens.shape).toMatchObject({ iconRow: 22, iconBar: 24, iconChip: 18, ringIcon: 28 });
   });
 
+  it("has panel, handle and dialog metrics per platform, and the dismiss thresholds", () => {
+    expect(tokens.system.panelRadius).toEqual({ ios: 38, android: 28 });
+    expect(tokens.system.handleWidth).toEqual({ ios: 36, android: 32 });
+    expect(tokens.system.dialogRadius).toEqual({ ios: 14, android: 28 });
+    expect(tokens.motion.dismiss).toEqual({ distance: 76, velocity: 0.45 });
+    expect(tokens.color.light.scrim).toBe("rgba(0, 0, 0, 0.4)");
+  });
+
+  it("keeps one source per value: platform radii live only in system", () => {
+    expect(Object.keys(tokens.shape)).not.toContain("radiusPanel");
+    expect(Object.keys(tokens.shape)).not.toContain("radiusField");
+  });
+
   it("has iOS's system fill and a shadow for raised controls", () => {
     expect(tokens.color.light.fill).toBe("rgba(120, 120, 128, 0.2)");
     expect(tokens.color.dark.fill).toBe("rgba(120, 120, 128, 0.36)");

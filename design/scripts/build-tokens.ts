@@ -50,6 +50,7 @@ export interface TokenModel {
     live: { min: number; periodMs: number };
     waiting: { arc: number; periodMs: number };
     dim: number;
+    dismiss: { distance: number; velocity: number };
     fadeMs: number;
   };
 }
@@ -247,6 +248,10 @@ export function buildModel(src: TokenSources): TokenModel {
         periodMs: duration(m, "motion.waiting.period"),
       },
       dim: number(m, "motion.dim"),
+      dismiss: {
+        distance: dimension(m, "motion.dismiss.distance"),
+        velocity: number(m, "motion.dismiss.velocity"),
+      },
       fadeMs: duration(m, "motion.fade"),
     },
   };
@@ -307,6 +312,7 @@ export function renderCss(model: TokenModel): string {
     ["motion-waiting-duration", `${mo.waiting.periodMs}ms`],
     ["motion-waiting-arc", mo.waiting.arc],
     ["motion-dim", mo.dim],
+    ["motion-dismiss-distance", px(mo.dismiss.distance)],
     ["motion-fade-duration", `${mo.fadeMs}ms`],
   ];
   return [

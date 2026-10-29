@@ -1,11 +1,12 @@
 import { tokens } from "@tokens";
 
-const radii = [
-  ["radiusThumb", "Thumbnails"],
-  ["radiusField", "Text fields"],
-  ["radiusCard", "Cards"],
-  ["radiusPanel", "Panel top"],
-] as const;
+// Brand radii are the same on both platforms; system radii follow each platform.
+const radii: { label: string; ios: number; android: number }[] = [
+  { label: "Thumbnails", ios: tokens.shape.radiusThumb, android: tokens.shape.radiusThumb },
+  { label: "Cards", ios: tokens.shape.radiusCard, android: tokens.shape.radiusCard },
+  { label: "Text fields", ...tokens.system.fieldRadius },
+  { label: "Panel top", ...tokens.system.panelRadius },
+];
 
 const sizes = [
   ["buttonHeight", "Filled and tinted buttons (capsule)"],
@@ -32,15 +33,21 @@ export function Shape() {
         <article className="g-card">
           <h3>Corner radii</h3>
           <div className="g-radii">
-            {radii.map(([key, label]) => (
-              <figure key={key}>
+            {radii.map(({ label, ios, android }) => (
+              <figure key={label}>
                 <span
                   className="g-radius"
-                  style={{ borderRadius: `${tokens.shape[key]}px ${tokens.shape[key]}px 0 0` }}
+                  style={{ borderRadius: `${ios}px ${ios}px 0 0` }}
                   aria-hidden="true"
                 />
                 <figcaption>
-                  {label} <code>{tokens.shape[key]}</code>
+                  {label} <code>{ios}</code>
+                  {android !== ios && (
+                    <>
+                      {" "}
+                      · Android <code>{android}</code>
+                    </>
+                  )}
                 </figcaption>
               </figure>
             ))}

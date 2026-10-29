@@ -528,3 +528,20 @@
 .ex-phone--framed > .grouped-list {
   padding-block: var(--space-4);
 }
+
+.ex-screen--tall {
+  height: 520px;
+}
+
+.ex-screen__center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+}
+
+.ex-stack {
+  display: grid;
+  gap: var(--space-4);
+}
