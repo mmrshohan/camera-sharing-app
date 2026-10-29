@@ -169,3 +169,26 @@ test("on the lock, only what can be tapped is blue (design review 12, spec §7.1
     });
   expect(blue).toEqual([]);
 });
+
+test("canceling says photos already sent may still arrive, when some have left Alex's phone (copy review, doc 06)", async ({
+  page,
+}) => {
+  await openShell(page, "camera-ready");
+  const alex = phone(page, "Alex");
+  const network = async (name: "Alex" | "Sarah", state: "Online" | "Offline") => {
+    await page.getByRole("button", { name: `${name}'s phone settings` }).click();
+    await page.getByRole("radio", { name: state }).check();
+    await page.keyboard.press("Escape");
+  };
+  // The first photo leaves Alex's phone but can't reach Sarah's; the second stays on Alex's.
+  await network("Sarah", "Offline");
+  await alex.getByRole("button", { name: "Take photo" }).click();
+  await page.getByRole("button", { name: "Forward 1 minute" }).click();
+  await network("Alex", "Offline");
+  await alex.getByRole("button", { name: "Take photo" }).click();
+  await alex.locator(".camera-status-line").click();
+  await alex.getByRole("button", { name: "Cancel unsent photos" }).click();
+  await expect(alex.getByRole("alertdialog")).toContainText(
+    "1 photo won’t be sent. Photos already sent may still arrive.",
+  );
+});

@@ -150,11 +150,6 @@
   gap: var(--space-4);
 }
 
-/* The panel already sits at the screen margin, so an inset list inside it lines up with its title. */
-.panel-stack > .grouped-list {
-  padding-inline: 0;
-}
-
 .panel-actions {
   display: grid;
   gap: var(--space-2);

@@ -1,7 +1,7 @@
 // Builds an earlier design-system release from its tag, so pages can be compared with it.
 // Usage: npm run release:fetch 1.0.0
 import { execFileSync } from "node:child_process";
-import { existsSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
@@ -50,6 +50,7 @@ export function releaseIndex(entries: string[]): string[] {
 export interface Effects {
   run: (command: string, args: string[], cwd: string) => void;
   exists: (path: string) => boolean;
+  deleteFolder: (path: string) => void;
   writeIndex: () => void;
   log: (message: string) => void;
   error: (message: string) => void;
@@ -60,8 +61,13 @@ const message = (error: unknown) => (error instanceof Error ? error.message : St
 /** Removes the temporary worktree, and git's record of any worktree whose folder is gone. */
 function clear(plan: ReleasePlan, repoRoot: string, fx: Effects): void {
   fx.run("git", ["worktree", "prune"], repoRoot);
-  if (fx.exists(plan.worktree))
+  if (!fx.exists(plan.worktree)) return;
+  try {
     fx.run("git", ["worktree", "remove", "--force", plan.worktree], repoRoot);
+  } catch {
+    // A folder git no longer records as a worktree would stop every run; it is only ours.
+    fx.deleteFolder(plan.worktree);
+  }
 }
 
 /** Builds a release in a temporary worktree, which it always removes. Returns whether it built. */
@@ -103,6 +109,7 @@ function main(): void {
   const built = fetchRelease(plan, repoRoot, {
     run: (command, args, cwd) => execFileSync(command, args, { cwd, stdio: "inherit" }),
     exists: existsSync,
+    deleteFolder: (path) => rmSync(path, { recursive: true, force: true }),
     writeIndex: () =>
       writeFileSync(
         join(releases, "index.json"),

@@ -14,6 +14,7 @@ export const meta: ComponentMeta = {
     "Android: a 32 × 4 dp drag handle with a 48 dp touch area, 28 dp corners, the elevated background",
     "The title in title2; the content scrolls inside, clear of the home indicator or navigation bar",
     "Cards inside take color.surfaceElevated, one step above the panel, so they keep their shape in dark",
+    "An inset list inside lines up with the title: the panel already sets the screen margin",
     "Medium detent is half the screen; large stops just below the status bar",
     "The screen behind dims to 40%",
   ],
@@ -55,7 +56,7 @@ export const meta: ComponentMeta = {
       version: "1.0.2",
       date: "2026-10-30",
       summary:
-        "Where focus starts is shown from its first line, not centered with a line cut under the title; content that scrolls with nothing to tap can be scrolled from the keyboard.",
+        "Where focus starts is shown from its first line, not centered with a line cut under the title; content that scrolls with nothing to tap can be scrolled from the keyboard; an inset list inside lines up with the title.",
     },
     {
       version: "1.0.1",

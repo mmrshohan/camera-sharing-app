@@ -16,6 +16,8 @@ function texts(strings: Record<string, unknown>): [key: string, text: string][] 
       return [
         [key, String(value("Sarah", 2, "Sunday 9:41 AM"))],
         [key, String(value(1, "Alex", "Sunday 9:41 AM"))],
+        // A zero and a later count reach the sentences that only show for them.
+        [key, String(value(0, "Sarah", 1))],
       ];
     }
     if (Array.isArray(value)) return value.flatMap((item, i) => walk(`${key}.${i}`, item));
@@ -83,6 +85,12 @@ describe("prototype copy (spec §11)", () => {
   );
 });
 
+test("the scan reaches the sentences that show only in some states", () => {
+  const all = allCopy.flatMap(({ strings }) => texts(strings).map(([, text]) => text));
+  expect(all.some((text) => text.includes("Photos already sent may still arrive."))).toBe(true);
+  expect(all.some((text) => text.includes("save the ones you want"))).toBe(true);
+});
+
 describe("copy review: what happens, precisely (deferred minors, 29 October 2026)", () => {
   const module = (name: string) => {
     const found = allCopy.find((c) => c.module === name);
@@ -143,10 +151,14 @@ describe("copy review: what happens, precisely (deferred minors, 29 October 2026
   test("with Photos access off, Home never says photos already received will be saved", () => {
     const on = home.accessBody(true);
     const off = home.accessBody(false);
-    for (const body of [on, off]) expect(body).not.toMatch(/until you turn it on/);
-    // With Save to Photos on, only new photos save themselves; with it off, saving is a choice.
-    expect(on).toMatch(/save new ones to Photos/);
-    expect(off).not.toMatch(/new ones/);
+    for (const body of [on, off]) {
+      expect(body).not.toMatch(/until you turn it on/);
+      // Only what arrives now: photos saved before access was turned off are in Photos too.
+      expect(body).toMatch(/^New photos are kept only in this app\./);
+    }
+    // With Save to Photos on, only the next photos save themselves; with it off, saving is a choice.
+    expect(on).toMatch(/save the next ones to Photos/);
+    expect(off).not.toMatch(/next ones|new ones/);
   });
 
   test("canceling says photos already on their way may still arrive (doc 06)", () => {

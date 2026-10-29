@@ -26,10 +26,11 @@ describe("release comparison", () => {
   describe("its temporary worktree (code review 6)", () => {
     const plan = releasePlan("1.0.0", "/r", "/t");
 
-    /** A shell that records each command; `fail` names commands that throw. */
+    /** A shell that records each command; `fail` names commands that throw ("rm" for the folder). */
     function shell(leftOver: boolean, fail: string[] = []) {
       const calls: string[] = [];
       const errors: string[] = [];
+      const deleted: string[] = [];
       let there = leftOver;
       const fx: Effects = {
         run: (command, args) => {
@@ -40,11 +41,16 @@ describe("release comparison", () => {
           if (line.startsWith("git worktree remove")) there = false;
         },
         exists: (path) => path === plan.worktree && there,
+        deleteFolder: (path) => {
+          if (fail.includes("rm")) throw new Error(`Could not delete ${path}`);
+          deleted.push(path);
+          there = false;
+        },
         writeIndex: () => {},
         log: () => {},
         error: (line) => errors.push(line),
       };
-      return { fx, calls, errors };
+      return { fx, calls, errors, deleted };
     }
 
     test("one left by an interrupted run is cleared before a new one is added", () => {
@@ -58,8 +64,15 @@ describe("release comparison", () => {
       expect(before).toContain("git worktree prune");
     });
 
+    test("a leftover folder git no longer records as a worktree is deleted, so runs aren't stuck (review)", () => {
+      const { fx, errors, deleted } = shell(true, ["git worktree remove"]);
+      expect(fetchRelease(plan, "/r", fx)).toBe(true);
+      expect(deleted).toContain(plan.worktree);
+      expect(errors).toEqual([]);
+    });
+
     test("a failed cleanup is reported after the error that stopped the build, never instead of it", () => {
-      const { fx, errors } = shell(false, ["npm ci", "git worktree remove"]);
+      const { fx, errors } = shell(false, ["npm ci", "git worktree remove", "rm"]);
       expect(fetchRelease(plan, "/r", fx)).toBe(false);
       expect(errors[0]).toBe("release:fetch: Command failed: npm ci");
       expect(errors[1]).toMatch(/could not remove .*design-release-1\.0\.0/);

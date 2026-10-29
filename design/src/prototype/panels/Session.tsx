@@ -25,7 +25,6 @@ export function Session({ id }: { id: DeviceId }) {
   const to = session.recipient.name;
   const counts = hostSummary(world);
   const items = hostItems(world);
-  const unsent = counts.preparing + counts.sending + counts.waitingInternet + counts.waitingWifi;
   const ending = endingNow(world);
   const canceling = cancelingNow(world);
   const active = session.state === "active";
@@ -76,7 +75,7 @@ export function Session({ id }: { id: DeviceId }) {
               >
                 {s.endSession}
               </Button>
-              {unsent > 0 && (
+              {canceling.unsent > 0 && (
                 <Button
                   variant="plain"
                   fullWidth
