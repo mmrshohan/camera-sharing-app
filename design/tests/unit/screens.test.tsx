@@ -1,11 +1,13 @@
 import type { ComponentType } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, test } from "vitest";
+import { strings as camera } from "@prototype/copy/camera";
 import { strings as session } from "@prototype/copy/session";
 import { endingNow, recipientTiles } from "@prototype/model/selectors";
-import type { DeviceId, World, WorldEvent } from "@prototype/model/types";
-import { reduce, timing } from "@prototype/model/world";
+import type { DeviceId, HostPhoto, World, WorldEvent } from "@prototype/model/types";
+import { limits, reduce, timing, toasts } from "@prototype/model/world";
 import { getScenario } from "@prototype/scenarios/catalog";
+import { Camera } from "@prototype/screens/Camera";
 import { Home } from "@prototype/screens/Home";
 import { Lock } from "@prototype/screens/Lock";
 import { DeviceViewContext } from "@prototype/shell/deviceView";
@@ -118,5 +120,40 @@ describe("Sarah's Home (design review, 29 October 2026)", () => {
     expect(labels.length).toBeGreaterThan(1);
     expect(new Set(labels).size).toBe(labels.length);
     expect(markup(Home, w, "sarah")).not.toMatch(/aria-label="([^",]+), \1[,"]/);
+  });
+});
+
+describe("the queue limit (code review 10)", () => {
+  /** An earlier session's photos, still on Alex's phone and waiting for internet. */
+  function earlierPhotos(w: World, count: number): World {
+    const alex = w.devices.alex;
+    const waiting: HostPhoto[] = Array.from({ length: count }, (_, i) => ({
+      id: `s0-${i + 1}`,
+      sessionId: "s0",
+      stage: "reserved",
+      reserved: true,
+      retry: false,
+      capturedAt: 0,
+      stageAt: 0,
+      reservedAt: 0,
+      expiresAt: limits.photoMs,
+      sample: "coast-01",
+    }));
+    return {
+      ...w,
+      devices: { ...w.devices, alex: { ...alex, hostPhotos: [...waiting, ...alex.hostPhotos] } },
+    };
+  }
+
+  test("photos still waiting from an earlier session count on the camera as in the model", () => {
+    const w = earlierPhotos(run(scenario("camera-ready"), offline("alex")), limits.queue);
+    expect(run(w, capture).devices.alex.ui.toast).toBe(toasts.queueFull);
+    expect(markup(Camera, w, "alex")).toContain(camera.queueFull);
+  });
+
+  test("one under the limit, both still take photos", () => {
+    const w = earlierPhotos(run(scenario("camera-ready"), offline("alex")), limits.queue - 1);
+    expect(run(w, capture).devices.alex.ui.toast).toBeNull();
+    expect(markup(Camera, w, "alex")).not.toContain(camera.queueFull);
   });
 });

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react
 import { useParams } from "react-router";
 import type { DeviceId, World, WorldEvent } from "@prototype/model/types";
 import { reduce } from "@prototype/model/world";
-import { isToPhone, reconcile, type Pending, type ToShell } from "./bridge";
+import { isToPhone, nextSeq, reconcile, type Pending, type ToShell } from "./bridge";
 import { DeviceHost } from "./DeviceHost";
 import "./phone.css";
 
@@ -21,6 +21,8 @@ export function PhonePage() {
   const { id } = useParams();
   const [state, setState] = useState<PhoneState | null>(null);
   const seq = useRef(0);
+  /** The last event of this phone that the shell has applied, from its latest message. */
+  const applied = useRef(0);
 
   useEffect(() => {
     if (!isDeviceId(id)) return;
@@ -29,6 +31,7 @@ export function PhonePage() {
       if (event.origin !== window.location.origin || event.source !== window.parent) return;
       const message = event.data;
       if (!isToPhone(message)) return;
+      applied.current = message.applied;
       setState((current) => ({
         ...reconcile(message.world, message.applied, current?.pending ?? []),
         scale: message.scale,
@@ -75,7 +78,7 @@ export function PhonePage() {
   const dispatch = useCallback(
     (event: WorldEvent) => {
       if (!isDeviceId(id)) return;
-      seq.current += 1;
+      seq.current = nextSeq(seq.current, applied.current);
       const pending = { seq: seq.current, event };
       // Shown at once; the shell confirms it with its next world.
       setState(

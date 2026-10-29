@@ -594,6 +594,34 @@ describe("Review Focus 1: a double tap has one effect", () => {
     const w = run(sent, { type: "savePhoto", id: a }, { type: "savePhoto", id: a }, settle);
     expect(gallery(w).map((p) => [p.id, p.stage])).toEqual([[a, "saved"]]);
   });
+
+  test("a prompt keeps its first answer: a second tap while it fades changes nothing (code review 3)", () => {
+    const sent = run(connected(createWorld({ sarahModel: "iphone16pro" })), capture, settle);
+    const a = must(hostIds(sent)[0]);
+    const asked = run(sent, { type: "savePhoto", id: a });
+    expect(asked.devices.sarah.ui.prompt).toBe("photosAddOnly");
+    const w = run(
+      asked,
+      { type: "answerPrompt", device: "sarah", kind: "photosAddOnly", allow: true },
+      { type: "answerPrompt", device: "sarah", kind: "photosAddOnly", allow: false },
+    );
+    expect(w.devices.sarah.permissions.photosAddOnly).toBe("granted");
+    expect(stageOf(w, a)).toBe("exportPending");
+  });
+});
+
+describe("asking by username", () => {
+  test("someone the app knows is found however the name is typed (code review 4)", () => {
+    for (const typed of ["maya", "@maya", "Maya", "@MAYA"]) {
+      const w = run(createWorld(), { type: "requestByUsername", username: typed });
+      expect(w.devices.alex.ui.notice, typed).toBe("notAvailable");
+    }
+  });
+
+  test("nobody by that name is no match", () => {
+    const w = run(createWorld(), { type: "requestByUsername", username: "@nobody" });
+    expect(w.devices.alex.ui.notice).toBe("noMatch");
+  });
 });
 
 describe("the session's clock", () => {
@@ -817,6 +845,7 @@ test("reduce never mutates its input", () => {
     { type: "setSetting", device: "sarah", key: "autoSave", value: true },
     { type: "setSetting", device: "alex", key: "wifiOnly", value: true },
     { type: "permission", device: "sarah", kind: "photosAddOnly", allow: true },
+    { type: "answerPrompt", device: "sarah", kind: "photosAddOnly", allow: false },
     { type: "typeField", device: "sarah", value: "sarah" },
     { type: "submitUsername", device: "sarah" },
   ];

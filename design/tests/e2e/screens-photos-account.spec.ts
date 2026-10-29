@@ -36,6 +36,30 @@ test("D1, R7: offline photos need both phones; there is no Try again", async ({ 
   await expect(alex.getByText("Still on this phone: 2 sending")).toBeVisible();
 });
 
+const photosAccess = (page: Page) =>
+  page.evaluate(
+    () =>
+      (
+        window as {
+          __protoWorld?: { devices: { sarah: { permissions: { photosAddOnly: string } } } };
+        }
+      ).__protoWorld?.devices.sarah.permissions.photosAddOnly,
+  );
+
+test("a prompt keeps its first answer: a tap on Don’t Allow as it fades changes nothing (code review 3)", async ({
+  page,
+}) => {
+  await openShell(page, "scenario=system-photos-prompt&sarahDevice=iphone16pro");
+  const prompt = phone(page, "Sarah").getByRole("alertdialog");
+  await expect(prompt).toBeVisible();
+  const deny = prompt.getByRole("button", { name: "Don’t Allow" });
+  await prompt.getByRole("button", { name: "Allow", exact: true }).click();
+  // The prompt is still on screen while it fades out, so a second tap can land on it.
+  await deny.dispatchEvent("click");
+  await expect(prompt).toBeHidden();
+  expect(await photosAccess(page)).toBe("granted");
+});
+
 test("D11: with Photos access off, Save explains how to turn it on, and no prompt appears", async ({
   page,
 }) => {
