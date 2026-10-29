@@ -4,6 +4,8 @@ Releases of the Camera Sharing design system. The format follows [Keep a Changel
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-10-30
+
 ### Added
 
 - Group 5 approved by the owner on 30 October 2026; SignInButton is in the Library at 1.0.0, and Welcome uses it.

@@ -54,11 +54,27 @@ describe("parseChangelog", () => {
     expect(() => parseChangelog("## 1.0.0\n\n### Added\n\n- Something.\n")).toThrow(/1\.0\.0/);
   });
 
-  test("the shipped CHANGELOG.md parses: Unreleased first, then 1.0.0 with its date", () => {
+  test("the shipped CHANGELOG.md parses: Unreleased first, then 1.1.0 and 1.0.0 with their dates", () => {
     const md = readFileSync(new URL("../../CHANGELOG.md", import.meta.url), "utf8");
-    const [first, release] = parseChangelog(md);
+    const [first, latest, previous] = parseChangelog(md);
     expect(first?.version).toBe("Unreleased");
-    expect(release).toMatchObject({ version: "1.0.0", date: "2026-10-29" });
-    expect(release?.sections.Added.length).toBeGreaterThan(0);
+    expect(latest).toMatchObject({ version: "1.1.0", date: "2026-10-30" });
+    expect(latest?.sections.Added.join(" ")).toContain("SignInButton");
+    expect(previous).toMatchObject({ version: "1.0.0", date: "2026-10-29" });
+    expect(previous?.sections.Added.length).toBeGreaterThan(0);
+  });
+
+  test("the package's version is the newest release, in package.json and its lockfile", () => {
+    const read = (file: string) =>
+      JSON.parse(readFileSync(new URL(`../../${file}`, import.meta.url), "utf8")) as {
+        version: string;
+        packages?: Record<string, { version?: string }>;
+      };
+    const md = readFileSync(new URL("../../CHANGELOG.md", import.meta.url), "utf8");
+    const newest = parseChangelog(md).find((release) => release.date !== null);
+    const pkg = read("package.json");
+    const lock = read("package-lock.json");
+    expect(pkg.version).toBe(newest?.version);
+    expect([lock.version, lock.packages?.[""]?.version]).toEqual([pkg.version, pkg.version]);
   });
 });
