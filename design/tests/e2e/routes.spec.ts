@@ -1,4 +1,11 @@
+import { readFileSync } from "node:fs";
 import { expect, gotoAndSettle, test } from "./fixtures";
+
+const { version } = JSON.parse(
+  readFileSync(new URL("../../package.json", import.meta.url), "utf8"),
+) as {
+  version: string;
+};
 
 const routes: [path: string, heading: string][] = [
   ["/", "Camera Sharing design system"],
@@ -33,5 +40,5 @@ test("the top navigation links every section", async ({ page }) => {
   for (const name of ["Overview", "Guideline", "Library", "Lab", "Prototype", "Changelog"]) {
     await expect(nav.getByRole("link", { name })).toBeVisible();
   }
-  await expect(page.getByRole("banner").getByText("v0.1.0")).toBeVisible();
+  await expect(page.getByRole("banner").getByText(`v${version}`)).toBeVisible();
 });

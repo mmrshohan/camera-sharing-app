@@ -1,6 +1,6 @@
 {
   "name": "camera-sharing-design",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "description": "Design-system workspace and app prototype for Camera Sharing. Runs on 127.0.0.1 only.",
   "type": "module",

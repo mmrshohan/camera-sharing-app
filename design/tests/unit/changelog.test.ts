@@ -54,10 +54,11 @@ describe("parseChangelog", () => {
     expect(() => parseChangelog("## 1.0.0\n\n### Added\n\n- Something.\n")).toThrow(/1\.0\.0/);
   });
 
-  test("the shipped CHANGELOG.md parses and starts with Unreleased", () => {
+  test("the shipped CHANGELOG.md parses: Unreleased first, then 1.0.0 with its date", () => {
     const md = readFileSync(new URL("../../CHANGELOG.md", import.meta.url), "utf8");
-    const [first] = parseChangelog(md);
+    const [first, release] = parseChangelog(md);
     expect(first?.version).toBe("Unreleased");
-    expect(first?.sections.Added.length).toBeGreaterThan(0);
+    expect(release).toMatchObject({ version: "1.0.0", date: "2026-10-29" });
+    expect(release?.sections.Added.length).toBeGreaterThan(0);
   });
 });

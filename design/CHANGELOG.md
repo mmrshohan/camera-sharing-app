@@ -1,8 +1,10 @@
 # Changelog
 
-Releases of the Camera Sharing design system. The format follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/) and versions follow [Semantic Versioning](https://semver.org/). The first Library release will be 1.0.0. Add new entries at the top of their section.
+Releases of the Camera Sharing design system. The format follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/) and versions follow [Semantic Versioning](https://semver.org/). The first Library release is 1.0.0. Add new entries at the top of their section.
 
 ## [Unreleased]
+
+## [1.0.0] - 2026-10-29
 
 ### Fixed
 
