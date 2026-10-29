@@ -1,6 +1,6 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { AnimatePresence, motion, useDragControls, type PanInfo } from "motion/react";
-import type { ReactNode, RefObject } from "react";
+import { useLayoutEffect, useRef, useState, type ReactNode, type RefObject } from "react";
 import { useReturnFocus } from "@shared/focus";
 import { useShouldReduceMotion } from "@shared/surface";
 import { springToMotion, tokens } from "@tokens";
@@ -24,6 +24,43 @@ const { motion: m } = tokens;
 const rise = springToMotion(m.spring.panel);
 const fade = { duration: m.fadeMs / 1000 };
 
+/**
+ * Scrolls the body just enough to show where focus starts, its first line first. The browser
+ * would center it instead, and cut its first line when it is taller than the body.
+ */
+function reveal(body: HTMLElement | null, target: HTMLElement): void {
+  if (!body?.offsetHeight) return;
+  const view = body.getBoundingClientRect();
+  const box = target.getBoundingClientRect();
+  // Rectangles come at the scale the screen is drawn at; scrollTop is in CSS pixels.
+  const scale = view.height / body.offsetHeight;
+  const above = (view.top - box.top) / scale;
+  const below = (box.bottom - view.bottom) / scale;
+  if (above > 0) body.scrollTop -= above;
+  else if (below > 0) body.scrollTop += Math.min(below, -above);
+}
+
+/** Whether the content is taller than the body around it, kept current as either changes. */
+function useOverflow(
+  body: RefObject<HTMLElement | null>,
+  content: RefObject<HTMLElement | null>,
+  open: boolean,
+): boolean {
+  const [overflows, setOverflows] = useState(false);
+  useLayoutEffect(() => {
+    const outer = body.current;
+    const inner = content.current;
+    if (!open || !outer || !inner) return;
+    const check = () => setOverflows(outer.scrollHeight > outer.clientHeight);
+    const observer = new ResizeObserver(check);
+    observer.observe(outer);
+    observer.observe(inner);
+    check();
+    return () => observer.disconnect();
+  }, [body, content, open]);
+  return overflows;
+}
+
 /** The system sheet on iOS, Material's modal bottom sheet on Android. Opens inside its screen. */
 export function Panel({
   open,
@@ -38,6 +75,9 @@ export function Panel({
   const reduceMotion = useShouldReduceMotion();
   const drag = useDragControls();
   const focus = useReturnFocus();
+  const body = useRef<HTMLDivElement>(null);
+  const content = useRef<HTMLDivElement>(null);
+  const scrolls = useOverflow(body, content, open);
   const away = reduceMotion ? { opacity: 0 } : { y: "100%" };
 
   const onDragEnd = (_event: unknown, info: PanInfo) => {
@@ -72,9 +112,11 @@ export function Panel({
               aria-describedby={undefined}
               onOpenAutoFocus={(event) => {
                 focus.remember();
-                if (initialFocus?.current) {
+                const target = initialFocus?.current;
+                if (target) {
                   event.preventDefault();
-                  initialFocus.current.focus();
+                  target.focus({ preventScroll: true });
+                  reveal(body.current, target);
                 }
               }}
               onCloseAutoFocus={focus.restore}
@@ -108,7 +150,14 @@ export function Panel({
                   <span className="panel__grabber" />
                 </div>
                 <Dialog.Title className="panel__title">{title}</Dialog.Title>
-                <div className="panel__body">{children}</div>
+                <div
+                  ref={body}
+                  className="panel__body"
+                  // Content that scrolls can be scrolled from the keyboard, even with no control.
+                  {...(scrolls && { tabIndex: 0, role: "region", "aria-label": title })}
+                >
+                  <div ref={content}>{children}</div>
+                </div>
               </motion.div>
             </Dialog.Content>
           </Dialog.Portal>

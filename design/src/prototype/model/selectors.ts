@@ -205,11 +205,17 @@ export function recipientTiles(
   const bySession = new Map<string, RecipientPhoto[]>();
   for (const p of w.devices.sarah.gallery)
     bySession.set(p.sessionId, [...(bySession.get(p.sessionId) ?? []), p]);
-  return [...bySession.entries()].reverse().map(([sessionId, photos]) => {
+  const sections = [...bySession.entries()].reverse().map(([sessionId, photos]) => {
     const first = photos[0];
+    const at = first ? first.arrivedAt || first.stageAt : w.clock;
+    return { sessionId, photos, first, at, day: dayLabel(at, w.clock) };
+  });
+  // Sessions on the same day are told apart by when each began.
+  const shared = (day: string) => sections.filter((s) => s.day === day).length > 1;
+  return sections.map(({ sessionId, photos, first, at, day }) => {
     return {
       sectionId: sessionId,
-      title: dayLabel(first ? first.arrivedAt || first.stageAt : w.clock, w.clock),
+      title: shared(day) ? `${day} ${clockTime(at)}` : day,
       detail: `${plural(photos.length)} from ${first?.fromName ?? "Alex"}`,
       tiles: [...photos].reverse().map((p) => ({
         id: p.id,

@@ -4,6 +4,10 @@ Releases of the Camera Sharing design system. The format follows [Keep a Changel
 
 ## [Unreleased]
 
+### Fixed
+
+- Panel 1.0.2: where focus starts is shown from its first line, so at the largest text the Connect panel opens with its words in full under the title; content that scrolls with nothing to tap is a focusable region, so it scrolls from the keyboard.
+
 ## [1.0.0] - 2026-10-29
 
 ### Fixed

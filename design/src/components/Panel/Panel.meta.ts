@@ -6,7 +6,7 @@ export const meta: ComponentMeta = {
   group: 3,
   layer: "system",
   status: "final",
-  version: "1.0.1",
+  version: "1.0.2",
   summary:
     "A short task on top of the screen: the system sheet on iOS, Material's modal bottom sheet on Android.",
   anatomy: [
@@ -33,6 +33,8 @@ export const meta: ComponentMeta = {
   states: ["medium", "large", "dismissible", "not dismissible"],
   accessibility: [
     "A modal dialog named by its title; focus moves in when it opens and stays inside",
+    "Where focus starts is scrolled into view from its first line, so no line is cut under the title",
+    "Content that scrolls is a focusable region named by the title, so it scrolls from the keyboard even with no control inside",
     "When it closes, focus returns to whatever opened it (D12)",
     "Escape, an outside tap or a drag down closes it, unless it needs an answer",
     "Focus inside shows the 2 pt accent ring",
@@ -49,6 +51,12 @@ export const meta: ComponentMeta = {
     status: { ios: "not-started", android: "not-started" },
   },
   changelog: [
+    {
+      version: "1.0.2",
+      date: "2026-10-30",
+      summary:
+        "Where focus starts is shown from its first line, not centered with a line cut under the title; content that scrolls with nothing to tap can be scrolled from the keyboard.",
+    },
     {
       version: "1.0.1",
       date: "2026-10-29",

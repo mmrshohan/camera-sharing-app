@@ -150,6 +150,11 @@
   gap: var(--space-4);
 }
 
+/* The panel already sits at the screen margin, so an inset list inside it lines up with its title. */
+.panel-stack > .grouped-list {
+  padding-inline: 0;
+}
+
 .panel-actions {
   display: grid;
   gap: var(--space-2);
@@ -248,8 +253,9 @@
   text-align: center;
 }
 
+/* Blue means tappable and nothing else is blue (spec §7.1). */
 .lock > svg {
-  color: var(--color-accent-text);
+  color: var(--color-ink2);
 }
 
 .lock__notice {

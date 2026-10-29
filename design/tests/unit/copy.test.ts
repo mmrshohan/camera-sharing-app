@@ -68,6 +68,8 @@ describe("prototype copy (spec §11)", () => {
       for (const [key, text] of texts(strings)) {
         expect(text, key).not.toMatch(/prototype|simulated|sample|demo/i);
         expect(text, key).not.toContain("!");
+        // Typographic apostrophes, as everywhere else (design review 15).
+        expect(text, key).not.toContain("'");
         expect(text.trim(), key).not.toBe("");
       }
     },

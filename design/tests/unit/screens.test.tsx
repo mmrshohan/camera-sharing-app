@@ -175,12 +175,48 @@ describe("the queue limit (code review 10)", () => {
   test("photos still waiting from an earlier session count on the camera as in the model", () => {
     const w = earlierPhotos(run(scenario("camera-ready"), offline("alex")), limits.queue);
     expect(run(w, capture).devices.alex.ui.toast).toBe(toasts.queueFull);
-    expect(markup(Camera, w, "alex")).toContain(camera.queueFull);
+    expect(markup(Camera, w, "alex")).toContain(camera.shutter.queueFull);
   });
 
   test("one under the limit, both still take photos", () => {
     const w = earlierPhotos(run(scenario("camera-ready"), offline("alex")), limits.queue - 1);
     expect(run(w, capture).devices.alex.ui.toast).toBeNull();
-    expect(markup(Camera, w, "alex")).not.toContain(camera.queueFull);
+    expect(markup(Camera, w, "alex")).not.toContain(camera.shutter.queueFull);
+  });
+});
+
+describe("a blocked camera says why in a line that fits the shutter, and says it once (design review 11, 15)", () => {
+  const shutterMessage = (html: string) =>
+    /class="shutter__message">([^<]*)</.exec(html)?.[1] ?? "";
+
+  test.each(["camera-storage-full", "camera-queue-full", "camera-session-ended"])("%s", (id) => {
+    const w = scenario(id);
+    const message = shutterMessage(markup(Camera, w, "alex"));
+    expect(message).not.toBe("");
+    // About as wide as the shutter's capsule allows in one line.
+    expect(message.length).toBeLessThanOrEqual(16);
+    const text = said(Camera, w, "alex");
+    for (const phrase of [message, camera.ended])
+      expect(text.split(phrase).length - 1, phrase).toBeLessThanOrEqual(1);
+  });
+
+  test("full sentences end with a period", () => {
+    for (const toast of [camera.busy, camera.queueFull, camera.storageFull])
+      expect(toast).toMatch(/\.$/);
+  });
+});
+
+describe("Sarah's sections (design review 14)", () => {
+  test("two sessions on one day get headers of their own, told apart by time", () => {
+    const titles = recipientTiles(scenario("home-live-receiving")).map((s) => s.title);
+    expect(new Set(titles).size).toBe(titles.length);
+    const today = titles.filter((t) => t.startsWith("Today"));
+    expect(today).toHaveLength(2);
+    for (const title of today) expect(title).toMatch(/^Today \d{1,2}:\d{2}\s[AP]M$/);
+  });
+
+  test("a day with one session keeps the day alone", () => {
+    for (const { title } of recipientTiles(scenario("home-photos")))
+      expect(title).toMatch(/^(Today|Yesterday|\d+ days ago)$/);
   });
 });

@@ -549,7 +549,7 @@ test("R10: a tap while the camera is busy is refused at once and never counted",
   };
   const w = reduce(busy, capture);
   expect(w.devices.alex.hostPhotos).toHaveLength(1);
-  expect(w.devices.alex.ui.toast).toBe("Camera busy. That tap didn't take a photo.");
+  expect(w.devices.alex.ui.toast).toBe("Camera busy. That tap didn’t take a photo.");
   expect(w.devices.alex.ui.dropKey).toBe(ready.devices.alex.ui.dropKey);
 });
 
