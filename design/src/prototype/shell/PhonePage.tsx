@@ -59,6 +59,19 @@ export function PhonePage() {
     };
   }, []);
 
+  // On a phone, tapping a button leaves the keyboard up; on a computer, a click takes focus from
+  // the field, the keyboard drops, and the button moves away before the click lands.
+  useEffect(() => {
+    const keepTyping = (event: MouseEvent) => {
+      const active = document.activeElement;
+      const typing = active instanceof HTMLInputElement || active instanceof HTMLTextAreaElement;
+      if (typing && event.target instanceof Element && event.target.closest("button"))
+        event.preventDefault();
+    };
+    document.addEventListener("mousedown", keepTyping, true);
+    return () => document.removeEventListener("mousedown", keepTyping, true);
+  }, []);
+
   const dispatch = useCallback(
     (event: WorldEvent) => {
       if (!isDeviceId(id)) return;

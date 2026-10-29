@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { devices } from "@components/DeviceFrame";
 import type { DeviceId, DeviceModel, DeviceState, WorldEvent } from "@prototype/model/types";
 import { Segmented } from "./Segmented";
+import type { Simulation } from "./simulations";
 
 const models = Object.values(devices);
 
@@ -11,11 +12,14 @@ export function DeviceControls({
   name,
   device,
   dispatch,
+  simulations,
 }: {
   id: DeviceId;
   name: string;
   device: DeviceState;
   dispatch: (event: WorldEvent) => void;
+  /** Things that happen outside the phone, such as a code being scanned. */
+  simulations: Simulation[];
 }) {
   const trigger = useRef<HTMLButtonElement>(null);
   const popover = useRef<HTMLDivElement>(null);
@@ -52,6 +56,11 @@ export function DeviceControls({
       >
         Adjust
       </button>
+      {simulations.map(({ label, event }) => (
+        <button key={label} type="button" className="proto-button" onClick={() => dispatch(event)}>
+          {label}
+        </button>
+      ))}
       <div ref={popover} id={popoverId} popover="auto" className="proto-popover">
         <label className="proto-field">
           <span>Phone</span>

@@ -1,30 +1,15 @@
-import { createContext, useContext, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Button } from "@components/Button";
 import { DeviceFrame, devices } from "@components/DeviceFrame";
 import { Panel } from "@components/Panel";
 import { PermissionPrompt } from "@components/PermissionPrompt";
 import { strings as purposes } from "@prototype/copy/permissions";
-import type { DeviceId, DeviceState, PromptKind, World, WorldEvent } from "@prototype/model/types";
+import type { DeviceId, PanelId, PromptKind, World, WorldEvent } from "@prototype/model/types";
 import { panelNames, panels } from "@prototype/panels";
 import { routeNames, screens } from "@prototype/screens";
+import { DeviceViewContext, useDeviceView } from "./deviceView";
 
-export interface DeviceView {
-  device: DeviceState;
-  world: World;
-  dispatch: (event: WorldEvent) => void;
-  /** The phone's screen, where panels, dialogs and prompts open. */
-  screen: HTMLElement | null;
-}
-
-const DeviceViewContext = createContext<DeviceView | null>(null);
-
-/** A screen's view of its own phone. */
-export function useDeviceView(id: DeviceId): DeviceView {
-  const view = useContext(DeviceViewContext);
-  if (view?.device.id !== id)
-    throw new Error(`useDeviceView("${id}") must be used inside its DeviceHost`);
-  return view;
-}
+export { useDeviceView, type DeviceView } from "./deviceView";
 
 /** Until a route's screen is built, the phone shows the route's name. */
 function PendingScreen({ id }: { id: DeviceId }) {
@@ -39,9 +24,14 @@ function PendingScreen({ id }: { id: DeviceId }) {
 function PendingPanel({ id }: { id: DeviceId }) {
   const { device, dispatch, screen } = useDeviceView(id);
   const close = () => dispatch({ type: "closePanel", device: id });
-  if (!device.ui.panel) return null;
+  const panel = device.ui.panel;
   return (
-    <Panel open title={panelNames[device.ui.panel]} onClose={close} container={screen}>
+    <Panel
+      open={panel !== null}
+      title={panel ? panelNames[panel] : ""}
+      onClose={close}
+      container={screen}
+    >
       <Button variant="tinted" onPress={close}>
         Close
       </Button>
@@ -66,7 +56,11 @@ export function DeviceHost({
   const { route, panel, prompt } = device.ui;
   const platform = devices[device.model].platform;
   const Screen = screens[route] ?? PendingScreen;
-  const PanelView = panel ? (panels[panel] ?? PendingPanel) : null;
+  // The last panel stays mounted after it closes, so it can animate out.
+  const lastPanel = useRef<PanelId | null>(null);
+  if (panel) lastPanel.current = panel;
+  const shownPanel = panel ?? lastPanel.current;
+  const PanelView = shownPanel ? (panels[shownPanel] ?? PendingPanel) : null;
 
   // The prompt stays mounted after it is answered, so it can fade out.
   const lastPrompt = useRef<PromptKind | null>(null);

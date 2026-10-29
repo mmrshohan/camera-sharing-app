@@ -14,6 +14,7 @@ import { DeviceControls } from "./DeviceControls";
 import { Navigator } from "./Navigator";
 import { PhoneEmbed } from "./PhoneEmbed";
 import { Segmented } from "./Segmented";
+import { simulationsFor } from "./simulations";
 import { Stage } from "./Stage";
 import { useWorld } from "./useWorld";
 import "./shell.css";
@@ -197,6 +198,7 @@ export function PrototypePage() {
                     name={names[id]}
                     device={world.devices[id]}
                     dispatch={dispatch}
+                    simulations={simulationsFor(world, id)}
                   />
                 )
               }

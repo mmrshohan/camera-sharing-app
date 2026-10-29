@@ -587,6 +587,39 @@ describe("selectors", () => {
   });
 });
 
+describe("signing in", () => {
+  const newSarah = (): World => {
+    const w = createWorld();
+    const sarah = { ...w.devices.sarah, signedIn: false, username: null };
+    return {
+      ...w,
+      devices: {
+        ...w.devices,
+        sarah: { ...sarah, ui: { ...sarah.ui, route: "welcome" as const } },
+      },
+    };
+  };
+
+  test("a new account goes on to choose a username; an existing one goes Home", () => {
+    const w = run(newSarah(), { type: "signIn", device: "sarah", method: "google" });
+    expect(w.devices.sarah).toMatchObject({
+      signedIn: true,
+      ui: { route: "username", notice: null },
+    });
+    const back = run(
+      createWorld(),
+      { type: "signOut", device: "sarah" },
+      { type: "signIn", device: "sarah", method: "google" },
+    );
+    expect(back.devices.sarah).toMatchObject({ signedIn: true, ui: { route: "home" } });
+  });
+
+  test("offline, signing in does nothing", () => {
+    const offline = run(newSarah(), { type: "setNetwork", device: "sarah", network: "offline" });
+    expect(reduce(offline, { type: "signIn", device: "sarah", method: "google" })).toBe(offline);
+  });
+});
+
 describe("the username check", () => {
   test("takes a moment, then says whether the name is free", () => {
     const start = createWorld();

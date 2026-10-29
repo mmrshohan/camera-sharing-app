@@ -86,8 +86,8 @@ test("Review Focus 3: switching theme keeps an open panel, its focus and the wor
   const sarah = phone(page, "Sarah");
   const panel = sarah.getByRole("dialog");
   await expect(panel).toBeVisible();
-  const close = panel.getByRole("button", { name: "Close" });
-  await close.focus();
+  const notNow = panel.getByRole("button", { name: "Not now" });
+  await notNow.focus();
   const before = await page.evaluate(() =>
     JSON.stringify((window as { __protoWorld?: unknown }).__protoWorld),
   );
@@ -97,7 +97,7 @@ test("Review Focus 3: switching theme keeps an open panel, its focus and the wor
   await expect(panel).toBeVisible();
   // Back on the phone, focus is where it was.
   await sarah.locator("body").evaluate(() => window.focus());
-  await expect(close).toBeFocused();
+  await expect(notNow).toBeFocused();
   const after = await page.evaluate(() =>
     JSON.stringify((window as { __protoWorld?: unknown }).__protoWorld),
   );
@@ -109,8 +109,15 @@ test("Review Focus 3: switching theme keeps an open panel, its focus and the wor
   expect(withoutTheme(after)).toEqual(withoutTheme(before));
 });
 
-test.fixme("Review Focus 3: switching phone model takes the keyboard down", async () => {
-  // Needs a screen with a text field: enabled with the Username screen (Task 24).
+test("Review Focus 3: switching phone model takes the keyboard down", async ({ page }) => {
+  await openShell(page, "?scenario=username-empty");
+  const sarah = phone(page, "Sarah");
+  await sarah.getByRole("textbox", { name: "Username" }).focus();
+  await expect(sarah.locator(".keyboard")).toBeVisible();
+  await page.getByRole("button", { name: "Sarah's phone settings" }).click();
+  await page.getByRole("combobox", { name: "Phone" }).selectOption("iphone16pro");
+  await expect(sarah.locator(".device__screen")).toHaveAttribute("data-keyboard", "down");
+  await expect(sarah.locator(".keyboard")).toHaveCount(0);
 });
 
 test("relaunching Alex keeps the camera during a session, and the lock after it", async ({

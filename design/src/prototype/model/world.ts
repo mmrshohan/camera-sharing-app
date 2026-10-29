@@ -412,6 +412,17 @@ function submitUsername(w: World, id: DeviceId): World {
   return withUi(w, id, { field: { ...field, state, since: w.clock } });
 }
 
+function signIn(w: World, id: DeviceId): World {
+  const d = w.devices[id];
+  if (d.signedIn || !online(d)) return w;
+  // A new account chooses its username next.
+  return withDevice(w, id, (x) => ({
+    ...x,
+    signedIn: true,
+    ui: { ...x.ui, route: x.username === null ? "username" : "home", notice: null },
+  }));
+}
+
 function signOut(w: World, id: DeviceId): World {
   // The app's photos stay on the phone, locked until this account signs in again (R11).
   return withDevice(w, id, (d) => ({
@@ -763,11 +774,15 @@ export function reduce(w: World, event: WorldEvent): World {
         settings: { ...d.settings, [event.key]: event.value },
       }));
     case "typeField":
+      // Typing again is the next step after any notice.
       return withUi(w, event.device, {
         field: { value: event.value, state: "idle", since: w.clock },
+        notice: null,
       });
     case "submitUsername":
       return submitUsername(w, event.device);
+    case "signIn":
+      return signIn(w, event.device);
     case "signOut":
       return signOut(w, event.device);
     case "deleteAccount":

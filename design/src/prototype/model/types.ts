@@ -262,6 +262,7 @@ export type WorldEvent =
   | ({ type: "setSetting"; key: "autoSave" | "wifiOnly" | "notifications"; value: boolean } & On)
   | ({ type: "typeField"; value: string } & On)
   | ({ type: "submitUsername" } & On)
+  | ({ type: "signIn"; method: SignInMethod } & On)
   | ({ type: "signOut" } & On)
   | ({ type: "deleteAccount" } & On)
   // The review shell's own controls: how a phone looks, and its system surfaces.
