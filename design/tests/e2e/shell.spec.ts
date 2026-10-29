@@ -134,6 +134,24 @@ test("relaunching Alex keeps the camera during a session, and the lock after it"
   await expect(route(page, "Alex")).toHaveAttribute("data-route", "lock");
 });
 
+test("Reset and other scenarios keep each phone's own theme, and the URL records it", async ({
+  page,
+}) => {
+  await openShell(page, "?scenario=home-photos");
+  const screenOf = (name: "Alex" | "Sarah") => phone(page, name).locator(".device__screen");
+  await page.getByRole("button", { name: "Alex's phone settings" }).click();
+  await page.getByRole("radio", { name: "Dark" }).check();
+  await page.keyboard.press("Escape");
+  await expect(screenOf("Alex")).toHaveAttribute("data-theme", "dark");
+  await expect(page).toHaveURL(/alexTheme=dark/);
+  await page.getByRole("button", { name: "Reset" }).click();
+  await expect(screenOf("Alex")).toHaveAttribute("data-theme", "dark");
+  await expect(screenOf("Sarah")).toHaveAttribute("data-theme", "light");
+  await page.getByRole("link", { name: "Settings", exact: true }).click();
+  await expect(screenOf("Alex")).toHaveAttribute("data-theme", "dark");
+  await expect(screenOf("Sarah")).toHaveAttribute("data-theme", "light");
+});
+
 test("the clock moves only when asked, and Reset puts the scenario back", async ({ page }) => {
   await openShell(page, "?scenario=invitation-showing-code");
   const clock = page.locator(".proto-clock__time");

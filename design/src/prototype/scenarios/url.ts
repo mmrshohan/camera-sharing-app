@@ -9,8 +9,11 @@ export interface UrlState {
   focus: DeviceId;
   alexDevice: DeviceModel;
   sarahDevice: DeviceModel;
-  theme: Theme;
-  text: TextSize;
+  /** Each phone's own theme and text size: `theme` and `text` in the URL set both. */
+  alexTheme: Theme;
+  sarahTheme: Theme;
+  alexText: TextSize;
+  sarahText: TextSize;
   /** An earlier release to compare with, such as "1.0.0". */
   compare: string | null;
 }
@@ -21,20 +24,17 @@ export const defaultUrlState: UrlState = {
   focus: "sarah",
   alexDevice: "iphone16pro",
   sarahDevice: "galaxyA15",
-  theme: "light",
-  text: "default",
+  alexTheme: "light",
+  sarahTheme: "light",
+  alexText: "default",
+  sarahText: "default",
   compare: null,
 };
 
-const order = [
-  "scenario",
-  "view",
-  "focus",
-  "alexDevice",
-  "sarahDevice",
-  "theme",
-  "text",
-  "compare",
+/** A look the URL writes once when both phones share it, and per phone when they differ. */
+const looks = [
+  { both: "theme", alex: "alexTheme", sarah: "sarahTheme" },
+  { both: "text", alex: "alexText", sarah: "sarahText" },
 ] as const;
 const semver = /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/;
 
@@ -69,15 +69,20 @@ export function parseUrlState(search: string): { state: UrlState; notices: strin
     if (isModel(value)) state[key] = value;
     else ignore(key, value, `the ${devices[defaultUrlState[key]].name}`);
   }
-  const theme = params.get("theme");
-  if (theme !== null) {
-    if (theme === "light" || theme === "dark") state.theme = theme;
-    else ignore("theme", theme, "light");
+  // Both phones first, then each phone's own value.
+  for (const key of ["theme", "alexTheme", "sarahTheme"] as const) {
+    const theme = params.get(key);
+    if (theme === null) continue;
+    if (theme !== "light" && theme !== "dark") ignore(key, theme, "light");
+    else if (key === "theme") state.alexTheme = state.sarahTheme = theme;
+    else state[key] = theme;
   }
-  const text = params.get("text");
-  if (text !== null) {
-    if (text === "default" || text === "largest") state.text = text;
-    else ignore("text", text, "the default size");
+  for (const key of ["text", "alexText", "sarahText"] as const) {
+    const text = params.get(key);
+    if (text === null) continue;
+    if (text !== "default" && text !== "largest") ignore(key, text, "the default size");
+    else if (key === "text") state.alexText = state.sarahText = text;
+    else state[key] = text;
   }
   const compare = params.get("compare");
   if (compare !== null) {
@@ -90,10 +95,21 @@ export function parseUrlState(search: string): { state: UrlState; notices: strin
 /** Writes the shell's state as a query string, leaving out defaults. */
 export function formatUrlState(state: UrlState): string {
   const params = new URLSearchParams();
-  for (const key of order) {
-    const value = state[key];
-    if (value !== null && value !== defaultUrlState[key]) params.set(key, value);
+  const set = (key: string, value: string | null, fallback: string | null) => {
+    if (value !== null && value !== fallback) params.set(key, value);
+  };
+  for (const key of ["scenario", "view", "focus", "alexDevice", "sarahDevice"] as const) {
+    set(key, state[key], defaultUrlState[key]);
   }
+  for (const { both, alex, sarah } of looks) {
+    if (state[alex] === state[sarah]) {
+      set(both, state[alex], defaultUrlState[alex]);
+    } else {
+      set(alex, state[alex], defaultUrlState[alex]);
+      set(sarah, state[sarah], defaultUrlState[sarah]);
+    }
+  }
+  set("compare", state.compare, defaultUrlState.compare);
   const query = params.toString();
   return query ? `?${query}` : "";
 }

@@ -24,32 +24,32 @@ import "./shell.css";
 const names: Record<DeviceId, string> = { alex: "Alex", sarah: "Sarah" };
 const phones: readonly DeviceId[] = ["alex", "sarah"];
 
-type Look = Pick<UrlState, "alexDevice" | "sarahDevice" | "theme" | "text">;
+type Look = Pick<
+  UrlState,
+  "alexDevice" | "sarahDevice" | "alexTheme" | "sarahTheme" | "alexText" | "sarahText"
+>;
 
 /** A scenario's world on the phones, themes and text sizes being reviewed. */
 function build(scenario: string, look: Look): World {
   const world = getScenario(scenario)?.build() ?? createWorld();
-  return [
-    { device: "alex", model: look.alexDevice },
-    { device: "sarah", model: look.sarahDevice },
-  ].reduce(
-    (w, { device, model }) =>
-      reduce(w, {
-        type: "setAppearance",
-        device: device as DeviceId,
-        model,
-        theme: look.theme,
-        textSize: look.text,
-      }),
+  const looks = [
+    { device: "alex", model: look.alexDevice, theme: look.alexTheme, textSize: look.alexText },
+    { device: "sarah", model: look.sarahDevice, theme: look.sarahTheme, textSize: look.sarahText },
+  ] as const;
+  return looks.reduce(
+    (w, appearance) => reduce(w, { type: "setAppearance", ...appearance }),
     world,
   );
 }
 
-const lookOf = (world: World, focus: DeviceId): Look => ({
+/** Each phone's own model, theme and text size, kept across Reset and scenarios. */
+const lookOf = (world: World): Look => ({
   alexDevice: world.devices.alex.model,
   sarahDevice: world.devices.sarah.model,
-  theme: world.devices[focus].theme,
-  text: world.devices[focus].textSize,
+  alexTheme: world.devices.alex.theme,
+  sarahTheme: world.devices.sarah.theme,
+  alexText: world.devices.alex.textSize,
+  sarahText: world.devices.sarah.textSize,
 });
 
 /** The review shell: both phones, every scenario, a shared clock (design spec §10). */
@@ -80,14 +80,14 @@ export function PrototypePage() {
 
   const choose = (id: string) => {
     setScenario(id);
-    setInitial(build(id, lookOf(world, focus)));
+    setInitial(build(id, lookOf(world)));
   };
-  const reset = () => setInitial(build(scenario, lookOf(world, focus)));
+  const reset = () => setInitial(build(scenario, lookOf(world)));
 
   // The URL always records what is shown, so any state can be shared as a link.
   const url: UrlState = {
     ...defaultUrlState,
-    ...lookOf(world, focus),
+    ...lookOf(world),
     scenario,
     view,
     focus,

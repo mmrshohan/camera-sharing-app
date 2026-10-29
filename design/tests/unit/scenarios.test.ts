@@ -338,8 +338,10 @@ describe("URL state", () => {
         focus: "sarah",
         alexDevice: "iphone16pro",
         sarahDevice: "galaxyA15",
-        theme: "light",
-        text: "default",
+        alexTheme: "light",
+        sarahTheme: "light",
+        alexText: "default",
+        sarahText: "default",
         compare: null,
       },
       notices: [],
@@ -361,10 +363,32 @@ describe("URL state", () => {
       scenario: "lock-locked",
       view: "single",
       focus: "alex",
-      theme: "dark",
+      alexTheme: "dark",
+      sarahText: "largest",
       compare: "1.0.0",
     };
     expect(parseUrlState(formatUrlState(state))).toEqual({ state, notices: [] });
+  });
+
+  test("each phone keeps its own theme and text size", () => {
+    const { state, notices } = parseUrlState("?alexTheme=dark&sarahText=largest");
+    expect(notices).toEqual([]);
+    expect(state).toMatchObject({
+      alexTheme: "dark",
+      sarahTheme: "light",
+      alexText: "default",
+      sarahText: "largest",
+    });
+    expect(formatUrlState(state)).toBe("?alexTheme=dark&sarahText=largest");
+  });
+
+  test("theme and text set both phones, and a phone's own value wins", () => {
+    expect(parseUrlState("?theme=dark&text=largest&sarahTheme=light").state).toMatchObject({
+      alexTheme: "dark",
+      sarahTheme: "light",
+      alexText: "largest",
+      sarahText: "largest",
+    });
   });
 
   test("a compare version that isn't semver is ignored, with a notice", () => {
