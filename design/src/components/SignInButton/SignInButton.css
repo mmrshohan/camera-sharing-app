@@ -1,0 +1,65 @@
+/* Each brand's colors and words, at the height and in the capsule of our buttons, so neither is less prominent. */
+.sign-in-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-width: var(--target);
+  min-height: var(--button-height);
+  padding: var(--space-2) var(--space-5);
+  border: 0;
+  border-radius: 999px;
+  font-family: var(--type-headline-family);
+  font-size: var(--type-headline-size);
+  line-height: var(--type-headline-line);
+  font-weight: var(--type-headline-weight);
+  letter-spacing: var(--type-headline-tracking);
+  text-align: center;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sign-in-button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.sign-in-button[aria-disabled="true"] {
+  cursor: default;
+}
+
+.sign-in-button--full {
+  display: flex;
+  width: 100%;
+}
+
+/* Apple: black on light screens, white on dark (Apple HIG). */
+.sign-in-button--apple {
+  background: var(--color-sign-in-apple-fill);
+  color: var(--color-sign-in-apple-ink);
+}
+
+/* Google: its fill, its title color and a 1 px inside stroke (Google's branding guidelines). */
+.sign-in-button--google {
+  background: var(--color-sign-in-google-fill);
+  color: var(--color-sign-in-google-ink);
+  box-shadow: inset 0 0 0 1px var(--color-sign-in-google-stroke);
+}
+
+.sign-in-button__mark {
+  flex: none;
+}
+
+/* The Apple logo is a character in Apple's system fonts. */
+.sign-in-button__mark--apple {
+  font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
+
+/* Where Google's G goes: plainly a placeholder, never a homemade G. */
+.sign-in-button__mark--placeholder {
+  width: var(--icon-chip);
+  height: var(--icon-chip);
+  border: 1px dashed currentColor;
+  border-radius: 50%;
+}

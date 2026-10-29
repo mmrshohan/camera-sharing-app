@@ -17,4 +17,5 @@ export const groupApprovals: GroupApproval[] = [
   { group: 2, date: "2026-10-29", note: "Group 2 approved." },
   { group: 3, date: "2026-10-29", note: "Group 3 approved." },
   { group: 4, date: "2026-10-29", note: "Group 4 approved." },
+  { group: 5, date: "2026-10-30", note: "Group 5 approved" },
 ];

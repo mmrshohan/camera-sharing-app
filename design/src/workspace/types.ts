@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import type { Platform } from "@tokens";
 import type { Surface } from "@shared/surface";
 
-export type ComponentGroup = 1 | 2 | 3 | 4;
+export type ComponentGroup = 1 | 2 | 3 | 4 | 5;
 export type ComponentStatus = "draft" | "review" | "final";
 export type NativeStatus = "not-started" | "in-progress" | "done";
 
@@ -57,7 +57,11 @@ export const groupNames: Record<ComponentGroup, string> = {
   2: "Actions and status",
   3: "Structure, people and pairing, camera",
   4: "Photos and system surfaces",
+  5: "Sign-in",
 };
+
+/** Every group, in order, as the Library and the Lab list them. */
+export const componentGroups = Object.keys(groupNames).map(Number) as ComponentGroup[];
 
 export const statusNames: Record<ComponentStatus, string> = {
   draft: "Draft",

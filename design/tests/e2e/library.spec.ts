@@ -1,5 +1,6 @@
 import { tokens } from "../../src/tokens/generated/tokens";
 import { expect, gotoAndSettle, test } from "./fixtures";
+import { seriousA11yViolations } from "./helpers";
 
 test("the library lists the final components, and only those", async ({ page }) => {
   await gotoAndSettle(page, "/library");
@@ -53,6 +54,27 @@ test("a library component page shows its sections in order", async ({ page }) =>
     "Native",
   ]);
   await expect(page.getByText("No earlier release yet")).toBeVisible();
+});
+
+test("the sign-in buttons are in the Library, in both themes and on both platforms", async ({
+  page,
+}) => {
+  // Group 5 was approved by the owner on 30 October 2026.
+  await gotoAndSettle(page, "/library");
+  await expect(page.getByRole("link", { name: /^SignInButton\s/ })).toContainText("Final");
+  for (const [platform, theme] of [
+    ["ios", "light"],
+    ["ios", "dark"],
+    ["android", "light"],
+    ["android", "dark"],
+  ] as const) {
+    await gotoAndSettle(page, `/library/sign-in-button?platform=${platform}&theme=${theme}`);
+    await expect(page.getByRole("button", { name: "Continue with Google" }).first()).toBeVisible();
+    if (platform === "ios") {
+      await expect(page.getByRole("button", { name: "Continue with Apple" }).first()).toBeVisible();
+    }
+    expect(await seriousA11yViolations(page, ".ws-examples")).toEqual([]);
+  }
 });
 
 test("an unknown lab component is not found", async ({ page }) => {

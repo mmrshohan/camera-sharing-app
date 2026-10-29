@@ -3,8 +3,6 @@
 export const strings = {
   title: "Camera Sharing",
   body: "Borrow a friend’s camera. The photos come to your phone.",
-  apple: "Continue with Apple",
-  google: "Continue with Google",
   failedTitle: "Couldn’t sign in",
   failedBody: "Something went wrong on our side. Try again in a moment.",
   canceledTitle: "Sign-in canceled",

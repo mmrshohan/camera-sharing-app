@@ -258,6 +258,51 @@
         "hex": "#1D1D1F"
       },
       "$description": "A phone's body around the screen in device frames."
+    },
+    "signInAppleFill": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [0.0, 0.0, 0.0],
+        "hex": "#000000"
+      },
+      "$description": "Sign in with Apple's fill: black on light screens, white on dark (Apple HIG)."
+    },
+    "signInAppleInk": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [1.0, 1.0, 1.0],
+        "hex": "#FFFFFF"
+      },
+      "$description": "Sign in with Apple's logo and title: white on black, black on white (Apple HIG)."
+    },
+    "signInGoogleFill": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [1.0, 1.0, 1.0],
+        "hex": "#FFFFFF"
+      },
+      "$description": "Sign in with Google's fill (Google's branding guidelines)."
+    },
+    "signInGoogleStroke": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [0.4549, 0.4667, 0.4588],
+        "hex": "#747775"
+      },
+      "$description": "Sign in with Google's 1 px inside stroke (Google's branding guidelines)."
+    },
+    "signInGoogleInk": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [0.1216, 0.1216, 0.1216],
+        "hex": "#1F1F1F"
+      },
+      "$description": "Sign in with Google's title (Google's branding guidelines)."
     }
   },
   "label": {
