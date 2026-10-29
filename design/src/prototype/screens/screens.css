@@ -260,3 +260,7 @@
   justify-self: stretch;
   text-align: start;
 }
+
+.photo-screen {
+  height: 100%;
+}

@@ -1,11 +1,15 @@
+import * as account from "./account";
 import * as camera from "./camera";
 import * as connect from "./connect";
 import * as home from "./home";
 import * as invitation from "./invitation";
 import * as lock from "./lock";
 import * as permissions from "./permissions";
+import * as photo from "./photo";
+import * as recovery from "./recovery";
 import * as scanner from "./scanner";
 import * as session from "./session";
+import * as settings from "./settings";
 import * as username from "./username";
 import * as welcome from "./welcome";
 
@@ -24,5 +28,9 @@ export const allCopy: {
   { module: "camera", ...camera },
   { module: "session", ...session },
   { module: "lock", ...lock },
+  { module: "recovery", ...recovery },
+  { module: "photo", ...photo },
+  { module: "settings", ...settings },
+  { module: "account", ...account },
   { module: "permissions", ...permissions },
 ];

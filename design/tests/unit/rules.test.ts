@@ -394,6 +394,35 @@ describe("R7: photos stuck offline need both phones to approve recovery", () => 
   });
 });
 
+describe("recovery panels and reports", () => {
+  test("once both phones approve recovery, the Recovery panels close and sending goes on", () => {
+    const w = run(
+      connected(),
+      { type: "setNetwork", device: "alex", network: "offline" },
+      capture,
+      tick(timing.prepareMs),
+      { type: "endSession" },
+    );
+    expect(w.devices.alex.ui.panel).toBe("recovery");
+    expect(w.devices.sarah.ui.panel).toBe("recovery");
+    const approved = run(
+      w,
+      { type: "approveRecovery", by: "alex" },
+      { type: "approveRecovery", by: "sarah" },
+    );
+    expect(approved.devices.alex.ui.panel).toBeNull();
+    expect(approved.devices.sarah.ui.panel).toBeNull();
+  });
+
+  test("a report says it was sent, and can block the other person (D17)", () => {
+    const sent = run(createWorld(), { type: "sendReport", device: "sarah", block: false });
+    expect(sent.devices.sarah.ui.notice).toBe("reportSent");
+    expect(sent.devices.sarah.account.blocked).toEqual([]);
+    const blocked = run(createWorld(), { type: "sendReport", device: "sarah", block: true });
+    expect(blocked.devices.sarah.account.blocked).toEqual(["@alex"]);
+  });
+});
+
 describe("R8: permissions are asked once, at the moment of need", () => {
   const onIphone = () =>
     run(connected(createWorld({ sarahModel: "iphone16pro" })), capture, settle);

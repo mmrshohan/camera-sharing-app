@@ -6,7 +6,7 @@ export const meta: ComponentMeta = {
   group: 4,
   layer: "system",
   status: "final",
-  version: "1.0.0",
+  version: "1.0.1",
   summary:
     "The bottom of the screen: iOS's home indicator, Android's gesture handle or three buttons.",
   anatomy: [
@@ -24,5 +24,13 @@ export const meta: ComponentMeta = {
       "Drawn by the system; screens keep content clear of it with WindowInsets.navigationBars",
     status: { ios: "not-started", android: "not-started" },
   },
-  changelog: [{ version: "1.0.0", date: "2026-10-29", summary: "First version." }],
+  changelog: [
+    {
+      version: "1.0.1",
+      date: "2026-10-29",
+      summary:
+        "Android's three buttons sit on a dark scrim over photos and the camera, like the status bar.",
+    },
+    { version: "1.0.0", date: "2026-10-29", summary: "First version." },
+  ],
 };

@@ -291,7 +291,28 @@ function approveRecovery(w: World, by: DeviceId): World {
       ? { ...p, reserved: true, stage: "reserved", reservedAt: w.clock, stageAt: w.clock }
       : { ...p, reserved: true };
   });
-  return { ...next, recovery: { ...r, approvals, state: "approved" } };
+  // Approved: the phones go back to what they were showing; the lock shows what is sending.
+  const closed = (["alex", "sarah"] as const).reduce(
+    (acc, id) => (acc.devices[id].ui.panel === "recovery" ? withUi(acc, id, { panel: null }) : acc),
+    next,
+  );
+  return { ...closed, recovery: { ...r, approvals, state: "approved" } };
+}
+
+function sendReport(w: World, id: DeviceId, block: boolean): World {
+  // The report is about the other person in the story.
+  const other = id === "alex" ? people.sarah.handle : people.alex.handle;
+  return withDevice(w, id, (d) => ({
+    ...d,
+    account: {
+      ...d.account,
+      blocked:
+        block && !d.account.blocked.includes(other)
+          ? [...d.account.blocked, other]
+          : d.account.blocked,
+    },
+    ui: { ...d.ui, notice: "reportSent" },
+  }));
 }
 
 function declineRecovery(w: World): World {
@@ -806,6 +827,8 @@ export function reduce(w: World, event: WorldEvent): World {
       return submitUsername(w, event.device);
     case "signIn":
       return signIn(w, event.device);
+    case "sendReport":
+      return sendReport(w, event.device, event.block);
     case "signOut":
       return signOut(w, event.device);
     case "deleteAccount":

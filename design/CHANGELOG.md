@@ -4,6 +4,10 @@ Releases of the Camera Sharing design system. The format follows [Keep a Changel
 
 ## [Unreleased]
 
+### Fixed
+
+- HomeIndicator 1.0.1: Android's three buttons sit on a dark scrim over photos and the camera, like the status bar.
+
 ### Added
 
 - Group 4 approved by the owner on 29 October 2026; its ten components are in the Library at 1.0.0.

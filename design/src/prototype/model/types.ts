@@ -265,6 +265,7 @@ export type WorldEvent =
   | ({ type: "typeField"; value: string } & On)
   | ({ type: "submitUsername" } & On)
   | ({ type: "signIn"; method: SignInMethod } & On)
+  | ({ type: "sendReport"; block: boolean } & On)
   | ({ type: "signOut" } & On)
   | ({ type: "deleteAccount" } & On)
   // The review shell's own controls: how a phone looks, and its system surfaces.

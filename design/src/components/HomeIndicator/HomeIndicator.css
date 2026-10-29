@@ -50,3 +50,12 @@
 .device__screen:has([data-status-bar="light"]) .home-indicator--gestureBar {
   background: var(--color-on-camera);
 }
+
+/* Over photos and the camera, the three buttons sit on a dark scrim, as the status bar does. */
+.device__screen:has([data-status-bar="light"]) .home-indicator--buttons {
+  background: var(--color-camera-scrim);
+}
+
+.device__screen:has([data-status-bar="light"]) .home-indicator--buttons svg {
+  stroke: var(--color-on-camera);
+}
