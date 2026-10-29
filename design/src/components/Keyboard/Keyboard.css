@@ -1,0 +1,66 @@
+/* Docked at the bottom of its screen, above the content and below nothing. */
+.keyboard {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 40;
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
+  height: var(--keyboard-height-full);
+  padding: var(--space-2) var(--space-1) var(--safe-bottom);
+  background: var(--color-keyboard);
+  color: var(--color-ink);
+  font-family: var(--type-body-family);
+  font-size: var(--key-text);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.keyboard__row {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.keyboard__row--inset {
+  padding: 0 5%;
+}
+
+.keyboard__key {
+  display: grid;
+  flex: 1;
+  place-items: center;
+  max-width: 40px;
+  height: var(--key-height);
+  border-radius: var(--key-radius);
+  background: var(--color-keyboard-key);
+  box-shadow: 0 1px 0 var(--color-shadow);
+}
+
+.keyboard__key--alt {
+  background: var(--color-keyboard-key-alt);
+  font-size: calc(var(--key-text) * 0.7);
+}
+
+.keyboard__key--wide {
+  flex: 1.4;
+  max-width: 56px;
+}
+
+.keyboard__key--wider {
+  flex: 2.4;
+  max-width: 96px;
+}
+
+.keyboard__key--space {
+  flex: 6;
+  max-width: none;
+  font-size: calc(var(--key-text) * 0.7);
+}
+
+/* Gboard: no key shadows, rounder keys. */
+.keyboard--android .keyboard__key {
+  box-shadow: none;
+}

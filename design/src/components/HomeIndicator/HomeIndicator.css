@@ -1,0 +1,52 @@
+.home-indicator {
+  position: absolute;
+  z-index: 50;
+  pointer-events: none;
+}
+
+/* iOS: a 134 × 5 pt bar, 8 pt from the bottom. */
+.home-indicator--homeIndicator {
+  bottom: var(--space-2);
+  left: 50%;
+  width: 134px;
+  height: 5px;
+  border-radius: 999px;
+  translate: -50% 0;
+  background: var(--color-ink);
+}
+
+/* Android gestures: a slimmer handle. */
+.home-indicator--gestureBar {
+  bottom: var(--space-2);
+  left: 50%;
+  width: 108px;
+  height: 4px;
+  border-radius: 999px;
+  translate: -50% 0;
+  background: var(--color-ink);
+  opacity: 0.8;
+}
+
+/* Android three-button navigation fills the bottom inset. */
+.home-indicator--buttons {
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: var(--safe-bottom);
+  background: var(--color-background);
+}
+
+.home-indicator--buttons svg {
+  fill: none;
+  stroke: var(--color-ink2);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.device__screen:has([data-status-bar="light"]) .home-indicator--homeIndicator,
+.device__screen:has([data-status-bar="light"]) .home-indicator--gestureBar {
+  background: var(--color-on-camera);
+}

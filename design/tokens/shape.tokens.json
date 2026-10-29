@@ -471,6 +471,91 @@
           "unit": "px"
         }
       }
+    },
+    "statusBarText": {
+      "$description": "The status bar's clock: fixed, it does not follow the text size.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 17,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 14,
+          "unit": "px"
+        }
+      }
+    },
+    "keyboardHeight": {
+      "$description": "The on-screen keyboard: the iOS keyboard; Gboard on Android (approximate).",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 291,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 280,
+          "unit": "px"
+        }
+      }
+    },
+    "keyHeight": {
+      "$description": "One key of the on-screen keyboard (approximate).",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 42,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 46,
+          "unit": "px"
+        }
+      }
+    },
+    "keyRadius": {
+      "$description": "A key's corners (approximate).",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 5,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 8,
+          "unit": "px"
+        }
+      }
+    },
+    "keyText": {
+      "$description": "A letter on a key: fixed, it does not follow the text size.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 22,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 21,
+          "unit": "px"
+        }
+      }
     }
   }
 }

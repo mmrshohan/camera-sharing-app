@@ -33,3 +33,6 @@ export interface CameraCounts {
 /** Where one of Sarah's photos is (design spec, Appendix C). */
 export type TileStatus =
   "arriving" | "onlyInApp" | "saving" | "saved" | "needsChecking" | "expired";
+
+/** The four phones the prototype draws (design spec §10). */
+export type DeviceModel = "iphone16pro" | "iphoneSE3" | "galaxyA15" | "androidCompact";

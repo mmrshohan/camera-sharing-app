@@ -10,6 +10,7 @@ import {
   useSyncExternalStore,
   type HTMLAttributes,
   type ReactNode,
+  type Ref,
 } from "react";
 import type { Platform, TextSize, Theme } from "@tokens";
 import "./surface.css";
@@ -58,14 +59,16 @@ export function useShouldReduceMotion(): boolean {
 export interface SurfaceScopeProps extends HTMLAttributes<HTMLDivElement> {
   surface: Surface;
   children: ReactNode;
+  ref?: Ref<HTMLDivElement>;
 }
 
 /** Sets the token selectors (data-platform, data-theme, data-text-size) and the context together. */
-export function SurfaceScope({ surface, children, className, ...rest }: SurfaceScopeProps) {
+export function SurfaceScope({ surface, children, className, ref, ...rest }: SurfaceScopeProps) {
   return (
     <SurfaceContext.Provider value={surface}>
       <div
         {...rest}
+        ref={ref}
         className={className ? `surface ${className}` : "surface"}
         data-platform={surface.platform}
         data-theme={surface.theme}

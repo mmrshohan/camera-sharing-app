@@ -213,6 +213,42 @@
         "hex": "#FFFFFF"
       },
       "$description": "Camera controls and labels over the live preview, in both themes: color belongs to the photo."
+    },
+    "keyboard": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [0.1725, 0.1725, 0.1804],
+        "hex": "#2C2C2E"
+      },
+      "$description": "The on-screen keyboard's background (approximate)."
+    },
+    "keyboardKey": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [0.4235, 0.4235, 0.4392],
+        "hex": "#6C6C70"
+      },
+      "$description": "A letter key (approximate)."
+    },
+    "keyboardKeyAlt": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [0.2824, 0.2824, 0.2902],
+        "hex": "#48484A"
+      },
+      "$description": "Shift, delete, numbers and return (approximate)."
+    },
+    "deviceBody": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [0.1137, 0.1137, 0.1216],
+        "hex": "#1D1D1F"
+      },
+      "$description": "A phone's body around the screen in device frames."
     }
   },
   "label": {

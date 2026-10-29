@@ -150,6 +150,18 @@
       "bg": "color.elevated",
       "min": 4.5,
       "note": "Destructive answers"
+    },
+    {
+      "fg": "color.ink",
+      "bg": "color.keyboardKey",
+      "min": 4.5,
+      "note": "Letters on keys"
+    },
+    {
+      "fg": "color.ink",
+      "bg": "color.keyboardKeyAlt",
+      "min": 4.5,
+      "note": "Labels on special keys"
     }
   ]
 }
