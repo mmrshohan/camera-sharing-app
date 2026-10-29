@@ -6,7 +6,9 @@ Releases of the Camera Sharing design system. The format follows [Keep a Changel
 
 ### Added
 
-- SignInButton 1.0.0 in the Lab for review (group 5, Sign-in): Apple's and Google's sign-in buttons in each brand's colors and words, the same size as our buttons. No logo artwork is stored: Apple's logo comes from Apple's system font, and Google's G is a placeholder. New tokens color.signInAppleFill, color.signInAppleInk, color.signInGoogleFill, color.signInGoogleStroke and color.signInGoogleInk.
+- Group 5 approved by the owner on 30 October 2026; SignInButton is in the Library at 1.0.0, and Welcome uses it.
+- SignInButton 1.0.0: Apple's and Google's sign-in buttons in each brand's colors and words, the same size as our buttons. No logo artwork is stored: Apple's logo comes from Apple's system font, and Google's G is a placeholder.
+- New tokens color.signInAppleFill, color.signInAppleInk, color.signInGoogleFill, color.signInGoogleStroke and color.signInGoogleInk.
 
 ## [1.0.0] - 2026-10-29
 

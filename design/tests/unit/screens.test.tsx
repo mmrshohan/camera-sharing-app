@@ -8,6 +8,7 @@ import { reduce, timing } from "@prototype/model/world";
 import { getScenario } from "@prototype/scenarios/catalog";
 import { Home } from "@prototype/screens/Home";
 import { Lock } from "@prototype/screens/Lock";
+import { Welcome } from "@prototype/screens/Welcome";
 import { DeviceViewContext } from "@prototype/shell/deviceView";
 
 const run = (world: World, ...events: WorldEvent[]): World => events.reduce(reduce, world);
@@ -118,5 +119,29 @@ describe("Sarah's Home (design review, 29 October 2026)", () => {
     expect(labels.length).toBeGreaterThan(1);
     expect(new Set(labels).size).toBe(labels.length);
     expect(markup(Home, w, "sarah")).not.toMatch(/aria-label="([^",]+), \1[,"]/);
+  });
+});
+
+describe("Welcome signs in with each brand's own button (design review 7, group 5)", () => {
+  const onIphone: WorldEvent = { type: "setAppearance", device: "sarah", model: "iphone16pro" };
+
+  test("on iPhone, Apple's button comes first, then Google's", () => {
+    const html = markup(Welcome, run(scenario("welcome-ready"), onIphone), "sarah");
+    const apple = html.indexOf("sign-in-button--apple");
+    const google = html.indexOf("sign-in-button--google");
+    expect(apple).toBeGreaterThan(-1);
+    expect(google).toBeGreaterThan(apple);
+    expect(html).not.toContain("button--filled");
+  });
+
+  test("on Android, Google's button only", () => {
+    const html = markup(Welcome, scenario("welcome-ready"), "sarah");
+    expect(html).toContain("sign-in-button--google");
+    expect(html).not.toContain("sign-in-button--apple");
+  });
+
+  test("offline, the buttons are shown but unavailable", () => {
+    const html = markup(Welcome, run(scenario("welcome-offline"), onIphone), "sarah");
+    expect(html.match(/class="sign-in-button[^"]*"[^>]*aria-disabled="true"/g)).toHaveLength(2);
   });
 });

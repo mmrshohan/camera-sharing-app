@@ -1,6 +1,6 @@
-import { Button } from "@components/Button";
 import { devices } from "@components/DeviceFrame";
 import { InlineMessage } from "@components/InlineMessage";
+import { SignInButton } from "@components/SignInButton";
 import { Text } from "@components/Text";
 import { strings as s } from "@prototype/copy/welcome";
 import type { DeviceId, SignInMethod } from "@prototype/model/types";
@@ -8,11 +8,6 @@ import { useDeviceView } from "@prototype/shell/deviceView";
 import { ScreenBody } from "./parts";
 
 export const screenId = "screens/Welcome";
-
-const labels: Record<Exclude<SignInMethod, "passkey">, string> = {
-  apple: s.apple,
-  google: s.google,
-};
 
 export function Welcome({ id }: { id: DeviceId }) {
   const { device, dispatch } = useDeviceView(id);
@@ -32,16 +27,15 @@ export function Welcome({ id }: { id: DeviceId }) {
     <ScreenBody
       bar={
         <div className="stack">
-          {methods.map((method, index) => (
-            <Button
+          {methods.map((method) => (
+            <SignInButton
               key={method}
-              variant={index === 0 ? "filled" : "tinted"}
+              provider={method}
+              action="continue"
               fullWidth
               disabled={offline}
               onPress={() => dispatch({ type: "signIn", device: id, method })}
-            >
-              {labels[method]}
-            </Button>
+            />
           ))}
         </div>
       }

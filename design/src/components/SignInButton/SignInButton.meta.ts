@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "SignInButton",
   group: 5,
   layer: "system",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "Sign in with Apple and Google, in each brand's own colors and words, at the height and in the capsule of our buttons.",
@@ -52,7 +52,7 @@ export const meta: ComponentMeta = {
       version: "1.0.0",
       date: "2026-10-30",
       summary:
-        "First version, for review: Apple's and Google's sign-in buttons in light and dark, on both platforms.",
+        "First version: Apple's and Google's sign-in buttons in light and dark, on both platforms.",
     },
   ],
 };
