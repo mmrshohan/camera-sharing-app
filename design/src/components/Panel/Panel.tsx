@@ -1,6 +1,6 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { AnimatePresence, motion, useDragControls, type PanInfo } from "motion/react";
-import { useLayoutEffect, useRef, useState, type ReactNode, type RefObject } from "react";
+import { useCallback, useRef, useState, type ReactNode, type RefObject } from "react";
 import { useReturnFocus } from "@shared/focus";
 import { useShouldReduceMotion } from "@shared/surface";
 import { springToMotion, tokens } from "@tokens";
@@ -40,25 +40,25 @@ function reveal(body: HTMLElement | null, target: HTMLElement): void {
   else if (below > 0) body.scrollTop += Math.min(below, -above);
 }
 
-/** Whether the content is taller than the body around it, kept current as either changes. */
-function useOverflow(
-  body: RefObject<HTMLElement | null>,
-  content: RefObject<HTMLElement | null>,
-  open: boolean,
-): boolean {
+/**
+ * Whether a body's content is taller than the body, kept current as either changes. It follows the
+ * body element itself: a panel open before its screen exists is moved into it as a new element.
+ */
+function useOverflow(): [observe: (body: HTMLElement | null) => void, overflows: boolean] {
   const [overflows, setOverflows] = useState(false);
-  useLayoutEffect(() => {
-    const outer = body.current;
-    const inner = content.current;
-    if (!open || !outer || !inner) return;
-    const check = () => setOverflows(outer.scrollHeight > outer.clientHeight);
-    const observer = new ResizeObserver(check);
-    observer.observe(outer);
-    observer.observe(inner);
-    check();
-    return () => observer.disconnect();
-  }, [body, content, open]);
-  return overflows;
+  const observer = useRef<ResizeObserver | null>(null);
+  const observe = useCallback((body: HTMLElement | null) => {
+    observer.current?.disconnect();
+    observer.current = null;
+    if (!body) return;
+    observer.current = new ResizeObserver(() =>
+      setOverflows(body.scrollHeight > body.clientHeight),
+    );
+    observer.current.observe(body);
+    // The body's one child holds the content, so its size follows the content's.
+    if (body.firstElementChild) observer.current.observe(body.firstElementChild);
+  }, []);
+  return [observe, overflows];
 }
 
 /** The system sheet on iOS, Material's modal bottom sheet on Android. Opens inside its screen. */
@@ -75,9 +75,15 @@ export function Panel({
   const reduceMotion = useShouldReduceMotion();
   const drag = useDragControls();
   const focus = useReturnFocus();
-  const body = useRef<HTMLDivElement>(null);
-  const content = useRef<HTMLDivElement>(null);
-  const scrolls = useOverflow(body, content, open);
+  const body = useRef<HTMLDivElement | null>(null);
+  const [observe, scrolls] = useOverflow();
+  const bodyRef = useCallback(
+    (element: HTMLDivElement | null) => {
+      body.current = element;
+      observe(element);
+    },
+    [observe],
+  );
   const away = reduceMotion ? { opacity: 0 } : { y: "100%" };
 
   const onDragEnd = (_event: unknown, info: PanInfo) => {
@@ -151,12 +157,12 @@ export function Panel({
                 </div>
                 <Dialog.Title className="panel__title">{title}</Dialog.Title>
                 <div
-                  ref={body}
+                  ref={bodyRef}
                   className="panel__body"
                   // Content that scrolls can be scrolled from the keyboard, even with no control.
                   {...(scrolls && { tabIndex: 0, role: "region", "aria-label": title })}
                 >
-                  <div ref={content}>{children}</div>
+                  <div>{children}</div>
                 </div>
               </motion.div>
             </Dialog.Content>

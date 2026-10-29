@@ -212,6 +212,16 @@ test.describe("panels on the phones (design review, 29 October 2026)", () => {
     }
   });
 
+  test("a panel already open when the phone loads becomes a focusable region once it scrolls", async ({
+    page,
+  }) => {
+    // The phone's screen element arrives after the first render, and the panel moves into it.
+    await open(page, "scenario=invitation-showing-code&sarahDevice=iphoneSE3&text=largest");
+    const body = sarah(page).locator(".panel__body");
+    expect(await body.evaluate((el) => el.scrollHeight - el.clientHeight)).toBeGreaterThan(0);
+    await expect(body).toHaveAttribute("tabindex", "0");
+  });
+
   test("a showing invitation fits: its countdown and Done show without scrolling", async ({
     page,
   }) => {
