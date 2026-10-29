@@ -31,7 +31,10 @@ const areas = [
 ] as const;
 
 export function Overview() {
-  const [latest] = releases;
+  // The latest release with entries: an empty Unreleased section says nothing.
+  const latest = releases.find((release) =>
+    Object.values(release.sections).some((items) => items.length > 0),
+  );
   return (
     <>
       <p className="ws-eyebrow">

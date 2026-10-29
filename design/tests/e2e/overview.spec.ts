@@ -9,7 +9,10 @@ const version = (
 const componentCount = readdirSync(new URL("src/components/", root), {
   withFileTypes: true,
 }).filter((entry) => entry.isDirectory()).length;
-const [latest] = parseChangelog(readFileSync(new URL("CHANGELOG.md", root), "utf8"));
+// The latest release with entries: an empty Unreleased section is skipped.
+const latest = parseChangelog(readFileSync(new URL("CHANGELOG.md", root), "utf8")).find((release) =>
+  Object.values(release.sections).some((items) => items.length > 0),
+);
 
 test("the overview shows the version, components by status, latest changes and links", async ({
   page,
@@ -25,6 +28,7 @@ test("the overview shows the version, components by status, latest changes and l
 
   const firstAdded = latest!.sections.Added[0]!.replaceAll("`", "");
   await expect(page.getByTestId("overview-latest")).toContainText(firstAdded);
+  await expect(page.getByTestId("overview-latest")).toContainText(`v${latest!.version}`);
 
   const links = page.getByTestId("overview-links");
   for (const name of ["Guideline", "Library", "Lab", "Prototype", "Changelog"]) {
