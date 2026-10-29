@@ -386,20 +386,17 @@ export const scenarios: readonly Scenario[] = [
       title: "Camera: queue full",
       focus: "alex",
       make: () =>
-        run(
-          shoot(
-            run(connected(), { type: "setNetwork", device: "alex", network: "offline" }),
-            limits.queue,
-            50,
-          ),
-          { type: "capture" },
+        shoot(
+          run(connected(), { type: "setNetwork", device: "alex", network: "offline" }),
+          limits.queue,
+          timing.captureMs,
         ),
     },
     {
       id: "camera-storage-full",
       title: "Camera: storage full",
       focus: "alex",
-      make: () => run(patchDevice(connected(), "alex", { storageFull: true }), { type: "capture" }),
+      make: () => patchDevice(connected(), "alex", { storageFull: true }),
     },
     {
       id: "camera-interrupted",

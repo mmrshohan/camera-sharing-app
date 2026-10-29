@@ -1,4 +1,5 @@
 import { devices as specs } from "@components/DeviceFrame/devices";
+import { strings as camera } from "@prototype/copy/camera";
 import { people, samples } from "./fixtures";
 import {
   canStartNew,
@@ -30,10 +31,10 @@ export { limits, timing } from "./timing";
 
 /** What a phone says when it refuses something. Screens show these as toasts. */
 export const toasts = {
-  busy: "Camera busy. That tap didn't take a photo.",
-  sessionEnded: "This session has ended. That tap didn't take a photo.",
-  storageFull: "Storage is full. Free up space to take more photos.",
-  queueFull: `${limits.queue} photos are waiting to send. Take more once some have sent.`,
+  busy: camera.busy,
+  sessionEnded: camera.ended,
+  storageFull: camera.storageFull,
+  queueFull: camera.queueFull,
 } as const;
 
 // ---- Small helpers ----
@@ -178,14 +179,16 @@ function approve(w: World, by: DeviceId): World {
 function capture(w: World): World {
   const alex = w.devices.alex;
   const s = w.session;
-  const refuse = (toast: string) => withUi(w, "alex", { toast });
-  // Each refusal is immediate and distinct, and never counts as a photo (R10).
+  const refuse = (toast: string) =>
+    withUi(w, "alex", { toast, toastUntil: w.clock + timing.toastMs });
+  // Each refusal is immediate and distinct, and never counts as a photo (R10). Lasting reasons
+  // come before the camera's moment of being busy.
   if (!isActive(s) || alex.mode !== "borrowing") return refuse(toasts.sessionEnded);
-  if (alex.busy) return refuse(toasts.busy);
   if (alex.storageFull) return refuse(toasts.storageFull);
   if (alex.hostPhotos.filter((p) => unsent.includes(p.stage)).length >= limits.queue) {
     return refuse(toasts.queueFull);
   }
+  if (alex.busy) return refuse(toasts.busy);
   const n = alex.hostPhotos.filter((p) => p.sessionId === s.id).length + 1;
   const keys = Object.keys(samples);
   const photo: HostPhoto = {
@@ -204,7 +207,9 @@ function capture(w: World): World {
     ...withDevice(w, "alex", (d) => ({
       ...d,
       hostPhotos: [...d.hostPhotos, photo],
-      ui: { ...d.ui, lastShot: photo.id, dropKey: d.ui.dropKey + 1, toast: null },
+      // Capturing takes a moment; taps until then are refused (R10).
+      busy: true,
+      ui: { ...d.ui, lastShot: photo.id, dropKey: d.ui.dropKey + 1, toast: null, toastUntil: null },
     })),
     session: { ...s, endsAt: endsAt(s, w.clock) },
   };
@@ -338,6 +343,7 @@ function startRoute(w: World, d: DeviceState): Route {
 function relaunch(w: World, id: DeviceId): World {
   return withDevice(w, id, (d) => ({
     ...d,
+    busy: false,
     hostPhotos: d.hostPhotos.map((p) =>
       p.stage === "preparing" || p.stage === "uploading" ? { ...p, stageAt: w.clock } : p,
     ),
@@ -356,6 +362,7 @@ function relaunch(w: World, id: DeviceId): World {
       openPhoto: null,
       pendingSave: null,
       toast: null,
+      toastUntil: null,
       field: { value: "", state: "idle", since: w.clock },
     },
   }));
@@ -518,6 +525,12 @@ function settle(w: World): World {
   });
 }
 
+/** When a busy camera is ready again: a moment after its latest capture. */
+function cameraReadyAt(alex: DeviceState): number | null {
+  if (!alex.busy || alex.hostPhotos.length === 0) return null;
+  return Math.max(...alex.hostPhotos.map((p) => p.capturedAt)) + timing.captureMs;
+}
+
 /** The next moment something is due, or null. */
 function nextDue(w: World): number | null {
   const { alex, sarah } = w.devices;
@@ -543,7 +556,10 @@ function nextDue(w: World): number | null {
   if (w.recovery?.state === "needed") times.push(w.recovery.expiresAt);
   for (const d of [alex, sarah]) {
     if (d.ui.field.state === "checking") times.push(d.ui.field.since + timing.checkUsernameMs);
+    if (d.ui.toastUntil !== null) times.push(d.ui.toastUntil);
   }
+  const ready = cameraReadyAt(alex);
+  if (ready !== null) times.push(ready);
   return times.length > 0 ? Math.min(...times) : null;
 }
 
@@ -637,7 +653,14 @@ function fire(w: World): World {
   if (r?.state === "needed" && r.expiresAt <= now)
     next = { ...next, recovery: { ...r, state: "expired" } };
 
+  const ready = cameraReadyAt(next.devices.alex);
+  if (ready !== null && ready <= now)
+    next = withDevice(next, "alex", (d) => ({ ...d, busy: false }));
+
   for (const id of ["alex", "sarah"] as const) {
+    const { toastUntil } = next.devices[id].ui;
+    if (toastUntil !== null && toastUntil <= now)
+      next = withUi(next, id, { toast: null, toastUntil: null });
     const field = next.devices[id].ui.field;
     if (field.state === "checking" && field.since + timing.checkUsernameMs <= now) {
       const state = usernameProblem(field.value) === null ? "valid" : "invalid";
@@ -796,5 +819,11 @@ export function reduce(w: World, event: WorldEvent): World {
       }));
     case "showSystem":
       return withUi(w, event.device, { system: event.surface });
+    case "setCamera": {
+      const { type: _type, device: _device, ...controls } = event;
+      return withUi(w, event.device, {
+        camera: { ...w.devices[event.device].ui.camera, ...controls },
+      });
+    }
   }
 }

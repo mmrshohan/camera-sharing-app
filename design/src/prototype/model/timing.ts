@@ -8,6 +8,10 @@ export const timing = {
   downloadMs: 1000,
   saveMs: 800,
   checkUsernameMs: 600,
+  /** The camera is busy for a moment after each capture; a tap then is refused (R10). */
+  captureMs: 300,
+  /** How long a refusal's toast stays. */
+  toastMs: 3000,
 } as const;
 
 /**

@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 import { hostSummary, recipientTiles, showsLiveDot } from "@prototype/model/selectors";
 import type { DeviceId, World } from "@prototype/model/types";
-import { reduce, toasts } from "@prototype/model/world";
+import { limits, reduce, toasts } from "@prototype/model/world";
 import { getScenario, scenarios } from "@prototype/scenarios/catalog";
 import { journeys } from "@prototype/scenarios/types";
 import {
@@ -253,8 +253,14 @@ const reaches: Record<string, (w: World) => void> = {
   "camera-wifi-only-waiting": (w) => expect(hostSummary(w).waitingWifi).toBeGreaterThan(0),
   "camera-offline-waiting": (w) => expect(hostSummary(w).waitingInternet).toBeGreaterThan(0),
   "camera-busy-tap-rejected": (w) => expect(w.devices.alex.ui.toast).toBe(toasts.busy),
-  "camera-queue-full": (w) => expect(w.devices.alex.ui.toast).toBe(toasts.queueFull),
-  "camera-storage-full": (w) => expect(w.devices.alex.ui.toast).toBe(toasts.storageFull),
+  "camera-queue-full": (w) => {
+    // The blocked shutter says why; no refused tap repeats it as a toast.
+    const counts = hostSummary(w);
+    expect(counts.preparing + counts.waitingInternet).toBe(limits.queue);
+    expect(w.devices.alex.ui.toast).toBeNull();
+  },
+  "camera-storage-full": (w) =>
+    expect(w.devices.alex).toMatchObject({ storageFull: true, ui: { toast: null } }),
   "camera-session-ends-soon": (w) => {
     const left = must(must(w.session).endsAt) - w.clock;
     expect(left).toBeGreaterThan(0);

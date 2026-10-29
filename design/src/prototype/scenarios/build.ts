@@ -46,6 +46,7 @@ function device(id: DeviceId, model: DeviceModel, clock: number): DeviceState {
       openPhoto: null,
       pendingSave: null,
       toast: null,
+      toastUntil: null,
       notice: null,
       inviteExpiresAt: null,
       camera: { flash: "auto", zoom: 1, facing: "back" },

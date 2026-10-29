@@ -1,6 +1,8 @@
 import type { ComponentType } from "react";
 import type { DeviceId, Route } from "@prototype/model/types";
+import { Camera } from "./Camera";
 import { Home } from "./Home";
+import { Lock } from "./Lock";
 import { Scanner } from "./Scanner";
 import { Username } from "./Username";
 import { Welcome } from "./Welcome";
@@ -14,6 +16,8 @@ export const screens: Partial<Record<Route, Screen>> = {
   username: Username,
   home: Home,
   scanner: Scanner,
+  camera: Camera,
+  lock: Lock,
 };
 
 export const routeNames: Record<Route, string> = {

@@ -12,6 +12,9 @@ export function simulationsFor(world: World, id: DeviceId): Simulation[] {
   const session = world.session;
   const pending = session?.state === "requested" || session?.state === "verifying";
   if (id !== "alex") return [];
+  if (device.ui.route === "lock") {
+    return [{ label: "Unlock canceled", event: { type: "unlock", success: false } }];
+  }
   if (pending) {
     return [
       { label: "Words don’t match", event: { type: "wordsMismatch" } },

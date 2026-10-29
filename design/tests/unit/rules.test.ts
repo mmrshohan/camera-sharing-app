@@ -53,7 +53,14 @@ function withHostStage(w: World, id: PhotoId, stage: HostStage): World {
 
 describe("R1: the camera always shows where photos go", () => {
   test("every capture goes to the session's one recipient", () => {
-    const w = run(connected(), capture, tick(100), capture, tick(100), capture);
+    const w = run(
+      connected(),
+      capture,
+      tick(timing.captureMs),
+      capture,
+      tick(timing.captureMs),
+      capture,
+    );
     const session = must(w.session);
     expect(session.recipient).toEqual(people.sarah);
     expect(w.devices.alex.hostPhotos).toHaveLength(3);
@@ -143,7 +150,7 @@ describe("R2: both people approve the same attempt", () => {
 
 describe("R3: no gallery on Alex's phone", () => {
   test("the last shot is the newest photo of this session, cleared by relaunch, ending and a new session", () => {
-    const w = run(connected(), capture, tick(100), capture);
+    const w = run(connected(), capture, tick(timing.captureMs), capture);
     expect(w.devices.alex.ui.lastShot).toBe(hostIds(w)[1]);
     expect(run(w, { type: "relaunch", device: "alex" }).devices.alex.ui.lastShot).toBeNull();
     const ended = run(w, { type: "endSession" });
@@ -154,7 +161,7 @@ describe("R3: no gallery on Alex's phone", () => {
   });
 
   test("the session's list shows labels only: no images, nothing about Sarah's saving", () => {
-    const sent = run(connected(), capture, tick(100), capture, settle);
+    const sent = run(connected(), capture, tick(timing.captureMs), capture, settle);
     const w = run(sent, { type: "savePhoto", id: must(hostIds(sent)[0]) }, settle);
     const items = hostItems(w);
     for (const item of items) expect(Object.keys(item).sort()).toEqual(["index", "label"]);
@@ -165,7 +172,7 @@ describe("R3: no gallery on Alex's phone", () => {
   });
 
   test("Alex's gallery stays empty when he lends his camera", () => {
-    const w = run(connected(), capture, tick(100), capture, settle);
+    const w = run(connected(), capture, tick(timing.captureMs), capture, settle);
     expect(gallery(w)).toHaveLength(2);
     expect(w.devices.alex.gallery).toEqual([]);
   });
@@ -214,7 +221,7 @@ describe("R4: borrowing survives everything but Alex's own unlock", () => {
 
 describe("R5: honest states", () => {
   test("saving photo A, then opening photo B, saves only A", () => {
-    const sent = run(connected(), capture, tick(100), capture, settle);
+    const sent = run(connected(), capture, tick(timing.captureMs), capture, settle);
     const [a, b] = hostIds(sent).map(must);
     const w = run(
       sent,
@@ -333,7 +340,7 @@ describe("R7: photos stuck offline need both phones to approve recovery", () => 
       connected(),
       { type: "setNetwork", device: "alex", network: "offline" },
       capture,
-      tick(100),
+      tick(timing.captureMs),
       capture,
       tick(timing.prepareMs),
       { type: "endSession" },
@@ -454,7 +461,7 @@ test("R9: with Wi-Fi only on cellular, photos stay prepared and count as waiting
     { type: "setSetting", device: "alex", key: "wifiOnly", value: true },
     { type: "setNetwork", device: "alex", network: "online", connection: "cellular" },
     capture,
-    tick(100),
+    tick(timing.captureMs),
     capture,
     settle,
   );
@@ -482,7 +489,7 @@ test("R10: a tap while the camera is busy is refused at once and never counted",
 
 describe("R11: signing out and deleting the account", () => {
   const withPhotos = () => {
-    const sent = run(connected(), capture, tick(100), capture, settle);
+    const sent = run(connected(), capture, tick(timing.captureMs), capture, settle);
     return run(sent, { type: "savePhoto", id: must(hostIds(sent)[0]) }, settle);
   };
 
@@ -547,7 +554,7 @@ describe("the session's clock", () => {
 
 describe("selectors", () => {
   test("Sarah's tiles: one section per session, newest first, honest labels", () => {
-    const w = run(connected(), capture, tick(100), capture, settle);
+    const w = run(connected(), capture, tick(timing.captureMs), capture, settle);
     const [first, second] = hostIds(w);
     const sections = recipientTiles(w);
     expect(sections).toHaveLength(1);
@@ -584,6 +591,42 @@ describe("selectors", () => {
       waitingInternet: 0,
       waitingWifi: 0,
     });
+  });
+});
+
+describe("the camera between taps", () => {
+  test("a capture keeps the camera busy for a moment: a second tap then is refused (R10)", () => {
+    const w = run(connected(), capture, tick(timing.captureMs - 1), capture);
+    expect(w.devices.alex.hostPhotos).toHaveLength(1);
+    expect(w.devices.alex.ui.toast).toBe(toasts.busy);
+    const later = run(w, tick(1), capture);
+    expect(later.devices.alex.hostPhotos).toHaveLength(2);
+  });
+
+  test("a refusal's toast goes after a few seconds", () => {
+    const w = run(connected(), capture, capture);
+    expect(w.devices.alex.ui.toast).toBe(toasts.busy);
+    expect(run(w, tick(timing.toastMs)).devices.alex.ui.toast).toBeNull();
+  });
+
+  test("flash, zoom and the lens change only the camera's controls", () => {
+    const w = connected();
+    const next = run(w, {
+      type: "setCamera",
+      device: "alex",
+      flash: "on",
+      zoom: 2,
+      facing: "front",
+    });
+    expect(next.devices.alex.ui.camera).toEqual({ flash: "on", zoom: 2, facing: "front" });
+    expect({ ...next.devices.alex.ui, camera: w.devices.alex.ui.camera }).toEqual(
+      w.devices.alex.ui,
+    );
+  });
+
+  test("relaunching clears a busy camera", () => {
+    const w = run(connected(), capture, { type: "relaunch", device: "alex" });
+    expect(w.devices.alex.busy).toBe(false);
   });
 });
 
@@ -644,6 +687,8 @@ test("the model's timing", () => {
     downloadMs: 1000,
     saveMs: 800,
     checkUsernameMs: 600,
+    captureMs: 300,
+    toastMs: 3000,
   });
 });
 

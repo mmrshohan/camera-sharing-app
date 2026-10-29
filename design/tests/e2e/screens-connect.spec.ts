@@ -31,6 +31,7 @@ test("Alex lends his camera to Sarah, end to end", async ({ page }) => {
   await expect(alex.getByText(/Waiting for Sarah · expires in \d:\d\d/)).toBeVisible();
   await sarah.getByRole("button", { name: "Receive on this phone" }).click();
   await expect(alex.locator("[data-route]")).toHaveAttribute("data-route", "camera");
+  await expect(alex.getByText("Sending to Sarah")).toBeVisible();
   await expect(sarah.locator("[data-route]")).toHaveAttribute("data-route", "home");
 });
 

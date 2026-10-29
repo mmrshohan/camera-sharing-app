@@ -163,3 +163,100 @@
 .panel-focus:focus {
   outline: none;
 }
+
+.stack--tight {
+  gap: var(--space-1);
+}
+
+/* Alex's camera: the scene fills the screen; controls float over it on the camera's colors. */
+.camera {
+  --toast-top: calc(var(--safe-top) + var(--target) + var(--space-3));
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  background: var(--color-device-body);
+  color: var(--color-on-camera);
+}
+
+.camera__scene {
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+}
+
+.camera__top {
+  position: absolute;
+  top: var(--safe-top);
+  right: 0;
+  left: 0;
+  display: grid;
+  grid-template-columns: var(--target) minmax(0, 1fr) var(--target);
+  align-items: center;
+  padding: var(--space-1) var(--space-2);
+}
+
+.camera__pill {
+  display: flex;
+  justify-content: center;
+}
+
+.camera__notices {
+  position: absolute;
+  top: calc(var(--safe-top) + var(--target) + var(--space-3));
+  right: var(--margin);
+  left: var(--margin);
+  display: grid;
+  gap: var(--space-2);
+}
+
+.camera__controls {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+  padding: var(--space-8) var(--margin) calc(var(--safe-bottom) + var(--space-4));
+  background: linear-gradient(to top, var(--color-camera-scrim), transparent);
+}
+
+.camera__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  width: 100%;
+}
+
+.camera__row > :first-child {
+  justify-self: start;
+}
+
+.camera__row > :last-child {
+  justify-self: end;
+}
+
+.camera__viewer {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+}
+
+/* The lock: what the phone says to whoever holds it now. */
+.lock {
+  display: grid;
+  flex: 1;
+  align-content: center;
+  justify-items: center;
+  gap: var(--space-3);
+  text-align: center;
+}
+
+.lock > svg {
+  color: var(--color-accent-text);
+}
+
+.lock__notice {
+  justify-self: stretch;
+  text-align: start;
+}

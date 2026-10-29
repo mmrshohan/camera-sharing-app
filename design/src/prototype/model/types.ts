@@ -148,6 +148,8 @@ export interface DeviceUi {
   /** The photo whose save waits for the answer to the Photos prompt. */
   pendingSave: PhotoId | null;
   toast: string | null;
+  /** When the toast goes; null for one that stays. */
+  toastUntil: number | null;
   notice: Notice | null;
   /** Sarah's invitation code is valid until then; null while none is shown. */
   inviteExpiresAt: number | null;
@@ -267,4 +269,5 @@ export type WorldEvent =
   | ({ type: "deleteAccount" } & On)
   // The review shell's own controls: how a phone looks, and its system surfaces.
   | ({ type: "setAppearance"; model?: DeviceModel; theme?: Theme; textSize?: TextSize } & On)
-  | ({ type: "showSystem"; surface: DeviceUi["system"] } & On);
+  | ({ type: "showSystem"; surface: DeviceUi["system"] } & On)
+  | ({ type: "setCamera" } & Partial<DeviceUi["camera"]> & On);
