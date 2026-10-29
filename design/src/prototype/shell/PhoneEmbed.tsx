@@ -62,7 +62,7 @@ export function PhoneEmbed({
         ref={frame}
         className="proto-phone__frame"
         title={`${name}'s phone`}
-        src={`/prototype/phone/${id}`}
+        src={`${import.meta.env.BASE_URL}prototype/phone/${id}`}
         style={{ width: Math.ceil(size.width * scale), height: Math.ceil(size.height * scale) }}
       />
     </div>

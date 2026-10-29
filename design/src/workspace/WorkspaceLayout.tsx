@@ -36,25 +36,29 @@ function useHashScroll(hash: string): void {
 
 export function WorkspaceLayout() {
   useWorkspaceTheme();
-  const { pathname, hash } = useLocation();
+  const { pathname, hash, search } = useLocation();
   useHashScroll(hash);
   const fullBleed = pathname.startsWith("/prototype");
+  // Inside the compare view a page shows only itself.
+  const embedded = new URLSearchParams(search).get("embed") === "1";
 
   return (
     <>
-      <header className="ws-header">
-        <a className="ws-brand" href="/">
-          Camera Sharing · Design system
-        </a>
-        <nav className="ws-nav" aria-label="Workspace">
-          {sections.map(({ to, label, end }) => (
-            <NavLink key={to} to={to} end={end}>
-              {label}
-            </NavLink>
-          ))}
-        </nav>
-        <span className="ws-version">v{__DESIGN_VERSION__}</span>
-      </header>
+      {!embedded && (
+        <header className="ws-header">
+          <a className="ws-brand" href={import.meta.env.BASE_URL}>
+            Camera Sharing · Design system
+          </a>
+          <nav className="ws-nav" aria-label="Workspace">
+            {sections.map(({ to, label, end }) => (
+              <NavLink key={to} to={to} end={end}>
+                {label}
+              </NavLink>
+            ))}
+          </nav>
+          <span className="ws-version">v{__DESIGN_VERSION__}</span>
+        </header>
+      )}
       <main className={fullBleed ? "ws-main ws-main--full" : "ws-main"}>
         <Outlet />
       </main>

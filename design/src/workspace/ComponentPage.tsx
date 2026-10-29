@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, Navigate, useParams, useSearchParams } from "react-router";
 import type { Surface } from "@shared/surface";
 import { groupApprovals } from "./approvals";
+import { CompareView } from "./CompareView";
 import usageJson from "./generated/usage.json";
 import { NotFound } from "./pages/NotFound";
 import { PreviewScope } from "./PreviewScope";
 import { getComponent } from "./registry";
+import { listReleases } from "./releases";
 import { groupNames, statusNames, type ComponentEntry } from "./types";
 
 /** Component id → prototype files that import it, built by scripts/build-usage.ts. */
@@ -85,6 +87,19 @@ export function ComponentPage({ mode }: { mode: Mode }) {
   const [params, setParams] = useSearchParams();
   const surface = readSurface(params);
   const [seen, setSeen] = useState<Set<string>>(() => new Set([surface.platform, surface.theme]));
+  const [releases, setReleases] = useState<string[]>([]);
+  const [compareWith, setCompareWith] = useState<string | null>(null);
+
+  // Earlier releases, once one has been built with npm run release:fetch.
+  useEffect(() => {
+    let live = true;
+    void listReleases().then((list) => {
+      if (live) setReleases(list);
+    });
+    return () => {
+      live = false;
+    };
+  }, []);
 
   const entry = getComponent(id);
   if (!entry) return <NotFound />;
@@ -244,7 +259,28 @@ export function ComponentPage({ mode }: { mode: Mode }) {
         <p>
           Current version <strong>{meta.version}</strong>.
         </p>
-        <p className="ws-muted">No earlier release yet</p>
+        {mode === "library" && releases.length > 0 ? (
+          <>
+            <fieldset className="ws-segmented ws-segmented--start">
+              <legend>Compare with</legend>
+              {releases.map((version) => (
+                <label key={version}>
+                  <input
+                    type="radio"
+                    name="compare"
+                    value={version}
+                    checked={compareWith === version}
+                    onChange={() => setCompareWith(version)}
+                  />
+                  <span>v{version}</span>
+                </label>
+              ))}
+            </fieldset>
+            {compareWith && <CompareView previous={compareWith} path={`/library/${meta.id}`} />}
+          </>
+        ) : (
+          <p className="ws-muted">No earlier release yet</p>
+        )}
       </section>
 
       <section className="ws-section">

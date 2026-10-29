@@ -645,3 +645,50 @@
   background: var(--color-background);
   box-shadow: inset 0 0 0 1px var(--color-separator);
 }
+
+/* An earlier release beside today's build. */
+.ws-compare {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.ws-compare figure {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 8px;
+  margin: 0;
+}
+
+.ws-compare figcaption {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ws-text-2);
+}
+
+.ws-compare iframe {
+  width: 100%;
+  height: 720px;
+  border: 0;
+  border-radius: var(--ws-radius);
+  background: var(--ws-bg);
+  box-shadow: inset 0 0 0 1px var(--ws-border);
+}
+
+/* In the review shell the comparison fills the stage. */
+.proto-main > .ws-compare {
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+  padding: 16px;
+}
+
+.proto-main > .ws-compare iframe {
+  height: 100%;
+}
+
+.ws-segmented--start {
+  justify-content: flex-start;
+  width: max-content;
+}

@@ -3,6 +3,8 @@ import type { DeviceId, World } from "@prototype/model/types";
 import { reduce } from "@prototype/model/world";
 import { createWorld } from "@prototype/scenarios/build";
 import { getScenario } from "@prototype/scenarios/catalog";
+import { CompareView } from "@workspace/CompareView";
+import { listReleases } from "@workspace/releases";
 import {
   defaultUrlState,
   formatUrlState,
@@ -54,14 +56,23 @@ const lookOf = (world: World, focus: DeviceId): Look => ({
 export function PrototypePage() {
   const [boot] = useState(() => {
     const { state, notices } = parseUrlState(window.location.search);
-    const paused = new URLSearchParams(window.location.search).get("play") === "0";
-    return { state, notices, paused };
+    const params = new URLSearchParams(window.location.search);
+    // Inside the compare view the shell shows only the phones.
+    return {
+      state,
+      notices,
+      paused: params.get("play") === "0",
+      embedded: params.get("embed") === "1",
+    };
   });
   const [scenario, setScenario] = useState(boot.state.scenario);
   const [view, setView] = useState(boot.state.view);
   const [focus, setFocus] = useState(boot.state.focus);
   const [notices, setNotices] = useState(boot.notices);
   const [present, setPresent] = useState(false);
+  const [compare, setCompare] = useState(boot.state.compare);
+  const [releases, setReleases] = useState<string[] | null>(null);
+  const bare = present || boot.embedded;
   const [initial, setInitial] = useState(() => build(boot.state.scenario, boot.state));
   const { world, applied, dispatch, dispatchFrom, playing, setPlaying } = useWorld(initial, {
     playing: !boot.paused,
@@ -80,7 +91,7 @@ export function PrototypePage() {
     scenario,
     view,
     focus,
-    compare: boot.state.compare,
+    compare,
   };
   const play = boot.paused ? "play=0" : "";
   const withPlay = (search: string) => (play ? `${search}${search ? "&" : "?"}${play}` : search);
@@ -90,6 +101,26 @@ export function PrototypePage() {
       window.history.replaceState(window.history.state, "", `${window.location.pathname}${search}`);
     }
   }, [search]);
+
+  // Earlier releases to compare with, once one has been built with npm run release:fetch.
+  useEffect(() => {
+    let live = true;
+    void listReleases().then((list) => {
+      if (live) setReleases(list);
+    });
+    return () => {
+      live = false;
+    };
+  }, []);
+  useEffect(() => {
+    if (compare === null || releases === null || releases.includes(compare)) return;
+    setNotices((current) => [
+      ...current,
+      `No release ${compare} is built here. Build it with npm run release:fetch ${compare}.`,
+    ]);
+    setCompare(null);
+  }, [compare, releases]);
+  const comparing = compare !== null && releases?.includes(compare) === true;
 
   // For the end-to-end tests: the world, as both phones see it.
   useEffect(() => {
@@ -126,11 +157,11 @@ export function PrototypePage() {
   const hrefFor = (id: string) => `/prototype${withPlay(formatUrlState({ ...url, scenario: id }))}`;
 
   return (
-    <div className={present ? "proto proto--present" : "proto"}>
+    <div className={bare ? "proto proto--present" : "proto"}>
       <h1 className="ws-visually-hidden">Prototype</h1>
-      {!present && <Navigator current={scenario} hrefFor={hrefFor} onChoose={choose} />}
+      {!bare && <Navigator current={scenario} hrefFor={hrefFor} onChoose={choose} />}
       <div className="proto-main">
-        {!present && (
+        {!bare && (
           <div className="proto-toolbar">
             <Segmented
               legend="View"
@@ -160,6 +191,19 @@ export function PrototypePage() {
               setPlaying={setPlaying}
               dispatch={dispatch}
             />
+            {releases !== null && releases.length > 0 && (
+              <label className="proto-field">
+                <span>Compare with</span>
+                <select value={compare ?? ""} onChange={(e) => setCompare(e.target.value || null)}>
+                  <option value="">Nothing</option>
+                  {releases.map((version) => (
+                    <option key={version} value={version}>
+                      v{version}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            )}
             <div className="proto-toolbar__end">
               <button type="button" className="proto-button proto-button--quiet" onClick={reset}>
                 Reset
@@ -170,7 +214,7 @@ export function PrototypePage() {
             </div>
           </div>
         )}
-        {!present && notices.length > 0 && (
+        {!bare && notices.length > 0 && (
           <p role="status" className="proto-notice">
             <span>{notices.join(" ")}</span>
             <button
@@ -182,29 +226,36 @@ export function PrototypePage() {
             </button>
           </p>
         )}
-        <Stage count={shown.length === 1 ? 1 : 2}>
-          {shown.map((id) => (
-            <PhoneEmbed
-              key={id}
-              id={id}
-              name={names[id]}
-              world={world}
-              applied={applied[id]}
-              onEvent={onEventFor(id)}
-              header={
-                present ? null : (
-                  <DeviceControls
-                    id={id}
-                    name={names[id]}
-                    device={world.devices[id]}
-                    dispatch={dispatch}
-                    simulations={simulationsFor(world, id)}
-                  />
-                )
-              }
-            />
-          ))}
-        </Stage>
+        {comparing && compare !== null ? (
+          <CompareView
+            previous={compare}
+            path={`/prototype${withPlay(formatUrlState({ ...url, compare: null }))}`}
+          />
+        ) : (
+          <Stage count={shown.length === 1 ? 1 : 2}>
+            {shown.map((id) => (
+              <PhoneEmbed
+                key={id}
+                id={id}
+                name={names[id]}
+                world={world}
+                applied={applied[id]}
+                onEvent={onEventFor(id)}
+                header={
+                  bare ? null : (
+                    <DeviceControls
+                      id={id}
+                      name={names[id]}
+                      device={world.devices[id]}
+                      dispatch={dispatch}
+                      simulations={simulationsFor(world, id)}
+                    />
+                  )
+                }
+              />
+            ))}
+          </Stage>
+        )}
         {present && (
           <button
             type="button"
