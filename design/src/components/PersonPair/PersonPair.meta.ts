@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "PersonPair",
   group: 3,
   layer: "brand",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "Who lends the camera and exactly which phone the photos go to. Both phones show the same block before anyone approves (R2).",

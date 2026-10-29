@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "ListRow",
   group: 3,
   layer: "system",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "One row of a list: an icon, a title, an optional second line and one trailing thing: a chevron, a value, a switch or a label.",

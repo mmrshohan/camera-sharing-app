@@ -82,7 +82,7 @@ test("small components share a row in the states gallery, centered on their stag
 });
 
 test("workspace styles never leak into previewed components", async ({ page }) => {
-  await gotoAndSettle(page, "/lab/grouped-list");
+  await gotoAndSettle(page, "/library/grouped-list");
   const header = page.locator(".grouped-list__header").first();
   await expect(header).toHaveCSS("font-size", `${tokens.type.ios.default.footnote.size}px`);
   await expect(header).toHaveCSS("margin-bottom", "0px");

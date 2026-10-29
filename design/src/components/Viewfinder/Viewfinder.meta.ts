@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "Viewfinder",
   group: 3,
   layer: "brand",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "The scanner: the camera's view with a frame for the code, and what is happening in words.",

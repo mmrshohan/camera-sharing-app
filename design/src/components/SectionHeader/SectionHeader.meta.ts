@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "SectionHeader",
   group: 3,
   layer: "system",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary: "Names a section of a screen, such as a day in the photo grid, with an optional count.",
   anatomy: [

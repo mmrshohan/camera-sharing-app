@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "CameraStatusLine",
   group: 3,
   layer: "brand",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "What has happened to Alex's photos, in one line: “4 sent · 1 sending · 2 waiting for Wi-Fi”. Tap it for details.",

@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "VerificationWords",
   group: 3,
   layer: "brand",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "Six words, two rows of three. Both phones must show the same words, or nothing goes forward (R2).",

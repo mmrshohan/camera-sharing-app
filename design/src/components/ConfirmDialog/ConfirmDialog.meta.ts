@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "ConfirmDialog",
   group: 3,
   layer: "system",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "Asks before something that matters. On iOS, destructive questions are an action sheet and others an alert; on Android, a Material alert dialog.",

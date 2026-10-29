@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "GroupedList",
   group: 3,
   layer: "system",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "Rows in a group with an optional header and footer: iOS's inset grouped list, a plain Material list on Android.",

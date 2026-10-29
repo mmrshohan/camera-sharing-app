@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "InvitationCode",
   group: 3,
   layer: "brand",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "Sarah's invitation: a QR code that Alex scans, with a countdown only while it is active.",

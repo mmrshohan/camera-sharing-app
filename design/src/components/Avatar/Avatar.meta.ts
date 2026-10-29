@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "Avatar",
   group: 3,
   layer: "brand",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary: "A person, by one or two initials. Neutral, because the photos bring the color.",
   anatomy: [

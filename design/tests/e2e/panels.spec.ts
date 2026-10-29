@@ -6,7 +6,7 @@ const example = (page: Page, title: string) =>
   page.locator(".ws-example").filter({ has: page.getByText(title, { exact: true }) });
 
 async function openDeleteConfirmation(page: Page) {
-  await gotoAndSettle(page, "/lab/confirm-dialog");
+  await gotoAndSettle(page, "/library/confirm-dialog");
   const opener = example(page, "Destructive: an action sheet on iOS").getByRole("button", {
     name: "Delete from this app",
   });
@@ -39,7 +39,7 @@ test.describe("ConfirmDialog", () => {
 
 test.describe("Panel", () => {
   async function openPanel(page: Page, title: string) {
-    await gotoAndSettle(page, "/lab/panel");
+    await gotoAndSettle(page, "/library/panel");
     await example(page, title).getByRole("button", { name: "Show my code" }).click();
     const panel = page.getByRole("dialog");
     await expect(panel).toBeVisible();

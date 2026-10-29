@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "LastShotWell",
   group: 3,
   layer: "brand",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary: "The last photo, beside the shutter. A new one drops in after each capture.",
   anatomy: [

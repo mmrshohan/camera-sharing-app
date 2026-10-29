@@ -6,10 +6,25 @@ Releases of the Camera Sharing design system. The format follows [Keep a Changel
 
 ### Added
 
-- DestinationPill, ZoomControl, LastShotWell and CameraStatusLine (group 3), in review, with shared plural rules: “1 photo”, and photos waiting for Wi-Fi are never “sending” (D10, D16). The Guideline's Motion section has a live send demo.
-- PersonPair, VerificationWords, InvitationCode and Viewfinder (group 3), in review. The invitation shows its countdown only while active (D19).
-- Panel and ConfirmDialog (group 3), in review: each platform's sheet and alert; focus starts on the safe answer and returns to whatever opened them. The Guideline's Motion section has a live panel.
-- TopBar, SectionHeader, ListRow, GroupedList, EmptyState and Avatar (group 3), in review.
+- Group 3 approved by the owner on 29 October 2026; its sixteen components are in the Library at 1.0.0.
+- TopBar 1.0.0: iOS's large-title bar and Material's large top app bar, expanded or collapsed.
+- SectionHeader 1.0.0: a section's title with an optional count.
+- ListRow 1.0.0: chevron, value, switch and label rows; with a switch, the whole row is the switch.
+- GroupedList 1.0.0: iOS's inset grouped list; a plain Material list on Android.
+- EmptyState 1.0.0: calm, with at most one way forward.
+- Avatar 1.0.0: one or two initials, neutral.
+- Panel 1.0.0: the platform sheet; drag down to dismiss unless it needs an answer.
+- ConfirmDialog 1.0.0: action sheet or alert on iOS, Material dialog on Android; focus starts on the safe answer.
+- PersonPair 1.0.0: who lends and exactly which phone the photos go to.
+- VerificationWords 1.0.0: six words, two rows of three.
+- InvitationCode 1.0.0: the QR code, with a countdown only while active.
+- Viewfinder 1.0.0: scanning, not an invitation, camera access off, camera in use.
+- DestinationPill 1.0.0: “Sending to Sarah”, pulsing after each photo.
+- ZoomControl 1.0.0: zoom levels written the camera way.
+- LastShotWell 1.0.0: the last photo, dropping in after each capture.
+- CameraStatusLine 1.0.0: sent, sending and waiting counts in one line.
+- Shared plural rules: “1 photo”, and photos waiting for Wi-Fi are never “sending” (D10, D16).
+- The Guideline's Motion section has a live panel and a live send demo.
 - Group 2 approved by the owner on 29 October 2026; its nine components are in the Library at 1.0.0.
 - Button 1.0.0: filled and tinted capsules, plain and destructive text buttons; disabled and loading.
 - IconButton 1.0.0: a full platform touch target, on the app's surfaces or over the camera.

@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "ZoomControl",
   group: 3,
   layer: "brand",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "Zoom levels over the camera: “.5”, “1×”, “2”. The chosen level is larger and carries the “×”.",

@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "DestinationPill",
   group: 3,
   layer: "brand",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "“Sending to Sarah”, over the camera: where every photo goes. It pulses once after each photo.",

@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "Panel",
   group: 3,
   layer: "system",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "A short task on top of the screen: the system sheet on iOS, Material's modal bottom sheet on Android.",

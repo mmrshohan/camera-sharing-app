@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "TopBar",
   group: 3,
   layer: "system",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary:
     "The screen's title and its few controls: iOS's large-title navigation bar, Material's large top app bar on Android.",

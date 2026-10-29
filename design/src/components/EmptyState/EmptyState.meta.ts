@@ -5,7 +5,7 @@ export const meta: ComponentMeta = {
   name: "EmptyState",
   group: 3,
   layer: "brand",
-  status: "review",
+  status: "final",
   version: "1.0.0",
   summary: "What a screen says before it has anything to show: calm, with at most one way forward.",
   anatomy: [
