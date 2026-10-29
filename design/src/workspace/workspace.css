@@ -545,3 +545,12 @@
   display: grid;
   gap: var(--space-4);
 }
+
+/* The sample photo stands in for the live camera. */
+.ex-viewfinder {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 12px;
+  --viewfinder-preview: url("/images/coast.jpg") center / cover;
+}

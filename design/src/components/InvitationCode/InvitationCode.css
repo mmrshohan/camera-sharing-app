@@ -1,0 +1,76 @@
+.invitation {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+  color: var(--color-ink);
+  text-align: center;
+}
+
+.invitation__card {
+  padding: var(--space-3);
+  border-radius: var(--radius-card);
+  background: var(--color-background);
+  box-shadow: 0 0 0 1px var(--color-separator);
+}
+
+.invitation__qr {
+  display: block;
+  width: var(--qr-size);
+  height: var(--qr-size);
+}
+
+.invitation__qr path {
+  fill: var(--color-ink);
+}
+
+/* Expired and offline keep the code's footprint, so nothing jumps when it comes back. */
+.invitation__placeholder {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: var(--space-1);
+  box-sizing: content-box;
+  width: var(--qr-size);
+  min-height: var(--qr-size);
+  padding: var(--space-3);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  color: var(--color-ink2);
+}
+
+.invitation__placeholder-title,
+.invitation__handle {
+  color: var(--color-ink);
+  font-family: var(--type-headline-family);
+  font-size: var(--type-headline-size);
+  line-height: var(--type-headline-line);
+  font-weight: var(--type-headline-weight);
+  letter-spacing: var(--type-headline-tracking);
+}
+
+.invitation__placeholder-body,
+.invitation__device {
+  font-family: var(--type-subheadline-family);
+  font-size: var(--type-subheadline-size);
+  line-height: var(--type-subheadline-line);
+  font-weight: var(--type-subheadline-weight);
+  letter-spacing: var(--type-subheadline-tracking);
+}
+
+.invitation__who {
+  display: grid;
+}
+
+.invitation__device {
+  color: var(--color-ink2);
+}
+
+.invitation__countdown {
+  margin: 0;
+  color: var(--color-ink2);
+  font-family: var(--type-footnote-family);
+  font-size: var(--type-footnote-size);
+  line-height: var(--type-footnote-line);
+  font-weight: var(--type-footnote-weight);
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,67 @@
+.person-pair {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  color: var(--color-ink);
+}
+
+.person-pair__party {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.person-pair__title {
+  margin: 0;
+  color: var(--color-ink2);
+  font-family: var(--type-footnote-family);
+  font-size: var(--type-footnote-size);
+  line-height: var(--type-footnote-line);
+  font-weight: var(--type-footnote-weight);
+  letter-spacing: var(--type-footnote-tracking);
+}
+
+.person-pair__person {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.person-pair__text {
+  display: grid;
+  min-width: 0;
+}
+
+.person-pair__name {
+  font-family: var(--type-headline-family);
+  font-size: var(--type-headline-size);
+  line-height: var(--type-headline-line);
+  font-weight: var(--type-headline-weight);
+  letter-spacing: var(--type-headline-tracking);
+}
+
+.person-pair__detail {
+  color: var(--color-ink2);
+  font-family: var(--type-subheadline-family);
+  font-size: var(--type-subheadline-size);
+  line-height: var(--type-subheadline-line);
+  font-weight: var(--type-subheadline-weight);
+  letter-spacing: var(--type-subheadline-tracking);
+  overflow-wrap: break-word;
+}
+
+/* The recipient's exact phone is the thing to check (R2). */
+.person-pair__device {
+  color: var(--color-ink);
+  font-weight: var(--type-headline-weight);
+}
+
+/* A down arrow under the first avatar: the photos' direction. */
+.person-pair__arrow {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  color: var(--color-ink3);
+  rotate: 180deg;
+}

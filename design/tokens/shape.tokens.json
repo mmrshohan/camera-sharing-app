@@ -125,6 +125,14 @@
         "unit": "px"
       }
     },
+    "qrSize": {
+      "$type": "dimension",
+      "$value": {
+        "value": 200,
+        "unit": "px"
+      },
+      "$description": "The invitation QR code, quiet zone included: large enough to scan from arm's length."
+    },
     "progressRingSize": {
       "$type": "dimension",
       "$value": {
