@@ -93,6 +93,8 @@ describe("tokens", () => {
     expect(tokens.system.switchWidth).toEqual({ ios: 51, android: 52 });
     expect(tokens.system.switchThumbOn).toEqual({ ios: 27, android: 24 });
     expect(tokens.system.chipHeight).toEqual({ ios: 36, android: 32 });
+    expect(tokens.system.rowHeight).toEqual({ ios: 44, android: 56 });
+    expect(tokens.system.barHeight).toEqual({ ios: 44, android: 64 });
   });
 
   it("sizes icons by context: rows, bars, chips and rings", () => {

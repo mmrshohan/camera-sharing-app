@@ -1,0 +1,28 @@
+.section-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0 var(--space-3);
+  padding: var(--space-5) var(--margin) var(--space-2);
+}
+
+.section-header__title {
+  margin: 0;
+  color: var(--color-ink);
+  font-family: var(--type-title3-family);
+  font-size: var(--type-title3-size);
+  line-height: var(--type-title3-line);
+  font-weight: var(--type-title3-weight);
+  letter-spacing: var(--type-title3-tracking);
+}
+
+.section-header__detail {
+  color: var(--color-ink2);
+  font-family: var(--type-subheadline-family);
+  font-size: var(--type-subheadline-size);
+  line-height: var(--type-subheadline-line);
+  font-weight: var(--type-subheadline-weight);
+  letter-spacing: var(--type-subheadline-tracking);
+  font-variant-numeric: tabular-nums;
+}

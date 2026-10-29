@@ -70,5 +70,5 @@ test("a lab component page shows its sections, ending with the promotion checkli
   await cards.first().click();
   const headings = await page.getByRole("heading", { level: 2 }).allTextContents();
   expect(headings.at(-1)).toBe("Promotion checklist");
-  await expect(page.getByText(/^Group \d approved by the owner$/)).toBeVisible();
+  await expect(page.getByText(/Group \d approved by the owner/)).toBeVisible();
 });

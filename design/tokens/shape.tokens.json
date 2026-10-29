@@ -95,6 +95,14 @@
       },
       "$description": "Icons inside chips and status lines."
     },
+    "iconHero": {
+      "$type": "dimension",
+      "$value": {
+        "value": 48,
+        "unit": "px"
+      },
+      "$description": "The one icon that stands for an empty screen."
+    },
     "ringIcon": {
       "$type": "dimension",
       "$value": {
@@ -315,6 +323,40 @@
         "$type": "dimension",
         "$value": {
           "value": 24,
+          "unit": "px"
+        }
+      }
+    },
+    "rowHeight": {
+      "$description": "A one-line list row: UITableView's 44 pt; Material's 56 dp list item.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 44,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 56,
+          "unit": "px"
+        }
+      }
+    },
+    "barHeight": {
+      "$description": "The top bar's control row: the iOS navigation bar; Material's top app bar.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 44,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 64,
           "unit": "px"
         }
       }

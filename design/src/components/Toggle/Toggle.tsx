@@ -1,4 +1,5 @@
 import { useId } from "react";
+import { SwitchTrack } from "@shared/SwitchTrack";
 import "./Toggle.css";
 
 export interface ToggleProps {
@@ -33,9 +34,7 @@ export function Toggle({ checked, onChange, label, description }: ToggleProps) {
           </span>
         )}
       </span>
-      <span className="toggle__track" aria-hidden="true">
-        <span className="toggle__thumb" />
-      </span>
+      <SwitchTrack checked={checked} />
     </button>
   );
 }

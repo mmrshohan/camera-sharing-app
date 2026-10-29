@@ -6,6 +6,7 @@ Releases of the Camera Sharing design system. The format follows [Keep a Changel
 
 ### Added
 
+- TopBar, SectionHeader, ListRow, GroupedList, EmptyState and Avatar (group 3), in review.
 - Group 2 approved by the owner on 29 October 2026; its nine components are in the Library at 1.0.0.
 - Button 1.0.0: filled and tinted capsules, plain and destructive text buttons; disabled and loading.
 - IconButton 1.0.0: a full platform touch target, on the app's surfaces or over the camera.

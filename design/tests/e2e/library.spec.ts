@@ -1,3 +1,4 @@
+import { tokens } from "../../src/tokens/generated/tokens";
 import { expect, gotoAndSettle, test } from "./fixtures";
 
 test("the library lists the final components, and only those", async ({ page }) => {
@@ -78,4 +79,11 @@ test("small components share a row in the states gallery, centered on their stag
       return Math.abs(box.left + box.width / 2 - (stage.left + stage.width / 2));
     });
   expect(offset).toBeLessThan(1);
+});
+
+test("workspace styles never leak into previewed components", async ({ page }) => {
+  await gotoAndSettle(page, "/lab/grouped-list");
+  const header = page.locator(".grouped-list__header").first();
+  await expect(header).toHaveCSS("font-size", `${tokens.type.ios.default.footnote.size}px`);
+  await expect(header).toHaveCSS("margin-bottom", "0px");
 });

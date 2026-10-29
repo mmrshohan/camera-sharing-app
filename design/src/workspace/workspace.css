@@ -222,7 +222,8 @@
   margin: 0 0 40px;
 }
 
-.ws-section h2 {
+/* Direct children only: headings inside previewed components keep their own styles. */
+.ws-section > h2 {
   font-size: 22px;
   line-height: 28px;
   font-weight: 700;
@@ -494,4 +495,36 @@
   left: 0;
   display: flex;
   justify-content: center;
+}
+
+/* Rows sit on the surface color, as they do inside a grouped list. */
+.ex-surface {
+  border-radius: 12px;
+  background: var(--color-surface);
+  overflow: hidden;
+}
+
+.ex-avatar-button {
+  display: grid;
+  place-items: center;
+  min-width: var(--target);
+  min-height: var(--target);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+}
+
+/* A phone's width with its edges shown, for bars and lists that span the screen. */
+.ex-phone--framed {
+  overflow: hidden;
+  border-radius: 16px;
+  outline: 1px solid var(--color-separator);
+  outline-offset: -1px;
+  background: var(--color-background);
+}
+
+.ex-phone--framed > .grouped-list {
+  padding-block: var(--space-4);
 }
