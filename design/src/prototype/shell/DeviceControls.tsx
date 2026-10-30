@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { devices } from "@components/DeviceFrame";
 import type { DeviceId, DeviceModel, DeviceState, WorldEvent } from "@prototype/model/types";
-import { Segmented } from "./Segmented";
+import { Segmented } from "@workspace/Segmented";
 import type { Simulation } from "./simulations";
 
 const models = Object.values(devices);
@@ -47,14 +47,18 @@ export function DeviceControls({
     <header className="proto-phone__head">
       <h2 className="proto-phone__name">{name}</h2>
       <span className="proto-phone__model">{devices[device.model].name}</span>
+      {/* Named by its word first, so voice control can say what it shows. */}
       <button
         ref={trigger}
         type="button"
-        className="proto-button proto-button--quiet"
+        className="proto-button proto-button--menu"
         popoverTarget={popoverId}
-        aria-label={`${name}'s phone settings`}
+        aria-label={`Adjust ${name}'s phone`}
       >
         Adjust
+        <svg className="proto-button__chevron" viewBox="0 0 10 6" aria-hidden="true">
+          <path d="M1 1l4 4 4-4" />
+        </svg>
       </button>
       {simulations.map(({ label, event }) => (
         <button key={label} type="button" className="proto-button" onClick={() => dispatch(event)}>
@@ -118,9 +122,11 @@ export function DeviceControls({
             dispatch({ type: "setNetwork", device: id, network: device.network, connection })
           }
         />
-        <label className="ws-toggle">
+        <label className="ws-switch">
+          <span>Show Lock Screen</span>
           <input
             type="checkbox"
+            role="switch"
             checked={device.ui.system !== null}
             onChange={(e) =>
               dispatch({
@@ -130,7 +136,7 @@ export function DeviceControls({
               })
             }
           />
-          <span>Show Lock Screen</span>
+          <span className="ws-switch__track" aria-hidden="true" />
         </label>
         <button
           type="button"

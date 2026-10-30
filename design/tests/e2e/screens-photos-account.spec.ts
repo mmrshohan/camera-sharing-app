@@ -28,7 +28,7 @@ test("D1, R7: offline photos need both phones; there is no Try again", async ({ 
   await alex.getByRole("button", { name: "Approve on this phone" }).click();
   await expect(alex.getByText("Approved here. Waiting for the other phone.")).toBeVisible();
   expect(await sending(page)).toEqual(["prepared", "prepared"]);
-  await page.getByRole("button", { name: "Alex's phone settings" }).click();
+  await page.getByRole("button", { name: "Adjust Alex's phone" }).click();
   await page.getByRole("radio", { name: "Online" }).check();
   await page.keyboard.press("Escape");
   await sarah.getByRole("button", { name: "Approve on this phone" }).click();

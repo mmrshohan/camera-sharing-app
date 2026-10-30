@@ -91,7 +91,7 @@ test("Review Focus 3: switching theme keeps an open panel, its focus and the wor
   const before = await page.evaluate(() =>
     JSON.stringify((window as { __protoWorld?: unknown }).__protoWorld),
   );
-  await page.getByRole("button", { name: "Sarah's phone settings" }).click();
+  await page.getByRole("button", { name: "Adjust Sarah's phone" }).click();
   await page.getByRole("radio", { name: "Dark" }).check();
   await expect(sarah.locator(".device__screen")).toHaveAttribute("data-theme", "dark");
   await expect(panel).toBeVisible();
@@ -114,7 +114,7 @@ test("Review Focus 3: switching phone model takes the keyboard down", async ({ p
   const sarah = phone(page, "Sarah");
   await sarah.getByRole("textbox", { name: "Username" }).focus();
   await expect(sarah.locator(".keyboard")).toBeVisible();
-  await page.getByRole("button", { name: "Sarah's phone settings" }).click();
+  await page.getByRole("button", { name: "Adjust Sarah's phone" }).click();
   await page.getByRole("combobox", { name: "Phone" }).selectOption("iphone16pro");
   await expect(sarah.locator(".device__screen")).toHaveAttribute("data-keyboard", "down");
   await expect(sarah.locator(".keyboard")).toHaveCount(0);
@@ -124,12 +124,12 @@ test("relaunching Alex keeps the camera during a session, and the lock after it"
   page,
 }) => {
   await openShell(page, "?scenario=camera-ready");
-  await page.getByRole("button", { name: "Alex's phone settings" }).click();
+  await page.getByRole("button", { name: "Adjust Alex's phone" }).click();
   await page.getByRole("button", { name: "Relaunch the app" }).click();
   await expect(route(page, "Alex")).toHaveAttribute("data-route", "camera");
   await page.keyboard.press("Escape");
   await page.getByRole("link", { name: "Lock: still sending" }).click();
-  await page.getByRole("button", { name: "Alex's phone settings" }).click();
+  await page.getByRole("button", { name: "Adjust Alex's phone" }).click();
   await page.getByRole("button", { name: "Relaunch the app" }).click();
   await expect(route(page, "Alex")).toHaveAttribute("data-route", "lock");
 });
@@ -139,7 +139,7 @@ test("Reset and other scenarios keep each phone's own theme, and the URL records
 }) => {
   await openShell(page, "?scenario=home-photos");
   const screenOf = (name: "Alex" | "Sarah") => phone(page, name).locator(".device__screen");
-  await page.getByRole("button", { name: "Alex's phone settings" }).click();
+  await page.getByRole("button", { name: "Adjust Alex's phone" }).click();
   await page.getByRole("radio", { name: "Dark" }).check();
   await page.keyboard.press("Escape");
   await expect(screenOf("Alex")).toHaveAttribute("data-theme", "dark");
@@ -156,7 +156,7 @@ test("the clock moves only when asked, and Reset puts the scenario back", async 
   await openShell(page, "?scenario=invitation-showing-code");
   const clock = page.locator(".proto-clock__time");
   await expect(clock).toHaveText("Today 9:41");
-  await page.getByRole("button", { name: "Forward 1 hour" }).click();
+  await page.getByRole("button", { name: "+1 h", exact: true }).click();
   await expect(clock).toHaveText("Today 10:41");
   await page.getByRole("button", { name: "Reset" }).click();
   await expect(clock).toHaveText("Today 9:41");

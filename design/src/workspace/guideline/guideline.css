@@ -4,7 +4,7 @@
   max-width: 1120px;
 }
 
-/* Contents: a quiet strip that stays under the header, like the component pages' settings. */
+/* Contents: a quiet, solid strip that stays under the header, like the component pages' settings. */
 .g-contents {
   position: sticky;
   top: var(--ws-header-height);
@@ -15,9 +15,7 @@
   margin: 0 0 56px;
   padding: 10px 0;
   border-bottom: 1px solid var(--ws-border);
-  background: color-mix(in srgb, var(--ws-bg) 86%, transparent);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
-  backdrop-filter: saturate(180%) blur(20px);
+  background: var(--ws-bg);
 }
 
 .g-contents a {
@@ -45,8 +43,8 @@
 .g-section > h2 {
   font-size: 28px;
   line-height: 34px;
-  font-weight: 700;
-  letter-spacing: -0.3px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
   margin: 0 0 8px;
 }
 
@@ -97,7 +95,7 @@
 
 .g-card {
   padding: 18px 20px;
-  border-radius: 16px;
+  border-radius: var(--ws-radius);
   background: var(--ws-panel);
   box-shadow: inset 0 0 0 1px var(--ws-border);
 }
@@ -119,7 +117,7 @@
 .g-table-wrap {
   position: relative;
   overflow-x: auto;
-  border-radius: 16px;
+  border-radius: var(--ws-radius);
   background: var(--ws-panel);
   box-shadow: inset 0 0 0 1px var(--ws-border);
 }
@@ -303,7 +301,7 @@
 
 .g-facts--wide > div {
   padding: 16px 18px;
-  border-radius: 14px;
+  border-radius: var(--ws-radius);
   background: var(--ws-panel);
   box-shadow: inset 0 0 0 1px var(--ws-border);
 }
@@ -368,7 +366,7 @@
   align-items: center;
   gap: 6px;
   padding: 16px 10px 12px;
-  border-radius: 14px;
+  border-radius: var(--ws-radius);
   background: var(--ws-panel);
   box-shadow: inset 0 0 0 1px var(--ws-border);
   text-align: center;
@@ -498,7 +496,7 @@
   gap: 24px 32px;
   align-items: center;
   padding: 24px;
-  border-radius: 16px;
+  border-radius: var(--ws-radius);
   background: var(--ws-panel);
   box-shadow: inset 0 0 0 1px var(--ws-border);
 }
@@ -605,7 +603,7 @@
 .g-surface {
   display: inline-flex;
   padding: var(--space-2);
-  border-radius: 12px;
+  border-radius: var(--ws-radius);
   background: var(--color-background);
   box-shadow: inset 0 0 0 1px var(--color-separator);
 }
@@ -613,7 +611,7 @@
 .g-surface--block {
   display: block;
   padding: var(--space-5);
-  border-radius: 14px;
+  border-radius: var(--ws-radius);
 }
 
 .g-numeral-card {
@@ -640,7 +638,7 @@
   width: min(100%, 402px);
   height: auto;
   min-height: 300px;
-  border-radius: 16px;
+  border-radius: var(--ws-radius);
   grid-template-rows: 1fr auto;
   padding: var(--space-5) var(--space-5) var(--space-6);
 }
