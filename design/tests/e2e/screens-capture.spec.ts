@@ -176,14 +176,14 @@ test("canceling says photos already sent may still arrive, when some have left A
   await openShell(page, "camera-ready");
   const alex = phone(page, "Alex");
   const network = async (name: "Alex" | "Sarah", state: "Online" | "Offline") => {
-    await page.getByRole("button", { name: `${name}'s phone settings` }).click();
+    await page.getByRole("button", { name: `Adjust ${name}'s phone` }).click();
     await page.getByRole("radio", { name: state }).check();
     await page.keyboard.press("Escape");
   };
   // The first photo leaves Alex's phone but can't reach Sarah's; the second stays on Alex's.
   await network("Sarah", "Offline");
   await alex.getByRole("button", { name: "Take photo" }).click();
-  await page.getByRole("button", { name: "Forward 1 minute" }).click();
+  await page.getByRole("button", { name: "+1 min", exact: true }).click();
   await network("Alex", "Offline");
   await alex.getByRole("button", { name: "Take photo" }).click();
   await alex.locator(".camera-status-line").click();
