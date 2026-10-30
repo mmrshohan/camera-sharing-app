@@ -1,9 +1,9 @@
 /* Workspace pages: Library, Lab and component pages. Product components style themselves. */
 
 .ws-eyebrow {
-  margin: 0 0 6px;
+  margin: 0 0 10px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--ws-text-2);
 }
 
@@ -21,11 +21,11 @@
 }
 
 .ws-empty {
-  padding: 28px;
+  padding: 32px;
   border-radius: var(--ws-radius);
-  background: var(--ws-panel);
   box-shadow: inset 0 0 0 1px var(--ws-border);
-  font-size: 17px;
+  font-size: 15px;
+  color: var(--ws-text-2);
 }
 
 .ws-empty p {
@@ -33,39 +33,42 @@
 }
 
 .ws-group {
-  margin: 0 0 40px;
+  margin: 0 0 56px;
 }
 
+/* A section label over a hairline, as in a well-set document. */
 .ws-group__title {
-  font-size: 15px;
+  margin: 0 0 16px;
+  padding: 0 0 12px;
+  border-bottom: 1px solid var(--ws-border);
+  font-size: 13px;
   font-weight: 600;
   color: var(--ws-text-2);
-  margin: 0 0 14px;
 }
 
 .ws-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px;
 }
 
 .ws-card {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 18px;
+  padding: 20px;
   border-radius: var(--ws-radius);
   background: var(--ws-panel);
   box-shadow: inset 0 0 0 1px var(--ws-border);
   color: var(--ws-text);
   text-decoration: none;
-  transition: box-shadow 160ms ease-out;
+  transition: box-shadow 200ms var(--ws-ease);
 }
 
 .ws-card:hover {
   box-shadow:
-    inset 0 0 0 1px var(--ws-border),
-    0 6px 20px -12px rgb(0 0 0 / 0.35);
+    inset 0 0 0 1px var(--ws-border-strong),
+    var(--ws-shadow-hover);
 }
 
 .ws-card__head {
@@ -76,44 +79,57 @@
 }
 
 .ws-card__name {
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 .ws-card__summary {
-  font-size: 15px;
+  font-size: 14px;
   line-height: 20px;
   color: var(--ws-text-2);
 }
 
 .ws-card__meta {
-  font-size: 13px;
+  margin-top: auto;
+  font-size: 12px;
   color: var(--ws-text-2);
   font-variant-numeric: tabular-nums;
 }
 
+/* Status as a dot and a word: color never carries it alone. */
 .ws-badge {
+  display: inline-flex;
   flex: none;
-  padding: 3px 9px;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px 2px 7px;
   border-radius: 999px;
-  font-size: 12.5px;
-  font-weight: 600;
-  background: var(--label-neutral-bg);
-  color: var(--label-neutral-fg);
+  box-shadow: inset 0 0 0 1px var(--ws-border);
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 500;
+  color: var(--ws-text-2);
 }
 
-.ws-badge--review {
-  background: var(--label-sending-bg);
-  color: var(--label-sending-fg);
+.ws-badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ws-border-strong);
 }
 
-.ws-badge--final {
-  background: var(--label-saved-bg);
-  color: var(--label-saved-fg);
+.ws-badge--review::before {
+  background: var(--color-accent);
+}
+
+.ws-badge--final::before {
+  background: var(--color-success);
 }
 
 .ws-component__header {
-  margin: 0 0 24px;
+  margin: 0 0 32px;
 }
 
 .ws-component__facts {
@@ -122,42 +138,44 @@
   align-items: center;
   gap: 8px 14px;
   margin: 0;
-  font-size: 14px;
+  font-size: 13px;
   color: var(--ws-text-2);
   font-variant-numeric: tabular-nums;
 }
 
+/* Preview settings: a quiet strip that stays under the header while the states scroll. */
 .ws-controls {
   position: sticky;
-  top: 57px;
+  top: var(--ws-header-height);
   z-index: 5;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 12px 20px;
-  margin: 0 0 32px;
-  padding: 12px 14px;
-  border-radius: var(--ws-radius);
-  background: color-mix(in srgb, var(--ws-panel) 92%, transparent);
-  backdrop-filter: saturate(180%) blur(16px);
-  box-shadow: inset 0 0 0 1px var(--ws-border);
+  gap: 10px 16px;
+  margin: 0 0 40px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--ws-border);
+  background: color-mix(in srgb, var(--ws-bg) 86%, transparent);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
 }
 
 .ws-segmented {
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 0;
   margin: 0;
   padding: 2px;
   border: 0;
-  border-radius: 999px;
-  background: var(--ws-bg);
+  border-radius: 9px;
+  background: var(--ws-fill);
 }
 
 .ws-segmented legend {
   float: left;
   padding: 0 8px 0 10px;
-  font-size: 13px;
+  font-size: 12px;
+  font-weight: 500;
   color: var(--ws-text-2);
 }
 
@@ -176,19 +194,24 @@
 
 .ws-segmented span {
   display: block;
-  padding: 5px 12px;
-  border-radius: 999px;
+  padding: 4px 12px;
+  border-radius: 7px;
   font-size: 13px;
   font-weight: 500;
   color: var(--ws-text-2);
+  transition:
+    color var(--ws-quick) var(--ws-ease),
+    background-color var(--ws-quick) var(--ws-ease);
+}
+
+.ws-segmented label:hover span {
+  color: var(--ws-text);
 }
 
 .ws-segmented input:checked + span {
-  background: var(--ws-panel);
+  background: var(--ws-thumb);
   color: var(--ws-text);
-  box-shadow:
-    0 1px 2px rgb(0 0 0 / 0.12),
-    inset 0 0 0 1px var(--ws-border);
+  box-shadow: var(--ws-shadow-raised);
 }
 
 .ws-segmented input:focus-visible + span,
@@ -207,33 +230,42 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 5px 12px;
-  border-radius: 999px;
+  padding: 6px 12px;
+  border-radius: var(--ws-radius-small);
+  background: var(--ws-fill);
   color: var(--ws-text-2);
-  box-shadow: inset 0 0 0 1px var(--ws-border);
+  transition:
+    color var(--ws-quick) var(--ws-ease),
+    background-color var(--ws-quick) var(--ws-ease);
 }
 
-.ws-toggle input:checked + span {
+.ws-toggle:hover span {
   color: var(--ws-text);
-  background: var(--ws-bg);
+}
+
+/* On, it is chosen: blue. */
+.ws-toggle input:checked + span {
+  background: var(--ws-accent-tint);
+  color: var(--ws-accent);
 }
 
 .ws-section {
-  margin: 0 0 40px;
+  margin: 0 0 56px;
 }
 
 /* Direct children only: headings inside previewed components keep their own styles. */
 .ws-section > h2 {
-  font-size: 22px;
-  line-height: 28px;
-  font-weight: 700;
-  margin: 0 0 14px;
+  margin: 0 0 16px;
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
 }
 
 .ws-examples {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr));
-  gap: 20px;
+  gap: 24px 20px;
 }
 
 /* Caption and stage are two shared rows, so stages line up even when a caption wraps. */
@@ -263,8 +295,14 @@
   justify-content: space-between;
   gap: 12px;
   margin: 0;
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ws-text);
+}
+
+.ws-example figcaption code {
   color: var(--ws-text-2);
+  font-weight: 400;
 }
 
 .ws-example code,
@@ -277,38 +315,41 @@
 }
 
 .preview {
-  padding: 24px;
+  padding: 28px;
   border-radius: var(--ws-radius);
   box-shadow: inset 0 0 0 1px var(--ws-border);
   overflow: auto;
 }
 
+/* One strip, three figures, divided by hairlines. */
 .ws-stats {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
   margin: 0;
-}
-
-.ws-stat {
-  padding: 16px 18px 14px;
   border-radius: var(--ws-radius);
-  background: var(--ws-panel);
   box-shadow: inset 0 0 0 1px var(--ws-border);
 }
 
+.ws-stat {
+  padding: 20px 24px;
+}
+
+.ws-stat + .ws-stat {
+  border-left: 1px solid var(--ws-border);
+}
+
 .ws-stat dt {
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 500;
   color: var(--ws-text-2);
 }
 
 .ws-stat dd {
-  margin: 2px 0 0;
-  font-size: 48px;
-  line-height: 54px;
-  font-weight: 700;
-  letter-spacing: -1px;
+  margin: 6px 0 0;
+  font-size: 40px;
+  line-height: 44px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums;
 }
 
@@ -343,10 +384,9 @@
 }
 
 .ws-tokens li {
-  padding: 3px 8px;
+  padding: 2px 8px;
   border-radius: 6px;
-  background: var(--ws-panel);
-  box-shadow: inset 0 0 0 1px var(--ws-border);
+  background: var(--ws-fill);
 }
 
 .ws-native {
@@ -672,7 +712,7 @@
   height: 720px;
   border: 0;
   border-radius: var(--ws-radius);
-  background: var(--ws-bg);
+  background: var(--ws-panel);
   box-shadow: inset 0 0 0 1px var(--ws-border);
 }
 
