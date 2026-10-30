@@ -12,7 +12,7 @@ Status: proposed. Applies equally to both tools; all implementation steps remain
 | Camera Imaging Specialist | Physical-device comparisons, format/lens/low-light evidence | Relevant mobile principal + QA |
 | Backend/Distributed Systems Architect | Identity/session interfaces, durable delivery, idempotency and scale model | Security + QA for trust/lifecycle changes |
 | Security & Privacy Engineer | Threat model, authorization, crypto, consent, retention and abuse boundaries | Independent security peer; owner accepts material trade-offs |
-| Product Design Director | Minimal flows, truthful status, native interaction and accessibility | Product + QA; security for consent/privacy wording |
+| Product Design Director (the owner's Chief Design Officer; in Claude Code, the `chief-design-officer` agent) | Minimal flows, truthful status, native interaction and accessibility; the design system's tokens, components, motion and quality bar | Product + QA; security for consent/privacy wording |
 | SRE/Performance Engineer | SLOs, capacity/cost, observability, recovery and incident procedures | Backend + QA; release owner for operational gates |
 | QA/Automation Lead | Test strategy, real-device matrix, failure injection and regression evidence | Relevant principal + independent reviewer |
 | Developer Experience/Release Lead | Repository conventions, toolchain/CI, reproducible artifacts and release evidence | QA + security for pipeline/credential changes |
