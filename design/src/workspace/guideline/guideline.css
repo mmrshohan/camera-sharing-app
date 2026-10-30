@@ -4,33 +4,37 @@
   max-width: 1120px;
 }
 
+/* Contents: a quiet strip that stays under the header, like the component pages' settings. */
 .g-contents {
   position: sticky;
-  top: 57px;
+  top: var(--ws-header-height);
   z-index: 4;
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
-  margin: 0 0 48px;
-  padding: 8px;
-  border-radius: var(--ws-radius);
-  background: color-mix(in srgb, var(--ws-panel) 92%, transparent);
-  backdrop-filter: saturate(180%) blur(16px);
-  box-shadow: inset 0 0 0 1px var(--ws-border);
+  gap: 2px;
+  margin: 0 0 56px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--ws-border);
+  background: color-mix(in srgb, var(--ws-bg) 86%, transparent);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
 }
 
 .g-contents a {
-  padding: 5px 11px;
-  border-radius: 999px;
+  padding: 5px 10px;
+  border-radius: var(--ws-radius-small);
   font-size: 13px;
   font-weight: 500;
   color: var(--ws-text-2);
   text-decoration: none;
+  transition:
+    color var(--ws-quick) var(--ws-ease),
+    background-color var(--ws-quick) var(--ws-ease);
 }
 
 .g-contents a:hover {
   color: var(--ws-text);
-  background: var(--ws-bg);
+  background: var(--ws-fill);
 }
 
 .g-section {
@@ -314,10 +318,9 @@
 }
 
 .g-tags li {
-  padding: 3px 8px;
+  padding: 2px 8px;
   border-radius: 6px;
-  background: var(--ws-bg);
-  box-shadow: inset 0 0 0 1px var(--ws-border);
+  background: var(--ws-fill);
 }
 
 .g-tags code {
@@ -347,8 +350,7 @@
   display: block;
   width: 96px;
   height: 64px;
-  background: var(--ws-bg);
-  box-shadow: inset 0 0 0 1px var(--ws-border);
+  background: var(--ws-fill);
 }
 
 .g-icons {
@@ -396,12 +398,14 @@
   margin: 0 0 18px;
 }
 
+/* The hairline is drawn over the stage, which paints its own background. */
 .g-demo {
   margin: 0;
-  border-radius: 16px;
+  border-radius: var(--ws-radius);
   overflow: hidden;
   background: var(--ws-panel);
-  box-shadow: inset 0 0 0 1px var(--ws-border);
+  outline: 1px solid var(--ws-border);
+  outline-offset: -1px;
 }
 
 .g-demo__stage {

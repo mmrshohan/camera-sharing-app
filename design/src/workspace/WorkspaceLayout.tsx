@@ -47,7 +47,7 @@ export function WorkspaceLayout() {
       {!embedded && (
         <header className="ws-header">
           <a className="ws-brand" href={import.meta.env.BASE_URL}>
-            Camera Sharing · Design system
+            Camera Sharing <span>· Design system</span>
           </a>
           <nav className="ws-nav" aria-label="Workspace">
             {sections.map(({ to, label, end }) => (
