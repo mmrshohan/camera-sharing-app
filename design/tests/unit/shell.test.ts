@@ -2,7 +2,7 @@ import { describe, expect, test } from "vitest";
 import type { WorldEvent } from "@prototype/model/types";
 import { reduce } from "@prototype/model/world";
 import { createWorld } from "@prototype/scenarios/build";
-import { reconcile } from "@prototype/shell/bridge";
+import { nextSeq, reconcile } from "@prototype/shell/bridge";
 import { clockLabel, fitScale } from "@prototype/shell/layout";
 
 describe("review shell events", () => {
@@ -67,8 +67,9 @@ describe("clockLabel", () => {
 });
 
 describe("bridge", () => {
+  const typing = (value: string): WorldEvent => ({ type: "typeField", device: "sarah", value });
+
   test("a phone re-applies its own events the shell hasn't confirmed yet", () => {
-    const typing = (value: string): WorldEvent => ({ type: "typeField", device: "sarah", value });
     const pending = [
       { seq: 1, event: typing("s") },
       { seq: 2, event: typing("sa") },
@@ -78,5 +79,15 @@ describe("bridge", () => {
     expect(left.map((p) => p.seq)).toEqual([2]);
     expect(world.devices.sarah.ui.field.value).toBe("sa");
     expect(reconcile(world, 2, left).pending).toEqual([]);
+  });
+
+  test("a reloaded phone numbers its events after the shell's count, so its first tap stays (code review 5)", () => {
+    // The shell had applied 15 of this phone's events when the phone reloaded and counted from 0.
+    const applied = 15;
+    const tap = { seq: nextSeq(0, applied), event: typing("s") };
+    // A world the shell sent before it applied the tap must not take the tap away.
+    const { world, pending } = reconcile(createWorld(), applied, [tap]);
+    expect(pending).toEqual([tap]);
+    expect(world.devices.sarah.ui.field.value).toBe("s");
   });
 });

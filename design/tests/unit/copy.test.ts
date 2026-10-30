@@ -1,5 +1,12 @@
 import { describe, expect, test } from "vitest";
 import { allCopy } from "@prototype/copy";
+import { strings as camera } from "@prototype/copy/camera";
+import { strings as home } from "@prototype/copy/home";
+import { cameraStatusText } from "@prototype/copy/plural";
+import { strings as session } from "@prototype/copy/session";
+import { strings as settings } from "@prototype/copy/settings";
+import { hostLabel, recipientLabel, withRetry } from "@prototype/model/photos";
+import type { HostPhoto, HostStage, RecipientPhoto, RecipientStage } from "@prototype/model/types";
 
 /** Every string a module can produce, calling functions with sample names and counts. */
 function texts(strings: Record<string, unknown>): [key: string, text: string][] {
@@ -9,6 +16,8 @@ function texts(strings: Record<string, unknown>): [key: string, text: string][] 
       return [
         [key, String(value("Sarah", 2, "Sunday 9:41 AM"))],
         [key, String(value(1, "Alex", "Sunday 9:41 AM"))],
+        // A zero and a later count reach the sentences that only show for them.
+        [key, String(value(0, "Sarah", 1))],
       ];
     }
     if (Array.isArray(value)) return value.flatMap((item, i) => walk(`${key}.${i}`, item));
@@ -61,6 +70,8 @@ describe("prototype copy (spec §11)", () => {
       for (const [key, text] of texts(strings)) {
         expect(text, key).not.toMatch(/prototype|simulated|sample|demo/i);
         expect(text, key).not.toContain("!");
+        // Typographic apostrophes, as everywhere else (design review 15).
+        expect(text, key).not.toContain("'");
         expect(text.trim(), key).not.toBe("");
       }
     },
@@ -72,4 +83,90 @@ describe("prototype copy (spec §11)", () => {
       for (const key of c.trust) expect(Object.keys(c.strings), key).toContain(key);
     },
   );
+});
+
+test("the scan reaches the sentences that show only in some states", () => {
+  const all = allCopy.flatMap(({ strings }) => texts(strings).map(([, text]) => text));
+  expect(all.some((text) => text.includes("Photos already sent may still arrive."))).toBe(true);
+  expect(all.some((text) => text.includes("save the ones you want"))).toBe(true);
+});
+
+describe("copy review: what happens, precisely (deferred minors, 29 October 2026)", () => {
+  const module = (name: string) => {
+    const found = allCopy.find((c) => c.module === name);
+    if (!found) throw new Error(`no copy module ${name}`);
+    return found;
+  };
+
+  test("each photo's status words are copy, and every one is a promise (R5, Appendix C)", () => {
+    const status = module("status");
+    expect([...status.trust].sort()).toEqual(Object.keys(status.strings).sort());
+    const words = texts(status.strings).map(([, text]) => text);
+    const net = { network: "online", connection: "wifi", wifiOnly: false } as const;
+    const host: HostStage[] = ["preparing", "prepared", "uploaded", "delivered", "expired"];
+    for (const stage of [...host, "canceled" as const]) {
+      const photo = { stage } as HostPhoto;
+      expect(words, stage).toContain(hostLabel(photo, net, "Sarah"));
+      expect(words, stage).toContain(hostLabel(photo, { ...net, network: "offline" }, "Sarah"));
+    }
+    expect(words).toContain(
+      hostLabel(
+        { stage: "reserved" } as HostPhoto,
+        { ...net, wifiOnly: true, connection: "cellular" },
+        "Sarah",
+      ),
+    );
+    const recipient: RecipientStage[] = [
+      "arriving",
+      "stored",
+      "exportPending",
+      "saved",
+      "exportUncertain",
+      "actionRequired",
+      "expired",
+      "canceled",
+    ];
+    for (const stage of recipient)
+      expect(words, stage).toContain(recipientLabel({ stage } as RecipientPhoto));
+    expect(withRetry("Sending", true)).toBe(`Sending · ${String(status.strings.willRetry)}`);
+    expect(
+      cameraStatusText({ sent: 1, sending: 1, preparing: 1, waitingInternet: 1, waitingWifi: 1 }),
+    ).toBe("1 sent · 1 sending · 1 preparing · 1 waiting for internet · 1 waiting for Wi-Fi");
+  });
+
+  test("the six words say what the other phone shows, so they are a promise (§11)", () => {
+    expect(module("connect").trust).toContain("words");
+  });
+
+  test("auto-save says where photos go, without promising each save at once", () => {
+    expect(settings.autoSaveOn).toMatch(/to Photos/);
+    expect(settings.autoSaveOn).not.toMatch(/as they arrive/);
+  });
+
+  test("the last photo's note doesn't sound as if the photo leaves the phone (doc 03)", () => {
+    expect(camera.lastPhotoNote).not.toMatch(/\bgoes\b|\bgone\b|deleted/);
+    expect(camera.lastPhotoNote).toMatch(/shown here, until you leave the camera/);
+  });
+
+  test("with Photos access off, Home never says photos already received will be saved", () => {
+    const on = home.accessBody(true);
+    const off = home.accessBody(false);
+    for (const body of [on, off]) {
+      expect(body).not.toMatch(/until you turn it on/);
+      // Only what arrives now: photos saved before access was turned off are in Photos too.
+      expect(body).toMatch(/^New photos are kept only in this app\./);
+    }
+    // With Save to Photos on, only the next photos save themselves; with it off, saving is a choice.
+    expect(on).toMatch(/save the next ones to Photos/);
+    expect(off).not.toMatch(/next ones|new ones/);
+  });
+
+  test("canceling says photos already on their way may still arrive (doc 06)", () => {
+    expect(session.cancelMessage(2, "Sarah", 1)).toBe(
+      "2 photos won’t be sent. Photos already sent may still arrive. Photos already received stay on Sarah’s phone.",
+    );
+    expect(session.cancelMessage(1, "Sarah", 0)).toBe(
+      "1 photo won’t be sent. Photos already received stay on Sarah’s phone.",
+    );
+  });
 });

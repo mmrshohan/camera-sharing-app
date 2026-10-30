@@ -9,7 +9,7 @@ export const strings = {
   blocked: "Blocked accounts",
   photosSection: "Photos",
   autoSave: "Save to Photos",
-  autoSaveOn: "New photos are saved as they arrive.",
+  autoSaveOn: "New photos are saved to Photos after they arrive.",
   autoSaveOff: "Photos stay in this app until you save them.",
   autoSaveUnavailable: "Photos access is off. Turn it on in Settings.",
   wifiOnly: "Send on Wi-Fi only",

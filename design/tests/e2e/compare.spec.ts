@@ -13,6 +13,13 @@ test("the release index is an empty list until one is built", async ({ request }
   expect(await response.json()).toEqual([]);
 });
 
+test("a release path with a malformed escape is a bad request, not a server error (code review 7)", async ({
+  request,
+}) => {
+  const response = await request.get("/__releases/%E0%A4%A");
+  expect(response.status()).toBe(400);
+});
+
 test("an embedded page shows only itself", async ({ page }) => {
   await gotoAndSettle(page, "/library/ring-button?embed=1");
   await expect(page.locator(".ws-header")).toBeHidden();

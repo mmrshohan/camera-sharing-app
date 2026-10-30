@@ -41,6 +41,9 @@ export function PhoneEmbed({
         post();
       } else if (message.kind === "event") {
         onEvent(message.seq, message.event);
+      } else if (message.kind === "key") {
+        // The shell handles it as if it had been pressed here.
+        window.dispatchEvent(new KeyboardEvent("keydown", { key: message.key }));
       } else {
         report(id, { width: message.width, height: message.height });
       }

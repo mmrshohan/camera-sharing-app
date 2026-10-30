@@ -11,6 +11,8 @@ export const strings = {
   declined: "Not sent. Other photos are unchanged.",
   expired: "These photos expired before both phones approved.",
   close: "Close",
+  /** Where the photos go, said on the phone that receives them. */
+  thisPhone: "this phone",
 } as const;
 
 /** Every recovery state makes a promise about sending (R7). */

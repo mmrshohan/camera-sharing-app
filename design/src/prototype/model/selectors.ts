@@ -1,3 +1,4 @@
+import { strings as status } from "@prototype/copy/status";
 import { clockTime } from "@prototype/copy/time";
 import { photos as plural } from "@shared/plural";
 import { hostLabel, withRetry } from "./photos";
@@ -36,18 +37,18 @@ export function tileStatus(stage: RecipientStage): TileStatus {
 /** Which of Alex's counts a photo's label adds to. Expired and canceled photos aren't counted. */
 export function countKey(label: HostLabel): keyof CameraCounts | null {
   switch (label) {
-    case "Preparing":
+    case status.preparing:
       return "preparing";
-    case "Waiting for internet":
+    case status.waitingInternet:
       return "waitingInternet";
-    case "Waiting for Wi-Fi":
+    case status.waitingWifi:
       return "waitingWifi";
-    case "Sending":
+    case status.sending:
       return "sending";
-    case "Delivered":
+    case status.delivered:
       return "sent";
-    case "Expired":
-    case "Canceled":
+    case status.expired:
+    case status.canceled:
       return null;
     default:
       // "Ready for Sarah": it has left Alex's phone.
@@ -90,7 +91,7 @@ function currentHostPhotos(
   return alex.hostPhotos
     .filter((p) => p.sessionId === s.id)
     .map((photo) => {
-      if (recovering.has(photo.id)) return { photo, label: "Needs both approvals", key: null };
+      if (recovering.has(photo.id)) return { photo, label: status.needsApproval, key: null };
       const label = hostLabel(photo, net, s.recipient.name);
       return { photo, label: withRetry(label, photo.retry), key: countKey(label) };
     });
@@ -161,6 +162,26 @@ export function endingNow(w: World): { keepGoing: number; needApproval: number }
   return { keepGoing: left.length, needApproval: stuck.size };
 }
 
+/**
+ * What canceling unsent photos now would cover: photos still on Alex's phone, which won't be sent,
+ * and photos already on their way, which may still arrive because a cancel can cross a download
+ * (doc 06). Like endingNow, it asks the model.
+ */
+export function cancelingNow(w: World): { unsent: number; onTheirWay: number } {
+  const canceled = new Set(
+    reduce(w, { type: "cancelUnsent" })
+      .devices.alex.hostPhotos.filter((p) => p.stage === "canceled")
+      .map((p) => p.id),
+  );
+  const covered = w.devices.alex.hostPhotos.filter(
+    (p) => canceled.has(p.id) && p.stage !== "canceled",
+  );
+  return {
+    unsent: covered.filter((p) => onAlexsPhone.includes(p.stage)).length,
+    onTheirWay: covered.filter((p) => p.stage === "uploaded").length,
+  };
+}
+
 /** The session panel's list: a number and a label per photo, never an image (R3, D7). */
 export function hostItems(w: World): { index: number; label: string }[] {
   return currentHostPhotos(w).map(({ label }, i) => ({ index: i + 1, label }));
@@ -184,11 +205,17 @@ export function recipientTiles(
   const bySession = new Map<string, RecipientPhoto[]>();
   for (const p of w.devices.sarah.gallery)
     bySession.set(p.sessionId, [...(bySession.get(p.sessionId) ?? []), p]);
-  return [...bySession.entries()].reverse().map(([sessionId, photos]) => {
+  const sections = [...bySession.entries()].reverse().map(([sessionId, photos]) => {
     const first = photos[0];
+    const at = first ? first.arrivedAt || first.stageAt : w.clock;
+    return { sessionId, photos, first, at, day: dayLabel(at, w.clock) };
+  });
+  // Sessions on the same day are told apart by when each began.
+  const shared = (day: string) => sections.filter((s) => s.day === day).length > 1;
+  return sections.map(({ sessionId, photos, first, at, day }) => {
     return {
       sectionId: sessionId,
-      title: dayLabel(first ? first.arrivedAt || first.stageAt : w.clock, w.clock),
+      title: shared(day) ? `${day} ${clockTime(at)}` : day,
       detail: `${plural(photos.length)} from ${first?.fromName ?? "Alex"}`,
       tiles: [...photos].reverse().map((p) => ({
         id: p.id,

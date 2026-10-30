@@ -1,3 +1,4 @@
+import { strings as status } from "@prototype/copy/status";
 import type {
   Connection,
   HostLabel,
@@ -19,34 +20,34 @@ export interface HostNetwork {
 export function hostLabel(photo: HostPhoto, net: HostNetwork, recipientName: string): HostLabel {
   switch (photo.stage) {
     case "preparing":
-      return "Preparing";
+      return status.preparing;
     case "prepared":
     case "reserved":
     case "uploading":
       // Until a photo has left the phone, it says what it is waiting for (R5, R9).
-      if (net.network === "offline") return "Waiting for internet";
-      if (net.wifiOnly && net.connection === "cellular") return "Waiting for Wi-Fi";
-      return "Sending";
+      if (net.network === "offline") return status.waitingInternet;
+      if (net.wifiOnly && net.connection === "cellular") return status.waitingWifi;
+      return status.sending;
     case "uploaded":
-      return `Ready for ${recipientName}`;
+      return status.readyFor(recipientName);
     case "delivered":
-      return "Delivered";
+      return status.delivered;
     case "expired":
-      return "Expired";
+      return status.expired;
     case "canceled":
-      return "Canceled";
+      return status.canceled;
   }
 }
 
 const recipientLabels: Record<RecipientStage, RecipientLabel> = {
-  arriving: "Arriving",
-  stored: "Only in this app",
-  exportPending: "Saving to Photos",
-  saved: "Saved to Photos",
-  exportUncertain: "Photos save needs checking",
-  actionRequired: "Photos save needs checking",
-  expired: "Expired, never arrived",
-  canceled: "Canceled before arrival",
+  arriving: status.arriving,
+  stored: status.onlyInApp,
+  exportPending: status.saving,
+  saved: status.saved,
+  exportUncertain: status.needsChecking,
+  actionRequired: status.needsChecking,
+  expired: status.neverArrived,
+  canceled: status.canceledBeforeArrival,
 };
 
 /** What Sarah's phone says about one photo (design spec, Appendix C). */
@@ -56,5 +57,5 @@ export function recipientLabel(photo: RecipientPhoto): RecipientLabel {
 
 /** A recoverable failure keeps its state and adds a retry marker (R5). */
 export function withRetry(label: string, retry: boolean): string {
-  return retry ? `${label} · Will retry` : label;
+  return retry ? `${label} · ${status.willRetry}` : label;
 }

@@ -15,7 +15,7 @@ import { samples } from "@prototype/model/fixtures";
 import { hostLabel, withRetry } from "@prototype/model/photos";
 import { countKey, hostSummary } from "@prototype/model/selectors";
 import type { DeviceId, DeviceModel } from "@prototype/model/types";
-import { limits } from "@prototype/model/world";
+import { queueFull } from "@prototype/model/world";
 import { useDeviceView } from "@prototype/shell/deviceView";
 
 export const screenId = "screens/Camera";
@@ -50,18 +50,19 @@ export function Camera({ id }: { id: DeviceId }) {
   const active = session?.state === "active";
   const to = session?.recipient.name ?? "";
   const counts = hostSummary(world);
-  const unsent = counts.preparing + counts.sending + counts.waitingInternet + counts.waitingWifi;
   const minutesLeft =
     active && session.endsAt !== null ? Math.ceil((session.endsAt - world.clock) / 60_000) : null;
 
-  // Blocked shows its reason; it is never silently disabled.
-  const reason = !active
-    ? s.ended
+  // Blocked shows its reason, never silently disabled: briefly on the shutter, and the rest once in
+  // the notices above (the session's end, or what to do).
+  const blocked = !active
+    ? "ended"
     : device.storageFull
-      ? s.storageFull
-      : unsent >= limits.queue
-        ? s.queueFull
+      ? "storageFull"
+      : queueFull(device)
+        ? "queueFull"
         : null;
+  const reason = blocked && s.shutter[blocked];
   const shutter: ShutterState = reason ? "blocked" : device.busy ? "preparing" : "ready";
 
   const last = device.hostPhotos.find((p) => p.id === ui.lastShot) ?? null;
@@ -104,6 +105,10 @@ export function Camera({ id }: { id: DeviceId }) {
         {minutesLeft !== null && minutesLeft <= 2 && (
           <InlineMessage tone="waiting" title={s.endsSoon(minutesLeft)} />
         )}
+        {blocked === "storageFull" && (
+          <InlineMessage tone="problem" icon="storage" title={s.storageFullNotice} />
+        )}
+        {blocked === "queueFull" && <InlineMessage tone="waiting" title={s.queueFullNotice} />}
         {!active && (
           <InlineMessage
             tone="neutral"
@@ -133,7 +138,7 @@ export function Camera({ id }: { id: DeviceId }) {
           />
           <Shutter
             state={shutter}
-            {...(reason !== null && { message: reason })}
+            {...(reason && { message: reason })}
             onCapture={() => dispatch({ type: "capture" })}
           />
           <IconButton

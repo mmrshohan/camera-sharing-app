@@ -52,7 +52,9 @@ test("words that don't match offer only Start again", async ({ page }) => {
   await openShell(page, "connect-words-dont-match");
   for (const name of ["Alex", "Sarah"] as const) {
     const p = phone(page, name);
-    await expect(p.getByText("These phones don’t match. Start again.")).toBeVisible();
+    await expect(
+      p.getByText("Nothing was shared. Both phones get new words when you start again."),
+    ).toBeVisible();
     await expect(p.getByRole("button", { name: "Start again" })).toBeVisible();
     await expect(p.getByRole("button", { name: "Lend camera" })).toHaveCount(0);
     await expect(p.getByRole("button", { name: "Receive on this phone" })).toHaveCount(0);

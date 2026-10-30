@@ -73,6 +73,13 @@ const undelivered: readonly HostStage[] = [
 ];
 const unsent: readonly HostStage[] = ["preparing", "prepared", "reserved", "uploading"];
 
+/**
+ * The pending limit is per phone (doc 01): every photo still waiting on Alex's phone counts,
+ * whichever session took it. The camera and the model both ask here, so they always agree.
+ */
+export const queueFull = (alex: DeviceState): boolean =>
+  alex.hostPhotos.filter((p) => unsent.includes(p.stage)).length >= limits.queue;
+
 /** While borrowing, Alex's phone shows only the camera or the lock (R4). */
 const borrowingRoutes: readonly Route[] = ["camera", "lock"];
 
@@ -188,9 +195,7 @@ function capture(w: World): World {
   // come before the camera's moment of being busy.
   if (!isActive(s) || alex.mode !== "borrowing") return refuse(toasts.sessionEnded);
   if (alex.storageFull) return refuse(toasts.storageFull);
-  if (alex.hostPhotos.filter((p) => unsent.includes(p.stage)).length >= limits.queue) {
-    return refuse(toasts.queueFull);
-  }
+  if (queueFull(alex)) return refuse(toasts.queueFull);
   if (alex.busy) return refuse(toasts.busy);
   const n = alex.hostPhotos.filter((p) => p.sessionId === s.id).length + 1;
   const keys = Object.keys(samples);
@@ -756,6 +761,11 @@ export function reduce(w: World, event: WorldEvent): World {
       return requestPermission(w, event.device, event.kind);
     case "permission":
       return answerPermission(w, event.device, event.kind, event.allow);
+    case "answerPrompt":
+      // A fading prompt can still be tapped; only the answer given while it showed counts.
+      return w.devices[event.device].ui.prompt === event.kind
+        ? answerPermission(w, event.device, event.kind, event.allow)
+        : w;
     case "scanInvitation": {
       const { alex, sarah } = w.devices;
       if (!canRequest(w) || alex.permissions.camera !== "granted") return w;
@@ -768,11 +778,10 @@ export function reduce(w: World, event: WorldEvent): World {
     }
     case "requestByUsername": {
       if (!canRequest(w)) return w;
-      if (event.username.replace(/^@/, "").toLowerCase() === people.sarah.handle.slice(1)) {
-        return startRequest(w, "requested");
-      }
+      const handle = `@${event.username.replace(/^@/, "").toLowerCase()}`;
+      if (handle === people.sarah.handle) return startRequest(w, "requested");
       // Someone the app knows who can't take a request, or nobody by that name.
-      const known = Object.values(people).some((p) => p.handle === `@${event.username}`);
+      const known = Object.values(people).some((p) => p.handle === handle);
       const field = { value: event.username, state: "invalid" as const, since: w.clock };
       return withUi(w, "alex", { field, notice: known ? "notAvailable" : "noMatch" });
     }

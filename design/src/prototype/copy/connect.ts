@@ -19,7 +19,8 @@ export const strings = {
   declinedRecipient: "Nothing was shared.",
   expiredTitle: "This request expired",
   expiredBody: "Start again when you’re both ready.",
-  mismatch: "These phones don’t match. Start again.",
+  mismatchTitle: "Words didn’t match",
+  mismatch: "Nothing was shared. Both phones get new words when you start again.",
   deviceChanged: (to: string) => `${to}’s receiving phone changed. Start again.`,
   startAgain: "Start again",
   close: "Close",
@@ -27,6 +28,7 @@ export const strings = {
 
 /** Promises about who receives and what is saved (spec §11). */
 export const trust = [
+  "words",
   "hostFinePrint",
   "recipientFinePrint",
   "declinedRecipient",

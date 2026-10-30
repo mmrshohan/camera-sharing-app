@@ -38,7 +38,7 @@ test("Review Focus 1: a double tap takes one photo and says the camera was busy 
   await openShell(page, "camera-ready");
   const alex = phone(page, "Alex");
   await alex.getByRole("button", { name: "Take photo" }).dblclick();
-  const toast = alex.getByText("Camera busy. That tap didn't take a photo.");
+  const toast = alex.getByText("Camera busy. That tap didn’t take a photo.");
   await expect(toast).toBeVisible();
   expect(await photosOnAlex(page)).toBe(1);
   const toastBox = await toast.boundingBox();
@@ -149,4 +149,46 @@ test("D7: the session panel lists each photo by number and label, never an image
   await expect(panel.getByText("Delivered").first()).toBeVisible();
   await expect(panel.getByText("Waiting for internet · Will retry")).toBeVisible();
   await expect(panel.locator("img")).toHaveCount(0);
+});
+
+test("on the lock, only what can be tapped is blue (design review 12, spec §7.1)", async ({
+  page,
+}) => {
+  await openShell(page, "lock-locked");
+  const blue = await phone(page, "Alex")
+    .locator(".lock")
+    .evaluate((lock) => {
+      const probe = document.createElement("span");
+      probe.style.color = "var(--color-accent-text)";
+      lock.append(probe);
+      const accent = getComputedStyle(probe).color;
+      probe.remove();
+      return [...lock.querySelectorAll("*")]
+        .filter((el) => getComputedStyle(el).color === accent && !el.closest("button, a"))
+        .map((el) => el.tagName.toLowerCase());
+    });
+  expect(blue).toEqual([]);
+});
+
+test("canceling says photos already sent may still arrive, when some have left Alex's phone (copy review, doc 06)", async ({
+  page,
+}) => {
+  await openShell(page, "camera-ready");
+  const alex = phone(page, "Alex");
+  const network = async (name: "Alex" | "Sarah", state: "Online" | "Offline") => {
+    await page.getByRole("button", { name: `Adjust ${name}'s phone` }).click();
+    await page.getByRole("radio", { name: state }).check();
+    await page.keyboard.press("Escape");
+  };
+  // The first photo leaves Alex's phone but can't reach Sarah's; the second stays on Alex's.
+  await network("Sarah", "Offline");
+  await alex.getByRole("button", { name: "Take photo" }).click();
+  await page.getByRole("button", { name: "+1 min", exact: true }).click();
+  await network("Alex", "Offline");
+  await alex.getByRole("button", { name: "Take photo" }).click();
+  await alex.locator(".camera-status-line").click();
+  await alex.getByRole("button", { name: "Cancel unsent photos" }).click();
+  await expect(alex.getByRole("alertdialog")).toContainText(
+    "1 photo won’t be sent. Photos already sent may still arrive.",
+  );
 });

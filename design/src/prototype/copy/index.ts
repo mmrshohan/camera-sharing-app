@@ -10,6 +10,7 @@ import * as recovery from "./recovery";
 import * as scanner from "./scanner";
 import * as session from "./session";
 import * as settings from "./settings";
+import * as status from "./status";
 import * as username from "./username";
 import * as welcome from "./welcome";
 
@@ -33,4 +34,5 @@ export const allCopy: {
   { module: "settings", ...settings },
   { module: "account", ...account },
   { module: "permissions", ...permissions },
+  { module: "status", ...status },
 ];

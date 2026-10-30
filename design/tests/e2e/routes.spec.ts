@@ -23,7 +23,8 @@ for (const [path, heading] of routes) {
   });
 }
 
-for (const path of ["/library/nope", "/lab/nope", "/does-not-exist"]) {
+// A phone that doesn't exist is an unknown address too, not a blank page (code review 9).
+for (const path of ["/library/nope", "/lab/nope", "/does-not-exist", "/prototype/phone/nobody"]) {
   test(`${path} shows not found with a way home`, async ({ page }) => {
     await gotoAndSettle(page, path);
     await expect(page.getByRole("heading", { level: 1, name: "Not found" })).toBeVisible();

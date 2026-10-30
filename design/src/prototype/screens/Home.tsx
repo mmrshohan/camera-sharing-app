@@ -108,7 +108,7 @@ export function Home({ id }: { id: DeviceId }) {
           tone="neutral"
           icon="save"
           title={s.accessTitle}
-          body={s.accessBody}
+          body={s.accessBody(device.settings.autoSave)}
           // Settings is outside the app; here it stands in for turning access back on there.
           action={{
             label: s.accessAction,

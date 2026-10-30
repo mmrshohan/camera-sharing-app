@@ -248,8 +248,9 @@
   text-align: center;
 }
 
+/* Blue means tappable and nothing else is blue (spec §7.1). */
 .lock > svg {
-  color: var(--color-accent-text);
+  color: var(--color-ink2);
 }
 
 .lock__notice {

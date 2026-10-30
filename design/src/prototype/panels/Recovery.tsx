@@ -19,7 +19,8 @@ export function Recovery({ id }: { id: DeviceId }) {
   const recovery = world.recovery;
   if (!recovery) return null;
 
-  const to = world.session?.recipient.name ?? people.sarah.name;
+  // On the receiving phone, the photos come to this phone, not "to Sarah".
+  const to = id === "alex" ? (world.session?.recipient.name ?? people.sarah.name) : s.thisPhone;
   const approvedHere = id === "alex" ? recovery.approvals.host : recovery.approvals.recipient;
   const close = () => dispatch({ type: "closePanel", device: id });
   const closeButton = (

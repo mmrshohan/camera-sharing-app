@@ -1,11 +1,13 @@
 import type { ComponentType } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, test } from "vitest";
+import { strings as camera } from "@prototype/copy/camera";
 import { strings as session } from "@prototype/copy/session";
-import { endingNow, recipientTiles } from "@prototype/model/selectors";
-import type { DeviceId, World, WorldEvent } from "@prototype/model/types";
-import { reduce, timing } from "@prototype/model/world";
+import { cancelingNow, endingNow, recipientTiles } from "@prototype/model/selectors";
+import type { DeviceId, HostPhoto, World, WorldEvent } from "@prototype/model/types";
+import { limits, reduce, timing, toasts } from "@prototype/model/world";
 import { getScenario } from "@prototype/scenarios/catalog";
+import { Camera } from "@prototype/screens/Camera";
 import { Home } from "@prototype/screens/Home";
 import { Lock } from "@prototype/screens/Lock";
 import { Welcome } from "@prototype/screens/Welcome";
@@ -106,6 +108,33 @@ describe("ending a session says what keeps going and what will need both phones 
   });
 });
 
+describe("canceling unsent photos says what may still arrive (copy review, doc 06)", () => {
+  test("photos that have left Alex's phone may still reach Sarah; the rest won't be sent", () => {
+    const w = run(
+      scenario("camera-ready"),
+      offline("sarah"),
+      capture,
+      tick(timing.captureMs),
+      capture,
+      settle,
+      offline("alex"),
+      capture,
+    );
+    expect(cancelingNow(w)).toEqual({ unsent: 1, onTheirWay: 2 });
+  });
+
+  test("with every photo still on Alex's phone, nothing is on its way", () => {
+    const w = run(
+      scenario("camera-ready"),
+      offline("alex"),
+      capture,
+      tick(timing.captureMs),
+      capture,
+    );
+    expect(cancelingNow(w)).toEqual({ unsent: 2, onTheirWay: 0 });
+  });
+});
+
 describe("Sarah's Home (design review, 29 October 2026)", () => {
   test("during a live session both rings are unavailable, with no waiting arc", () => {
     const html = markup(Home, scenario("home-live-receiving"), "sarah");
@@ -119,6 +148,77 @@ describe("Sarah's Home (design review, 29 October 2026)", () => {
     expect(labels.length).toBeGreaterThan(1);
     expect(new Set(labels).size).toBe(labels.length);
     expect(markup(Home, w, "sarah")).not.toMatch(/aria-label="([^",]+), \1[,"]/);
+  });
+});
+
+describe("the queue limit (code review 10)", () => {
+  /** An earlier session's photos, still on Alex's phone and waiting for internet. */
+  function earlierPhotos(w: World, count: number): World {
+    const alex = w.devices.alex;
+    const waiting: HostPhoto[] = Array.from({ length: count }, (_, i) => ({
+      id: `s0-${i + 1}`,
+      sessionId: "s0",
+      stage: "reserved",
+      reserved: true,
+      retry: false,
+      capturedAt: 0,
+      stageAt: 0,
+      reservedAt: 0,
+      expiresAt: limits.photoMs,
+      sample: "coast-01",
+    }));
+    return {
+      ...w,
+      devices: { ...w.devices, alex: { ...alex, hostPhotos: [...waiting, ...alex.hostPhotos] } },
+    };
+  }
+
+  test("photos still waiting from an earlier session count on the camera as in the model", () => {
+    const w = earlierPhotos(run(scenario("camera-ready"), offline("alex")), limits.queue);
+    expect(run(w, capture).devices.alex.ui.toast).toBe(toasts.queueFull);
+    expect(markup(Camera, w, "alex")).toContain(camera.shutter.queueFull);
+  });
+
+  test("one under the limit, both still take photos", () => {
+    const w = earlierPhotos(run(scenario("camera-ready"), offline("alex")), limits.queue - 1);
+    expect(run(w, capture).devices.alex.ui.toast).toBeNull();
+    expect(markup(Camera, w, "alex")).not.toContain(camera.shutter.queueFull);
+  });
+});
+
+describe("a blocked camera says why in a line that fits the shutter, and says it once (design review 11, 15)", () => {
+  const shutterMessage = (html: string) =>
+    /class="shutter__message">([^<]*)</.exec(html)?.[1] ?? "";
+
+  test.each(["camera-storage-full", "camera-queue-full", "camera-session-ended"])("%s", (id) => {
+    const w = scenario(id);
+    const message = shutterMessage(markup(Camera, w, "alex"));
+    expect(message).not.toBe("");
+    // About as wide as the shutter's capsule allows in one line.
+    expect(message.length).toBeLessThanOrEqual(16);
+    const text = said(Camera, w, "alex");
+    for (const phrase of [message, camera.ended])
+      expect(text.split(phrase).length - 1, phrase).toBeLessThanOrEqual(1);
+  });
+
+  test("full sentences end with a period", () => {
+    for (const toast of [camera.busy, camera.queueFull, camera.storageFull])
+      expect(toast).toMatch(/\.$/);
+  });
+});
+
+describe("Sarah's sections (design review 14)", () => {
+  test("two sessions on one day get headers of their own, told apart by time", () => {
+    const titles = recipientTiles(scenario("home-live-receiving")).map((s) => s.title);
+    expect(new Set(titles).size).toBe(titles.length);
+    const today = titles.filter((t) => t.startsWith("Today"));
+    expect(today).toHaveLength(2);
+    for (const title of today) expect(title).toMatch(/^Today \d{1,2}:\d{2}\s[AP]M$/);
+  });
+
+  test("a day with one session keeps the day alone", () => {
+    for (const { title } of recipientTiles(scenario("home-photos")))
+      expect(title).toMatch(/^(Today|Yesterday|\d+ days ago)$/);
   });
 });
 

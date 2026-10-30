@@ -77,6 +77,7 @@ export function Connect({ id }: { id: DeviceId }) {
       </>
     );
   } else if (session.state === "mismatch") {
+    title = s.mismatchTitle;
     body = (
       <>
         <InlineMessage tone="problem" title={s.mismatch} />

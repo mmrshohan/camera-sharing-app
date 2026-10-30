@@ -243,7 +243,10 @@ export type WorldEvent =
   | ({ type: "closeConfirm" } & On)
   | ({ type: "openPhoto"; id: PhotoId } & On)
   | ({ type: "closePhoto" } & On)
+  // Access set in the system's Settings, which the prototype stands in for, or by a scenario.
   | ({ type: "permission"; kind: PromptKind; allow: boolean } & On)
+  // An answer on the system prompt; it counts only while that prompt is showing.
+  | ({ type: "answerPrompt"; kind: PromptKind; allow: boolean } & On)
   | ({ type: "requestPermission"; kind: PromptKind } & On)
   | { type: "scanInvitation" }
   | { type: "requestByUsername"; username: string }

@@ -18,8 +18,10 @@ const basename = import.meta.env.BASE_URL.replace(/\/$/, "") || undefined;
 
 const router = createBrowserRouter(
   [
-    // Each phone of the review shell runs in its own document, outside the workspace chrome.
-    { path: "/prototype/phone/:id", element: <PhonePage /> },
+    // Each phone of the review shell runs in its own document, outside the workspace chrome. Any
+    // other phone is an unknown address, so it gets the workspace's Not found page.
+    { path: "/prototype/phone/alex", element: <PhonePage id="alex" /> },
+    { path: "/prototype/phone/sarah", element: <PhonePage id="sarah" /> },
     {
       element: <WorkspaceLayout />,
       children: [

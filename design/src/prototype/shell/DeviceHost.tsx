@@ -70,8 +70,8 @@ export function DeviceHost({
             appName="Camera Sharing"
             purpose={purposes[kind]}
             open={prompt !== null}
-            onAllow={() => dispatch({ type: "permission", device: id, kind, allow: true })}
-            onDeny={() => dispatch({ type: "permission", device: id, kind, allow: false })}
+            onAllow={() => dispatch({ type: "answerPrompt", device: id, kind, allow: true })}
+            onDeny={() => dispatch({ type: "answerPrompt", device: id, kind, allow: false })}
             container={screen}
           />
         )}

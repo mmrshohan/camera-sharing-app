@@ -23,8 +23,15 @@ export const strings = {
       .join(" "),
   keepShooting: "Keep shooting",
   cancelTitle: "Cancel unsent photos?",
-  cancelMessage: (count: number, to: string) =>
-    `${photos(count)} won’t be sent. Photos already received stay on ${to}’s phone.`,
+  /** Photos already on their way may still arrive: a cancel can cross a download (doc 06). */
+  cancelMessage: (count: number, to: string, onTheirWay = 0) =>
+    [
+      `${photos(count)} won’t be sent.`,
+      onTheirWay > 0 && "Photos already sent may still arrive.",
+      `Photos already received stay on ${to}’s phone.`,
+    ]
+      .filter(Boolean)
+      .join(" "),
   cancelConfirm: "Cancel photos",
   keepSending: "Keep sending",
 } as const;

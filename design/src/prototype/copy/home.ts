@@ -17,7 +17,14 @@ export const strings = {
   storageBody: "New photos can’t arrive until there’s room.",
   storageAction: "Manage storage",
   accessTitle: "Saving to Photos is off",
-  accessBody: "Photos stay in this app until you turn it on.",
+  /**
+   * Only what arrives now: photos saved before access was turned off are in Photos too. With Save
+   * to Photos on, only the next arrivals save themselves; photos already here never do.
+   */
+  accessBody: (autoSave: boolean) =>
+    autoSave
+      ? "New photos are kept only in this app. Turn it on to save the next ones to Photos."
+      : "New photos are kept only in this app. Turn it on, then save the ones you want to Photos.",
   accessAction: "Open Settings",
 } as const;
 

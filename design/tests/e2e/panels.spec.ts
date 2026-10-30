@@ -87,6 +87,27 @@ test.describe("Panel", () => {
     await openPanel(page, "Medium");
     expect(await seriousA11yViolations(page)).toEqual([]);
   });
+
+  test("content that scrolls with nothing to tap can still be scrolled from the keyboard (final review)", async ({
+    page,
+  }) => {
+    await gotoAndSettle(page, "/library/panel?platform=ios&text=largest");
+    await example(page, "Medium").getByRole("button", { name: "Show my code" }).click();
+    const panel = page.getByRole("dialog");
+    await expect(panel).toBeVisible();
+    const body = panel.locator(".panel__body");
+    // At the largest text the medium detent overflows, and there is no control inside.
+    expect(await body.evaluate((el) => el.scrollHeight - el.clientHeight)).toBeGreaterThan(0);
+    await expect(body.getByRole("button")).toHaveCount(0);
+    await expect(body).toHaveAttribute("tabindex", "0");
+    await expect(body).toHaveAccessibleName("Your code");
+    expect(await seriousA11yViolations(page)).toEqual([]);
+  });
+
+  test("content that fits takes no extra stop in the tab order", async ({ page }) => {
+    const panel = await openPanel(page, "Medium");
+    await expect(panel.locator(".panel__body")).not.toHaveAttribute("tabindex", /.*/);
+  });
 });
 
 test.describe("panels on the phones (design review, 29 October 2026)", () => {
@@ -126,6 +147,79 @@ test.describe("panels on the phones (design review, 29 October 2026)", () => {
     const action = await sarah(page).getByRole("button", { name: "Show a new code" }).boundingBox();
     const nav = await sarah(page).locator(".home-indicator").boundingBox();
     expect(action && nav && action.y + action.height).toBeLessThanOrEqual(nav?.y ?? 0);
+  });
+
+  const alex = (page: Page) => page.frameLocator(`iframe[title="Alex's phone"]`);
+
+  test("the Session panel's list lines up with its title on iPhone (design review 13)", async ({
+    page,
+  }) => {
+    await open(page, "scenario=session-photo-list");
+    const card = await alex(page)
+      .locator(".grouped-list__items")
+      .evaluate((el) => el.getBoundingClientRect().left);
+    // Where the title's words start, inside its padding.
+    const title = await alex(page)
+      .locator(".panel__title")
+      .evaluate((el) => {
+        const words = document.createRange();
+        words.selectNodeContents(el);
+        return words.getBoundingClientRect().left;
+      });
+    expect(card).toBeCloseTo(title, 0);
+  });
+
+  test("at the largest text the Connect panel opens with the words' first line in full (design review 16)", async ({
+    page,
+  }) => {
+    await open(page, "scenario=connect-check-words&sarahDevice=iphoneSE3&text=largest");
+    const panel = sarah(page).getByRole("dialog");
+    await expect(panel).toBeVisible();
+    // Focus starts on the words, scrolled so they begin right under the title: no line is cut there.
+    const offset = await panel.locator(".panel__body").evaluate((body) => {
+      const words = body.querySelector(".panel-focus");
+      return {
+        focused: document.activeElement === words,
+        scrolled: body.scrollTop,
+        gap: (words?.getBoundingClientRect().top ?? 0) - body.getBoundingClientRect().top,
+      };
+    });
+    expect(offset.focused).toBe(true);
+    expect(offset.scrolled).toBeGreaterThan(0);
+    expect(Math.abs(offset.gap)).toBeLessThan(1);
+  });
+
+  test("Recovery on Sarah's phone says the photos come to this phone (design review 15)", async ({
+    page,
+  }) => {
+    await open(page, "scenario=recovery-needs-both");
+    const body = (frame: ReturnType<Page["frameLocator"]>) =>
+      frame.getByRole("dialog", { name: "Finish sending offline photos?" }).locator(".panel__body");
+    await expect(body(sarah(page))).toContainText("sending them to this phone");
+    await expect(body(sarah(page))).not.toContainText("to Sarah");
+    await expect(body(alex(page))).toContainText("sending them to Sarah");
+  });
+
+  test("words that don't match say so in the title, and the message doesn't repeat the button (design review 15)", async ({
+    page,
+  }) => {
+    await open(page, "scenario=connect-words-dont-match");
+    for (const frame of [alex(page), sarah(page)]) {
+      const panel = frame.getByRole("dialog", { name: "Words didn’t match" });
+      await expect(panel).toBeVisible();
+      await expect(panel.locator(".inline-message")).not.toContainText("Start again");
+      await expect(panel.getByRole("button", { name: "Start again" })).toBeVisible();
+    }
+  });
+
+  test("a panel already open when the phone loads becomes a focusable region once it scrolls", async ({
+    page,
+  }) => {
+    // The phone's screen element arrives after the first render, and the panel moves into it.
+    await open(page, "scenario=invitation-showing-code&sarahDevice=iphoneSE3&text=largest");
+    const body = sarah(page).locator(".panel__body");
+    expect(await body.evaluate((el) => el.scrollHeight - el.clientHeight)).toBeGreaterThan(0);
+    await expect(body).toHaveAttribute("tabindex", "0");
   });
 
   test("a showing invitation fits: its countdown and Done show without scrolling", async ({

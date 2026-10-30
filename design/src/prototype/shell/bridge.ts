@@ -21,7 +21,9 @@ export interface ToPhone {
 export type ToShell =
   | { kind: "ready"; id: DeviceId }
   | { kind: "event"; id: DeviceId; seq: number; event: WorldEvent }
-  | { kind: "size"; id: DeviceId; width: number; height: number };
+  | { kind: "size"; id: DeviceId; width: number; height: number }
+  /** A key pressed in the phone that nothing there used. */
+  | { kind: "key"; id: DeviceId; key: "Escape" };
 
 const isRecord = (data: unknown): data is Record<string, unknown> =>
   typeof data === "object" && data !== null;
@@ -30,7 +32,14 @@ export const isToPhone = (data: unknown): data is ToPhone =>
   isRecord(data) && data.kind === "state";
 
 export const isToShell = (data: unknown): data is ToShell =>
-  isRecord(data) && (data.kind === "ready" || data.kind === "event" || data.kind === "size");
+  isRecord(data) &&
+  (data.kind === "ready" || data.kind === "event" || data.kind === "size" || data.kind === "key");
+
+/**
+ * The number of a phone's next event. A phone that reloads counts from 0 again while the shell
+ * still holds its old count, so it carries on after that count: a lower number would look applied.
+ */
+export const nextSeq = (last: number, applied: number): number => Math.max(last, applied) + 1;
 
 /**
  * The world a phone shows: the shell's world plus this phone's own events the shell hasn't
