@@ -1,5 +1,5 @@
 import { readdirSync, readFileSync } from "node:fs";
-import { parseChangelog } from "../../src/workspace/changelog";
+import { changeKinds, parseChangelog } from "../../src/workspace/changelog";
 import { expect, gotoAndSettle, test } from "./fixtures";
 
 const root = new URL("../../", import.meta.url);
@@ -26,8 +26,9 @@ test("the overview shows the version, components by status, latest changes and l
   }
   expect(total).toBe(componentCount);
 
-  const firstAdded = latest!.sections.Added[0]!.replaceAll("`", "");
-  await expect(page.getByTestId("overview-latest")).toContainText(firstAdded);
+  // Its first entry, in the order the notes list them; it need not be under Added.
+  const first = changeKinds.flatMap((kind) => latest!.sections[kind])[0]!.replaceAll("`", "");
+  await expect(page.getByTestId("overview-latest")).toContainText(first);
   // A release shows its version; the Unreleased section shows its name.
   const label = latest!.date === null ? latest!.version : `v${latest!.version}`;
   await expect(page.getByTestId("overview-latest")).toContainText(label);
