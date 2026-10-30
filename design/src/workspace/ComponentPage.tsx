@@ -8,6 +8,7 @@ import { NotFound } from "./pages/NotFound";
 import { PreviewScope } from "./PreviewScope";
 import { getComponent } from "./registry";
 import { listReleases } from "./releases";
+import { Segmented } from "./Segmented";
 import { groupNames, statusNames, type ComponentEntry } from "./types";
 
 /** Component id → prototype files that import it, built by scripts/build-usage.ts. */
@@ -155,21 +156,14 @@ export function ComponentPage({ mode }: { mode: Mode }) {
 
       <div className="ws-controls" role="group" aria-label="Preview settings">
         {choices.map(({ param, legend, options, fallback }) => (
-          <fieldset key={param} className="ws-segmented">
-            <legend>{legend}</legend>
-            {options.map(([value, label]) => (
-              <label key={value}>
-                <input
-                  type="radio"
-                  name={param}
-                  value={value}
-                  checked={(params.get(param) ?? fallback) === value}
-                  onChange={() => choose(param, value, fallback)}
-                />
-                <span>{label}</span>
-              </label>
-            ))}
-          </fieldset>
+          <Segmented
+            key={param}
+            legend={legend}
+            name={param}
+            options={options}
+            value={params.get(param) ?? fallback}
+            onChange={(value) => choose(param, value, fallback)}
+          />
         ))}
         <label className="ws-toggle">
           <input
@@ -261,21 +255,13 @@ export function ComponentPage({ mode }: { mode: Mode }) {
         </p>
         {mode === "library" && releases.length > 0 ? (
           <>
-            <fieldset className="ws-segmented ws-segmented--start">
-              <legend>Compare with</legend>
-              {releases.map((version) => (
-                <label key={version}>
-                  <input
-                    type="radio"
-                    name="compare"
-                    value={version}
-                    checked={compareWith === version}
-                    onChange={() => setCompareWith(version)}
-                  />
-                  <span>v{version}</span>
-                </label>
-              ))}
-            </fieldset>
+            <Segmented
+              legend="Compare with"
+              name="compare"
+              options={releases.map((version) => [version, `v${version}`] as const)}
+              value={compareWith ?? ""}
+              onChange={setCompareWith}
+            />
             {compareWith && <CompareView previous={compareWith} path={`/library/${meta.id}`} />}
           </>
         ) : (

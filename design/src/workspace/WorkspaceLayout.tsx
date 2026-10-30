@@ -34,10 +34,28 @@ function useHashScroll(hash: string): void {
   }, [hash]);
 }
 
+/**
+ * In a narrow window the sections scroll sideways: bring one into view, clear of the fades at the
+ * edges. This scrolls the list itself: scrollIntoView would also move where the Tab key starts,
+ * and the first Tab would skip the brand.
+ */
+function reveal(link: Element | null): void {
+  const nav = link?.closest<HTMLElement>(".ws-nav");
+  if (!link || !nav) return;
+  const room = Number.parseFloat(getComputedStyle(nav).scrollPaddingInlineStart) || 0;
+  const box = link.getBoundingClientRect();
+  const view = nav.getBoundingClientRect();
+  if (box.left < view.left + room) nav.scrollLeft -= view.left + room - box.left;
+  else if (box.right > view.right - room) nav.scrollLeft += box.right - (view.right - room);
+}
+
 export function WorkspaceLayout() {
   useWorkspaceTheme();
   const { pathname, hash, search } = useLocation();
   useHashScroll(hash);
+  // The current section stays in view; so does the one the keyboard reaches, which browsers
+  // don't scroll to when it is already partly showing.
+  useEffect(() => reveal(document.querySelector('.ws-nav [aria-current="page"]')), [pathname]);
   const fullBleed = pathname.startsWith("/prototype");
   // Inside the compare view a page shows only itself.
   const embedded = new URLSearchParams(search).get("embed") === "1";
@@ -49,7 +67,7 @@ export function WorkspaceLayout() {
           <a className="ws-brand" href={import.meta.env.BASE_URL}>
             Camera Sharing <span>· Design system</span>
           </a>
-          <nav className="ws-nav" aria-label="Workspace">
+          <nav className="ws-nav" aria-label="Workspace" onFocus={(event) => reveal(event.target)}>
             {sections.map(({ to, label, end }) => (
               <NavLink key={to} to={to} end={end}>
                 {label}

@@ -143,7 +143,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Preview settings: a quiet strip that stays under the header while the states scroll. */
+/* Preview settings: a quiet, solid strip that stays under the header while the states scroll. */
 .ws-controls {
   position: sticky;
   top: var(--ws-header-height);
@@ -151,32 +151,39 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 10px 16px;
+  gap: 10px 24px;
   margin: 0 0 40px;
   padding: 12px 0;
   border-bottom: 1px solid var(--ws-border);
-  background: color-mix(in srgb, var(--ws-bg) 86%, transparent);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
-  backdrop-filter: saturate(180%) blur(20px);
+  background: var(--ws-bg);
 }
 
+/* A segmented control: its name beside the track, the options sharing the track equally. */
 .ws-segmented {
   display: flex;
   align-items: center;
-  gap: 0;
+  gap: 8px;
+  min-width: 0;
   margin: 0;
-  padding: 2px;
+  padding: 0;
   border: 0;
-  border-radius: 9px;
-  background: var(--ws-fill);
 }
 
 .ws-segmented legend {
   float: left;
-  padding: 0 8px 0 10px;
+  padding: 0;
   font-size: 12px;
   font-weight: 500;
   color: var(--ws-text-2);
+}
+
+.ws-segmented__track {
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  padding: 2px;
+  border-radius: 9px;
+  background: var(--ws-fill);
 }
 
 .ws-segmented label {
@@ -184,7 +191,8 @@
 }
 
 .ws-segmented input,
-.ws-toggle input {
+.ws-toggle input,
+.ws-switch input {
   position: absolute;
   opacity: 0;
   inset: 0;
@@ -198,6 +206,8 @@
   border-radius: 7px;
   font-size: 13px;
   font-weight: 500;
+  text-align: center;
+  white-space: nowrap;
   color: var(--ws-text-2);
   transition:
     color var(--ws-quick) var(--ws-ease),
@@ -215,7 +225,8 @@
 }
 
 .ws-segmented input:focus-visible + span,
-.ws-toggle input:focus-visible + span {
+.ws-toggle input:focus-visible + span,
+.ws-switch input:focus-visible + .ws-switch__track {
   outline: 2px solid var(--ws-focus);
   outline-offset: 2px;
 }
@@ -247,6 +258,55 @@
 .ws-toggle input:checked + span {
   background: var(--ws-accent-tint);
   color: var(--ws-accent);
+}
+
+/* A switch, for a setting in a form: the words lead, the switch ends the row. On, it is blue. */
+.ws-switch {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 28px;
+  font-size: 13px;
+  color: var(--ws-text-2);
+}
+
+.ws-switch__track {
+  position: relative;
+  flex: none;
+  width: 32px;
+  height: 18px;
+  border-radius: 999px;
+  background: var(--ws-fill-strong);
+  transition: background-color var(--ws-quick) var(--ws-ease);
+}
+
+.ws-switch__track::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--ws-knob);
+  box-shadow: var(--ws-shadow-knob);
+  transition: transform var(--ws-quick) var(--ws-ease);
+}
+
+.ws-switch input:checked + .ws-switch__track {
+  background: var(--ws-accent-fill);
+}
+
+.ws-switch input:checked + .ws-switch__track::before {
+  transform: translateX(14px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ws-switch__track::before {
+    transition: none;
+  }
 }
 
 .ws-section {
@@ -351,6 +411,12 @@
   font-weight: 600;
   letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums;
+}
+
+/* Release notes keep a comfortable measure, about 70 characters a line. A ch is the width of a
+   zero, wider than the average letter, so the measure is set in em. */
+.ws-notes {
+  max-width: 32em;
 }
 
 .ws-notes h3 {
@@ -727,9 +793,4 @@
 
 .proto-main > .ws-compare iframe {
   height: 100%;
-}
-
-.ws-segmented--start {
-  justify-content: flex-start;
-  width: max-content;
 }

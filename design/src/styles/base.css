@@ -6,11 +6,14 @@
   --ws-panel: var(--color-background, #ffffff);
   /* Popovers and menus: lifted off the page. */
   --ws-elevated: #ffffff;
-  /* A whisper of gray for hover, tracks and chips; never a page background. */
-  --ws-fill: #f5f5f7;
-  --ws-fill-strong: #ebebef;
-  /* The chosen segment sits on the track. */
+  /* See-through grays, as Apple's fills are, so a track reads on the page and on a menu alike.
+     Hover and tracks, then a stronger hover, then pressed. Never a page background. */
+  --ws-fill: rgb(116 116 128 / 0.08);
+  --ws-fill-strong: rgb(118 118 128 / 0.14);
+  --ws-fill-pressed: rgb(118 118 128 / 0.2);
+  /* The chosen segment sits on the track; a switch's knob is white in both themes. */
   --ws-thumb: #ffffff;
+  --ws-knob: #ffffff;
   /* Hairlines give structure without boxes. */
   --ws-border: #e8e8ed;
   --ws-border-strong: #d2d2d7;
@@ -18,12 +21,14 @@
   --ws-text-2: var(--color-ink2, #6e6e73);
   /* Blue means chosen or a link. */
   --ws-accent: var(--color-accent-text, #0066cc);
+  --ws-accent-fill: var(--color-accent, #0071e3);
   --ws-accent-tint: var(--color-accent-tint, #e8f1fc);
   --ws-focus: var(--color-accent, #0071e3);
   --ws-radius: 12px;
   --ws-radius-small: 8px;
   --ws-header-height: 56px;
   --ws-shadow-raised: 0 0 0 0.5px rgb(0 0 0 / 0.06), 0 1px 2px rgb(0 0 0 / 0.08);
+  --ws-shadow-knob: 0 0 0 0.5px rgb(0 0 0 / 0.04), 0 1px 2px rgb(0 0 0 / 0.2);
   --ws-shadow-hover: 0 8px 24px -12px rgb(0 0 0 / 0.16);
   --ws-shadow-pop: 0 0 0 0.5px rgb(0 0 0 / 0.08), 0 16px 40px -12px rgb(0 0 0 / 0.24);
   --ws-quick: 120ms;
@@ -33,12 +38,17 @@
 
 :root[data-theme="dark"] {
   --ws-elevated: #1c1c1e;
-  --ws-fill: #1c1c1e;
-  --ws-fill-strong: #2c2c2e;
-  --ws-thumb: #3a3a3c;
+  --ws-fill: rgb(118 118 128 / 0.24);
+  --ws-fill-strong: rgb(118 118 128 / 0.32);
+  --ws-fill-pressed: rgb(118 118 128 / 0.4);
+  --ws-thumb: #636366;
   --ws-border: #262628;
   --ws-border-strong: #3a3a3c;
+  /* The product's dark tint is too faint to mark a chosen row on black; this one passes 4.5:1
+     under the accent text. */
+  --ws-accent-tint: #0a2a4a;
   --ws-shadow-raised: 0 0 0 0.5px rgb(255 255 255 / 0.1);
+  --ws-shadow-knob: 0 1px 2px rgb(0 0 0 / 0.4);
   --ws-shadow-hover: 0 0 0 0.5px rgb(255 255 255 / 0.12);
   --ws-shadow-pop: 0 0 0 0.5px rgb(255 255 255 / 0.12), 0 16px 40px -12px rgb(0 0 0 / 0.7);
   color-scheme: dark;
@@ -74,7 +84,7 @@ code {
   outline-offset: 2px;
 }
 
-/* A translucent bar: the page scrolls under it. */
+/* A solid bar: what scrolls under it never shows through. One row at any width. */
 .ws-header {
   position: sticky;
   top: 0;
@@ -84,13 +94,12 @@ code {
   gap: 28px;
   height: var(--ws-header-height);
   padding: 0 28px;
-  background: color-mix(in srgb, var(--ws-bg) 82%, transparent);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
-  backdrop-filter: saturate(180%) blur(20px);
+  background: var(--ws-bg);
   border-bottom: 1px solid var(--ws-border);
 }
 
 .ws-brand {
+  flex: none;
   font-size: 14px;
   font-weight: 600;
   letter-spacing: -0.01em;
@@ -104,17 +113,72 @@ code {
   color: var(--ws-text-2);
 }
 
+/* When the sections don't fit, they scroll sideways. The padding, taken back by the margin, and
+   the scroll padding keep focus rings inside the scrolling area. */
 .ws-nav {
   display: flex;
   gap: 2px;
-  flex-wrap: wrap;
+  min-width: 0;
+  margin: -4px;
+  padding: 4px;
+  overflow-x: auto;
+  scroll-padding-inline: 24px;
+  scrollbar-width: none;
+}
+
+/* Where sections run past an edge they fade out there, as Apple's scroll edges do, instead of
+   ending in a hard cut; the scroll padding keeps a focused section clear of the fade. Only in
+   browsers with scroll-driven animations; elsewhere the edge is plain. */
+@property --ws-fade-start {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --ws-fade-end {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@keyframes ws-fade-start {
+  to {
+    --ws-fade-start: 24px;
+  }
+}
+
+@keyframes ws-fade-end {
+  from {
+    --ws-fade-end: 24px;
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  .ws-nav {
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 var(--ws-fade-start),
+      #000 calc(100% - var(--ws-fade-end)),
+      transparent
+    );
+    animation:
+      ws-fade-start linear both,
+      ws-fade-end linear both;
+    animation-timeline: scroll(self inline);
+    animation-range:
+      0 24px,
+      calc(100% - 24px) 100%;
+  }
 }
 
 .ws-nav a {
+  flex: none;
   padding: 6px 12px;
   border-radius: var(--ws-radius-small);
   font-size: 14px;
   font-weight: 500;
+  white-space: nowrap;
   color: var(--ws-text-2);
   text-decoration: none;
   transition:
@@ -132,6 +196,7 @@ code {
 }
 
 .ws-version {
+  flex: none;
   margin-left: auto;
   padding: 2px 8px;
   border-radius: 999px;
@@ -169,12 +234,16 @@ code {
   color: var(--ws-text-2);
 }
 
+@media (max-width: 960px) {
+  .ws-brand span {
+    display: none;
+  }
+}
+
 @media (max-width: 640px) {
   .ws-header {
-    flex-wrap: wrap;
-    gap: 8px 16px;
-    height: auto;
-    padding: 10px 16px;
+    gap: 16px;
+    padding: 0 16px;
   }
   .ws-main {
     padding: 32px 16px 64px;

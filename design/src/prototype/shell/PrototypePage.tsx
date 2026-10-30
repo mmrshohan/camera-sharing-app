@@ -5,6 +5,7 @@ import { createWorld } from "@prototype/scenarios/build";
 import { getScenario } from "@prototype/scenarios/catalog";
 import { CompareView } from "@workspace/CompareView";
 import { listReleases } from "@workspace/releases";
+import { Segmented } from "@workspace/Segmented";
 import {
   defaultUrlState,
   formatUrlState,
@@ -15,7 +16,6 @@ import { ClockControls } from "./ClockControls";
 import { DeviceControls } from "./DeviceControls";
 import { Navigator } from "./Navigator";
 import { PhoneEmbed } from "./PhoneEmbed";
-import { Segmented } from "./Segmented";
 import { simulationsFor } from "./simulations";
 import { Stage } from "./Stage";
 import { useWorld } from "./useWorld";
@@ -73,6 +73,9 @@ export function PrototypePage() {
   const [compare, setCompare] = useState(boot.state.compare);
   const [releases, setReleases] = useState<string[] | null>(null);
   const bare = present || boot.embedded;
+  const presentButton = useRef<HTMLButtonElement>(null);
+  const exitButton = useRef<HTMLButtonElement>(null);
+  const presented = useRef(false);
   const [initial, setInitial] = useState(() => build(boot.state.scenario, boot.state));
   const { world, applied, dispatch, dispatchFrom, playing, setPlaying } = useWorld(initial, {
     playing: !boot.paused,
@@ -136,6 +139,12 @@ export function PrototypePage() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [present]);
+  // Focus follows the mode: to Exit on entering, and back to Present on leaving.
+  useEffect(() => {
+    if (present) exitButton.current?.focus();
+    else if (presented.current) presentButton.current?.focus();
+    presented.current = present;
+  }, [present]);
   // The shell fills the window below the workspace header; only its own panes scroll.
   useLayoutEffect(() => {
     const html = document.documentElement;
@@ -163,8 +172,10 @@ export function PrototypePage() {
       <div className="proto-main">
         {!bare && (
           <div className="proto-toolbar">
+            {/* The options say what these are, so their names are for screen readers only. */}
             <Segmented
               legend="View"
+              hideLegend
               name="view"
               options={[
                 ["dual", "Both phones"],
@@ -176,6 +187,7 @@ export function PrototypePage() {
             {view === "single" && (
               <Segmented
                 legend="Phone"
+                hideLegend
                 name="focus"
                 options={[
                   ["alex", "Alex"],
@@ -208,7 +220,12 @@ export function PrototypePage() {
               <button type="button" className="proto-button proto-button--quiet" onClick={reset}>
                 Reset
               </button>
-              <button type="button" className="proto-button" onClick={() => setPresent(true)}>
+              <button
+                ref={presentButton}
+                type="button"
+                className="proto-button"
+                onClick={() => setPresent(true)}
+              >
                 Present
               </button>
             </div>
@@ -258,6 +275,7 @@ export function PrototypePage() {
         )}
         {present && (
           <button
+            ref={exitButton}
             type="button"
             className="proto-button proto-exit"
             onClick={() => setPresent(false)}

@@ -149,7 +149,8 @@ html.proto-route .ws-main--full {
   cursor: pointer;
   transition:
     color var(--ws-quick) var(--ws-ease),
-    background-color var(--ws-quick) var(--ws-ease);
+    background-color var(--ws-quick) var(--ws-ease),
+    transform var(--ws-quick) var(--ws-ease);
 }
 
 .proto-button:hover {
@@ -166,8 +167,50 @@ html.proto-route .ws-main--full {
   color: var(--ws-text);
 }
 
+/* The press answers at once, before release: a deeper fill, and a slight give. */
 .proto-button:active {
+  background: var(--ws-fill-pressed);
+  transform: scale(var(--press-scale-button));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proto-button:active {
+    transform: none;
+  }
+}
+
+/* A button that opens a menu: its word, then a chevron. Held while the menu is open. */
+.proto-button--menu {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.proto-button__chevron {
+  width: 10px;
+  height: 6px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.proto-phone__head:has(> .proto-popover:popover-open) > .proto-button--menu {
   background: var(--ws-fill-strong);
+}
+
+/* Two words in one place: the button is as wide as the longer, whichever is showing. */
+.proto-swap {
+  display: inline-grid;
+}
+
+.proto-swap > * {
+  grid-area: 1 / 1;
+}
+
+.proto-swap__hidden {
+  visibility: hidden;
 }
 
 .proto-notice {
@@ -241,12 +284,14 @@ html.proto-route .ws-main--full {
   color-scheme: light;
 }
 
-/* A menu lifted off the page, as on macOS. */
+/* A menu lifted off the page, as on macOS: a two-column form, names on the left and the
+   controls lined up on the right, then the one action. */
 .proto-popover {
+  --proto-form-names: 92px;
   position: fixed;
   inset: auto;
   display: none;
-  gap: var(--space-3);
+  gap: var(--space-2);
   width: max-content;
   max-width: calc(100vw - 16px);
   margin: 0;
@@ -279,6 +324,30 @@ html.proto-route .ws-main--full {
   background: var(--ws-fill);
   color: var(--ws-text);
   font: inherit;
+}
+
+.proto-popover .proto-field,
+.proto-popover .ws-segmented {
+  justify-content: flex-start;
+  gap: 0;
+}
+
+.proto-popover .proto-field > span,
+.proto-popover .ws-segmented legend {
+  flex: none;
+  width: var(--proto-form-names);
+  color: var(--ws-text-2);
+  font-size: var(--type-footnote-size);
+  font-weight: var(--type-footnote-weight);
+}
+
+.proto-popover .proto-field select,
+.proto-popover .ws-segmented__track {
+  flex: 1;
+}
+
+.proto-popover > .proto-button {
+  margin-top: var(--space-2);
 }
 
 .proto-exit {

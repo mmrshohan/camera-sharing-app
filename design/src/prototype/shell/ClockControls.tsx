@@ -24,15 +24,26 @@ export function ClockControls({
   return (
     <div className="proto-clock" role="group" aria-label="Clock">
       <button type="button" className="proto-button" onClick={() => setPlaying(!playing)}>
-        {playing ? "Pause" : "Play"}
+        {/* Both words hold their place, so the button keeps its width as one replaces the other. */}
+        <span className="proto-swap">
+          {(["Play", "Pause"] as const).map((word) => (
+            <span
+              key={word}
+              className={(word === "Pause") === playing ? undefined : "proto-swap__hidden"}
+            >
+              {word}
+            </span>
+          ))}
+        </span>
       </button>
       <span className="proto-clock__time">{clockLabel(clock)}</span>
-      {jumps.map(([label, name, ms]) => (
+      {/* Named by what they show; the longer words are a hint on hover. */}
+      {jumps.map(([label, hint, ms]) => (
         <button
           key={label}
           type="button"
           className="proto-button proto-button--quiet"
-          aria-label={name}
+          title={hint}
           onClick={() => dispatch({ type: "tick", ms })}
         >
           {label}

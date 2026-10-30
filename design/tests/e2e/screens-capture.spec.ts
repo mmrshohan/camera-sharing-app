@@ -83,7 +83,7 @@ test("End session asks first, on Keep shooting (D8); the lock then shows what's 
 test("D2: relaunching on the lock stays on the lock", async ({ page }) => {
   await openShell(page, "lock-locked");
   const alex = phone(page, "Alex");
-  await page.getByRole("button", { name: "Alex's phone settings" }).click();
+  await page.getByRole("button", { name: "Adjust Alex's phone" }).click();
   await page.getByRole("button", { name: "Relaunch the app" }).click();
   await page.keyboard.press("Escape");
   await expect(alex.locator("[data-route]")).toHaveAttribute("data-route", "lock");

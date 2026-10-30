@@ -18,6 +18,9 @@ Releases of the Camera Sharing design system. The format follows [Keep a Changel
 
 ### Changed
 
+- The workspace header and preview strips are solid. The header stays one row at any width; its sections scroll sideways and fade where they are cut off.
+- Fills are see-through grays, so controls show on menus in dark mode. A segmented control's name sits beside its track, the chosen scenario is a stronger blue in dark mode, and release notes keep a readable line length.
+- The prototype's controls: the scenario list is one Tab stop walked with the arrow keys, buttons are named by the words they show, Adjust is a button with a chevron that opens a two-column menu, Present mode keeps the keyboard's place, Play and Pause keep one width, and a pressed button answers at once.
 - The workspace, as the owner asked: white pages with hairlines instead of gray panels, quieter controls and buttons, status shown as a dot and a word, and in the prototype's scenario list a gray tint on hover and a blue tint on the chosen scenario.
 
 ## [1.0.0] - 2026-10-29
