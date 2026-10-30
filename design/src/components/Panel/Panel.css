@@ -1,0 +1,82 @@
+/* Panels open inside their screen, which is position: relative and clips them. */
+.panel-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background: var(--color-scrim);
+}
+
+/* iOS: the system sheet. Grabber, 38 pt top corners, the elevated background. */
+.panel {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 21;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--panel-radius) var(--panel-radius) 0 0;
+  background: var(--color-elevated);
+  color: var(--color-ink);
+  outline: none;
+}
+
+.panel--medium {
+  height: 50%;
+}
+
+.panel--large {
+  height: calc(100% - var(--safe-top, 0px) - var(--space-3));
+}
+
+.panel__handle {
+  display: flex;
+  flex: none;
+  justify-content: center;
+  padding: var(--space-2) 0 var(--space-1);
+  cursor: grab;
+  touch-action: none;
+}
+
+.panel__grabber {
+  width: var(--handle-width);
+  height: var(--handle-height);
+  border-radius: 999px;
+  background: var(--color-ink3);
+}
+
+.panel__title {
+  margin: 0;
+  padding: var(--space-2) var(--margin) var(--space-3);
+  font-family: var(--type-title2-family);
+  font-size: var(--type-title2-size);
+  line-height: var(--type-title2-line);
+  font-weight: var(--type-title2-weight);
+  letter-spacing: var(--type-title2-tracking);
+}
+
+.panel__body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  /* Clear of the home indicator or Android's navigation bar. */
+  padding: 0 var(--margin) calc(var(--space-5) + var(--safe-bottom, 0px));
+  /* Cards inside are one step above the panel, as iOS draws them in a sheet. */
+  --color-surface: var(--color-surface-elevated);
+}
+
+/* Visible focus inside the portal (D12). */
+.panel :focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Android: Material's modal bottom sheet. A drag handle with a 48 dp touch area, 28 dp corners. */
+[data-platform="android"] .panel {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+[data-platform="android"] .panel__handle {
+  padding: var(--space-5) 0 var(--space-4);
+}

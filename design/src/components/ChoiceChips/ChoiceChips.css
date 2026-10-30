@@ -1,0 +1,64 @@
+.choice-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-2);
+}
+
+/* The button is the full touch target; the pill inside is what you see. */
+.choice-chip {
+  display: inline-grid;
+  place-items: center;
+  min-height: var(--target);
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* iOS: capsules on the system fill; the choice turns tinted and gains a checkmark. */
+.choice-chip__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: var(--chip-height);
+  padding: 0 var(--space-4);
+  border-radius: var(--chip-radius);
+  background: var(--color-fill);
+  color: var(--color-ink);
+  font-family: var(--type-subheadline-family);
+  font-size: var(--type-subheadline-size);
+  line-height: var(--type-subheadline-line);
+  font-weight: var(--type-headline-weight);
+  letter-spacing: var(--type-subheadline-tracking);
+  transition: background-color var(--motion-fade-duration) ease-out;
+}
+
+.choice-chip[aria-checked="true"] .choice-chip__pill {
+  padding-inline-start: var(--space-3);
+  background: var(--color-accent-tint);
+  color: var(--color-accent-text);
+}
+
+.choice-chip:focus-visible {
+  outline: none;
+}
+
+.choice-chip:focus-visible .choice-chip__pill {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Android: Material 3 filter chips. Outlined until chosen. */
+[data-platform="android"] .choice-chip__pill {
+  background: none;
+  box-shadow: inset 0 0 0 1px var(--color-field-border);
+}
+
+[data-platform="android"] .choice-chip[aria-checked="true"] .choice-chip__pill {
+  background: var(--color-accent-tint);
+  box-shadow: none;
+  padding-inline-start: var(--space-2);
+}

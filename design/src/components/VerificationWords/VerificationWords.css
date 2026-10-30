@@ -1,0 +1,42 @@
+.verification-words {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.verification-words__prompt {
+  margin: 0;
+  color: var(--color-ink2);
+  font-family: var(--type-subheadline-family);
+  font-size: var(--type-subheadline-size);
+  line-height: var(--type-subheadline-line);
+  font-weight: var(--type-subheadline-weight);
+  letter-spacing: var(--type-subheadline-tracking);
+}
+
+.verification-words__list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.verification-words__list li {
+  padding: var(--space-3) var(--space-1);
+  border-radius: var(--radius-thumb);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-family: var(--type-title3-family);
+  font-size: var(--type-title3-size);
+  line-height: var(--type-title3-line);
+  font-weight: var(--type-title3-weight);
+  letter-spacing: var(--type-title3-tracking);
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+/* At the largest text sizes the words take a row each, in the same order. */
+[data-text-size="largest"] .verification-words__list {
+  grid-template-columns: 1fr;
+}

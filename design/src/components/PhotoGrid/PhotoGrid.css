@@ -1,0 +1,13 @@
+.photo-grid {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.photo-grid__tiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--grid-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}

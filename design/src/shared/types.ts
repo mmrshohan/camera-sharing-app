@@ -1,0 +1,38 @@
+// Shapes shared by components and the prototype model.
+
+/** A person in a session, as both phones show them. */
+export interface Party {
+  name: string;
+  /** Their username, with the @. */
+  handle: string;
+  /** Their phone's exact model, such as "Galaxy A15". */
+  device: string;
+}
+
+/** The six verification words both phones must show (spec R2). */
+export type Words = readonly [string, string, string, string, string, string];
+
+/** A sample photo: one image file shown at a position and zoom, so samples need no extra files. */
+export interface SampleImage {
+  src: string;
+  /** CSS background-position, such as "30% 60%". */
+  position: string;
+  /** 1 shows the whole image; 2 shows half of it, and so on. */
+  zoom: number;
+}
+
+/** Alex's photos in a session, by state (design spec, Appendix C). */
+export interface CameraCounts {
+  sent: number;
+  sending: number;
+  waitingInternet: number;
+  waitingWifi: number;
+  preparing: number;
+}
+
+/** Where one of Sarah's photos is (design spec, Appendix C). */
+export type TileStatus =
+  "arriving" | "onlyInApp" | "saving" | "saved" | "needsChecking" | "expired";
+
+/** The four phones the prototype draws (design spec §10). */
+export type DeviceModel = "iphone16pro" | "iphoneSE3" | "galaxyA15" | "androidCompact";

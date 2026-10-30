@@ -1,0 +1,377 @@
+<!doctype html>
+<!-- Archived from the 28 October 2026 design session. Static reference only. This archive keeps its original Google Fonts link; the design workspace itself never loads remote fonts. -->
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Product design guideline v0.2 (approved 28 Oct 2026)</title>
+<style>:root{--bg-primary:#f5f5f7;--bg-secondary:#fff;--bg-tertiary:#e5e5e7;--border:#d1d1d6;--text-primary:#1d1d1f;--text-secondary:#86868b;--text-tertiary:#aeaeb2;--accent:#0071e3}*{box-sizing:border-box}body{margin:0;padding:32px;background:var(--bg-primary);color:var(--text-primary);font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.5}</style>
+</head><body>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..500,0..1,0&family=Roboto:wght@400;500;700&display=block">
+<style>
+  .g{--blue:#0071E3;--link:#0066CC;--tint:#E8F1FC;--ink:#1D1D1F;--ink2:#6E6E73;--sep:#D2D2D7;--surf:#F5F5F7;--live:#FF3B30;
+     font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",system-ui,sans-serif;-webkit-font-smoothing:antialiased;max-width:1180px;margin:0 auto;color:var(--text-primary);overflow-x:clip}
+  .ms{font-family:"Material Symbols Rounded";font-weight:400;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;direction:ltr;-webkit-font-feature-settings:"liga";font-feature-settings:"liga";font-variation-settings:"FILL" 0,"wght" 400,"GRAD" 0,"opsz" 24;display:inline-block}
+  .ms.f{font-variation-settings:"FILL" 1,"wght" 400,"GRAD" 0,"opsz" 24}
+  .g-k{font-size:13px;line-height:18px;font-weight:600;color:var(--text-secondary);letter-spacing:.2px;margin:0 0 10px}
+  .g-h{font-size:34px;line-height:40px;font-weight:700;letter-spacing:-.6px;margin:0 0 8px}
+  .g-sub{font-size:17px;line-height:24px;color:var(--text-secondary);max-width:760px;margin:0 0 26px}
+  .g-pr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 54px}
+  .g-pr div{background:var(--bg-secondary);border:1px solid var(--border);border-radius:16px;padding:16px 18px}
+  .g-pr b{display:block;font-size:17px;line-height:22px;font-weight:600;margin-bottom:4px}
+  .g-pr span{font-size:15px;line-height:20px;color:var(--text-secondary)}
+  @media (max-width:760px){.g-pr{grid-template-columns:1fr}}
+  .g-sec{margin:0 0 60px}
+  .g-n{font-size:13px;font-weight:600;color:var(--text-secondary);margin:0 0 4px}
+  .g-s{font-size:26px;line-height:32px;font-weight:700;letter-spacing:-.3px;margin:0 0 6px}
+  .g-sd{font-size:16px;line-height:23px;color:var(--text-secondary);margin:0 0 22px;max-width:780px}
+  .card{background:var(--bg-secondary);border:1px solid var(--border);border-radius:18px;padding:22px}
+  .white{background:#fff;color:#1D1D1F;border-radius:14px}
+  .ann{font:12.5px/17px ui-monospace,"SF Mono",Menlo,monospace;color:var(--text-secondary)}
+  .rules{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0}
+  .rule{font-size:14px;line-height:19px;padding:7px 12px;border-radius:999px;background:var(--bg-secondary);border:1px solid var(--border)}
+  /* ring family */
+  .ring{position:relative;width:72px;height:72px;border-radius:50%;box-shadow:inset 0 0 0 2.5px var(--blue);display:flex;align-items:center;justify-content:center;flex:none}
+  .ring>i{width:58px;height:58px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-style:normal}
+  .ring>i .ms{font-size:28px}
+  .ring.t>i{background:var(--tint);color:var(--link)}
+  .ring.press>i{transform:scale(.92)}
+  .ring.dis{box-shadow:inset 0 0 0 2.5px #D2D2D7}.ring.dis>i{background:#F2F2F7;color:#AEAEB2}
+  .ring.wait{box-shadow:inset 0 0 0 2.5px #D9E7F8}
+  .ring.wait::after{content:"";position:absolute;inset:0;border-radius:50%;border:2.5px solid transparent;border-top-color:var(--blue);animation:spin 1s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .shutter{width:78px;height:78px;border-radius:50%;box-shadow:inset 0 0 0 4px #fff;display:flex;align-items:center;justify-content:center;flex:none}
+  .shutter>i{width:64px;height:64px;border-radius:50%;background:#fff;display:block}
+  .pring{width:28px;height:28px}
+  .dot{width:10px;height:10px;border-radius:50%;background:var(--live);display:inline-block;animation:live 1.6s ease-in-out infinite}
+  @keyframes live{0%,100%{opacity:1}50%{opacity:.35}}
+  .fam{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+  .fam>div{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:12px;text-align:center}
+  .fam .stage{width:100%;height:120px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:#fff}
+  .fam .stage.dk{background:#000}
+  .fam b{font-size:15px;line-height:20px}
+  .fam span{font-size:13px;line-height:18px;color:var(--text-secondary)}
+  @media (max-width:860px){.fam{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  .anat{display:grid;grid-template-columns:260px 1fr;gap:28px;align-items:center;margin:0 0 22px}
+  .anat-fig{height:220px;display:flex;align-items:center;justify-content:center}
+  .anat-fig .ring{transform:scale(2.4)}
+  .anat dl{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:0;font-size:15px;line-height:21px}
+  .anat dt{font-weight:600}.anat dd{margin:0;color:var(--text-secondary)}
+  @media (max-width:760px){.anat{grid-template-columns:1fr}}
+  .states{display:flex;flex-wrap:wrap;gap:22px 34px;align-items:flex-start;margin-top:8px}
+  .states>div{display:flex;flex-direction:column;align-items:center;gap:10px;font-size:13px;color:var(--text-secondary)}
+  .demo-press>i{animation:ringpress 2.4s infinite}
+  @keyframes ringpress{0%,30%{transform:scale(1)}38%,50%{transform:scale(.92)}64%{transform:scale(1.015)}72%,100%{transform:scale(1)}}
+  /* chips */
+  .chip{display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 12px;border-radius:15px;font-size:13px;font-weight:600;letter-spacing:-.08px;white-space:nowrap}
+  .chip .ms{font-size:16px}
+  .c-live{background:#FFEAE8;color:#C4170C}.c-send{background:#E8F1FC;color:#0066CC}.c-saved{background:#E5F5E9;color:#1C7A34}.c-wait{background:#FFF0E3;color:#B23A00}.c-neu{background:#F2F2F7;color:#48484A}
+  .dk .c-live{background:#3A1210;color:#FF6961}.dk .c-send{background:#071829;color:#2997FF}.dk .c-saved{background:#0B2A14;color:#30D158}.dk .c-wait{background:#331E00;color:#FF9F0A}.dk .c-neu{background:#1C1C1E;color:#A1A1A6}
+  .chiprow{display:grid;grid-template-columns:150px 1fr 1fr 1.2fr;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px}
+  .chiprow .pv{padding:8px 10px;border-radius:12px;background:#fff}.chiprow .pv.dk{background:#000}
+  .chiprow .m{color:var(--text-secondary);font-size:13px;line-height:18px}
+  @media (max-width:760px){.chiprow{grid-template-columns:1fr 1fr}}
+  .acc{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:18px}
+  .acc>div{border-radius:16px;padding:16px;border:1px solid var(--border);background:var(--bg-secondary)}
+  .acc i{display:block;height:54px;border-radius:12px;margin-bottom:12px}
+  .acc b{display:block;font-size:15px}.acc span{font:12.5px/18px ui-monospace,"SF Mono",Menlo,monospace;color:var(--text-secondary)}
+  @media (max-width:760px){.acc{grid-template-columns:1fr}}
+  /* type */
+  .hero{font-family:-apple-system,"SF Pro Display",BlinkMacSystemFont,system-ui,sans-serif;font-weight:700;font-size:80px;line-height:80px;letter-spacing:-2px;font-variant-numeric:tabular-nums}
+  .tsp{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .tsp .col{background:var(--bg-secondary);border:1px solid var(--border);border-radius:16px;padding:18px}
+  .tsp h4{margin:0 0 12px;font-size:15px}
+  .tl{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:7px 0;border-bottom:1px solid var(--border)}
+  .tl:last-child{border-bottom:0}
+  .tl .m{font:12.5px/17px ui-monospace,"SF Mono",Menlo,monospace;color:var(--text-secondary);white-space:nowrap}
+  .roboto{font-family:Roboto,system-ui,sans-serif}
+  @media (max-width:760px){.tsp{grid-template-columns:1fr}}
+  /* icons */
+  .icg{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+  .icg>div{background:var(--bg-secondary);border:1px solid var(--border);border-radius:14px;padding:14px 10px 12px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+  .icg .ms{font-size:28px;color:var(--text-primary)}
+  .icg b{font-size:13px;line-height:17px}
+  .icg span{font:11.5px/15px ui-monospace,"SF Mono",Menlo,monospace;color:var(--text-secondary);overflow-wrap:anywhere}
+  .icg em{font-style:normal;color:var(--text-primary)}
+  /* platform table */
+  .pt{width:100%;border-collapse:collapse;font-size:14px;line-height:20px}
+  .pt th{text-align:left;font-size:13px;color:var(--text-secondary);font-weight:600;padding:0 14px 8px 0;border-bottom:1px solid var(--border)}
+  .pt td{padding:10px 14px 10px 0;border-bottom:1px solid var(--border);vertical-align:top}
+  .pt td:first-child{font-weight:600;white-space:nowrap}
+  .scroll{overflow-x:auto}
+  /* devices */
+  .devs{display:flex;flex-wrap:wrap;gap:34px 40px;justify-content:center}
+  .dv{--s:.62;margin:0;display:flex;flex-direction:column;align-items:center;gap:12px}
+  .bz{padding:10px;background:#1C1C1E;box-shadow:inset 0 0 0 1.5px #3A3A3C,0 26px 56px -24px rgba(0,0,0,.45)}
+  .ios .bz{border-radius:calc(55px * var(--s) + 10px)}
+  .and .bz{border-radius:calc(46px * var(--s) + 10px)}
+  .cl{position:relative;overflow:hidden}
+  .ios .cl{width:calc(393px * var(--s));height:calc(852px * var(--s));border-radius:calc(55px * var(--s))}
+  .and .cl{width:calc(412px * var(--s));height:calc(915px * var(--s));border-radius:calc(46px * var(--s))}
+  .sc{position:absolute;top:0;left:0;transform:scale(var(--s));transform-origin:0 0;overflow:hidden;background:#fff;color:#1D1D1F}
+  .ios .sc{width:393px;height:852px}
+  .and .sc{width:412px;height:915px;font-family:Roboto,system-ui,sans-serif}
+  .dv figcaption{font-size:15px;font-weight:600;text-align:center}
+  .dv figcaption span{display:block;font-weight:400;font-size:13px;color:var(--text-secondary);max-width:250px}
+  .island{position:absolute;top:11px;left:50%;width:126px;height:37px;margin-left:-63px;border-radius:19px;background:#000;z-index:9}
+  .punch{position:absolute;top:14px;left:50%;width:24px;height:24px;margin-left:-12px;border-radius:50%;background:#000;z-index:9}
+  .sb{position:absolute;top:0;left:0;right:0;height:54px;display:flex;align-items:center;justify-content:space-between;padding:4px 32px 0 54px;font-size:17px;font-weight:600;z-index:8}
+  .and .sb{height:44px;padding:0 22px;font-size:14px;font-weight:500}
+  .sb .ms{font-size:17px}
+  .home{position:absolute;bottom:8px;left:50%;width:134px;height:5px;margin-left:-67px;border-radius:3px;background:#1D1D1F;z-index:9}
+  .and .home{bottom:10px;width:108px;height:4px;margin-left:-54px;border-radius:2px}
+  .hd{position:absolute;left:20px;right:20px;display:flex;align-items:center;justify-content:space-between}
+  .and .hd{left:16px;right:16px}
+  .lt{font-size:34px;line-height:41px;font-weight:700;letter-spacing:.37px;margin:0}
+  .and .lt{font-size:32px;line-height:40px;font-weight:700;letter-spacing:0}
+  .av{width:36px;height:36px;border-radius:50%;background:#F2F2F7;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600}
+  .and .av{width:40px;height:40px;font-size:16px;font-weight:500}
+  .sh{position:absolute;left:20px;right:20px;display:flex;justify-content:space-between;align-items:baseline}
+  .and .sh{left:16px;right:16px}
+  .sh b{font-size:20px;line-height:25px;font-weight:600}.sh span{font-size:15px;color:#6E6E73}
+  .and .sh b{font-size:20px;font-weight:500}.and .sh span{font-size:14px}
+  .gr{position:absolute;left:0;right:0;display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+  .gr>div{position:relative;aspect-ratio:1;overflow:hidden;background:url(coast.jpg) no-repeat;background-size:290%}
+  .gr>div.dev::before{content:"";position:absolute;inset:-20px;background:inherit;filter:blur(14px) saturate(.3)}
+  .gr>div.dev::after{content:"";position:absolute;inset:0;background:rgba(255,255,255,.3)}
+  .gr>div .pring{position:absolute;left:50%;top:50%;margin:-14px 0 0 -14px;z-index:2}
+  .rings{position:absolute;left:0;right:0;bottom:0;padding:34px 0 46px;display:flex;justify-content:center;gap:56px;background:linear-gradient(to bottom,rgba(255,255,255,0),#fff 30%)}
+  .rings>div{display:flex;flex-direction:column;align-items:center;gap:9px;font-size:15px;line-height:20px;font-weight:600;letter-spacing:-.23px}
+  .and .rings>div{font-size:14px;font-weight:500;letter-spacing:.1px}
+  .heroW{position:absolute;left:20px;right:20px;display:flex;justify-content:space-between;align-items:flex-end}
+  .and .heroW{left:16px;right:16px}
+  .heroW .hero{display:flex;align-items:flex-start;gap:6px}
+  .heroW .hero .dot{width:14px;height:14px;margin-top:10px}
+  .heroW .r{text-align:right;font-size:17px;line-height:22px;color:#6E6E73;padding-bottom:6px}
+  .heroW .r b{display:block;color:#1D1D1F;font-weight:600}
+  .and .hero{font-family:Roboto,system-ui,sans-serif}
+  /* motion */
+  .mo{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+  .mo>div{background:var(--bg-secondary);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+  .mo .st{height:170px;background:#fff;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+  .mo .st.dk{background:#000}
+  .mo .bd{padding:12px 14px 14px}
+  .mo h4{margin:0 0 4px;font-size:15px}
+  .mo p{margin:0 0 8px;font-size:13.5px;line-height:19px;color:var(--text-secondary)}
+  .mo dl{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;margin:0;font:12px/16px ui-monospace,"SF Mono",Menlo,monospace}
+  .mo dt{color:var(--text-secondary)}.mo dd{margin:0}
+  .devtile{width:110px;height:110px;background:url(coast.jpg) 30% 60%/300%;animation:develop 3.2s infinite}
+  @keyframes develop{0%,25%{filter:blur(16px) saturate(.2);opacity:.55}44%,100%{filter:blur(0) saturate(1);opacity:1}}
+  .pfill circle.a{animation:fill 3.2s infinite cubic-bezier(.32,.72,0,1)}
+  @keyframes fill{0%{stroke-dashoffset:69.1}70%,100%{stroke-dashoffset:0}}
+  @media (prefers-reduced-motion:reduce){.dot,.ring.wait::after,.demo-press>i,.devtile,.pfill circle.a{animation:none}}
+</style>
+
+<div class="g">
+  <p class="g-k">PRODUCT DESIGN GUIDELINE · v0.2 · iOS AND ANDROID · LIVING DOCUMENT</p>
+  <h2 class="g-h">Very minimal. One signature: the ring.</h2>
+  <p class="g-sub">This page is the source of truth for design. Engineers build from it; we refine it here first. iOS leads with native features, Android gets the same brand with its own native conventions.</p>
+
+  <div class="g-pr">
+    <div><b>One job per screen</b><span>One obvious action. Everything else is one tap away or gone.</span></div>
+    <div><b>The photo is the color</b><span>Neutral surfaces. Blue only where you can tap. Soft tints only for status.</span></div>
+    <div><b>Honest by default</b><span>Every state shows an icon and words. Nothing implies a photo is safe before it is.</span></div>
+  </div>
+
+  <!-- 01 RING -->
+  <section class="g-sec">
+    <p class="g-n">01</p>
+    <h3 class="g-s">The ring</h3>
+    <p class="g-sd">The camera shutter, turned into the product’s signature control. Rings are for the camera moment: borrowing, lending, capturing, and photos on their way. Decisions inside panels use plain capsule buttons.</p>
+    <div class="card">
+      <div class="anat">
+        <div class="anat-fig white"><div class="ring"><i><span class="ms f">photo_camera</span></i></div></div>
+        <dl>
+          <dt>Size</dt><dd>72 pt (iOS) · 72 dp (Android). Tap area is the full circle.</dd>
+          <dt>Ring</dt><dd>2.5 pt stroke, accent #0071E3 · 4.70:1 on white, 4.47:1 on black</dd>
+          <dt>Gap</dt><dd>4.5 pt, transparent, so the disc reads as a separate “button”</dd>
+          <dt>Disc</dt><dd>58 pt. Filled: accent with white icon · Tinted: #E8F1FC with #0066CC icon (4.88:1)</dd>
+          <dt>Icon</dt><dd>28 pt, filled variant: SF Symbol on iOS, Material Symbols Rounded on Android</dd>
+          <dt>Label</dt><dd>Below, 9 pt gap, 15 pt semibold (iOS) · 14 sp medium (Android). Always present.</dd>
+          <dt>Press</dt><dd>Disc squeezes to 92%, ring stays still. Light haptic. Fires on release.</dd>
+        </dl>
+      </div>
+      <div class="fam">
+        <div><div class="stage"><div class="ring"><i><span class="ms f">photo_camera</span></i></div></div><b>Lend</b><span>Filled ring · Home</span></div>
+        <div><div class="stage"><div class="ring t"><i><span class="ms f">qr_code_2</span></i></div></div><b>Borrow</b><span>Tinted ring · Home</span></div>
+        <div><div class="stage dk"><div class="shutter"><i></i></div></div><b>Shutter</b><span>78 pt, white on black · Camera</span></div>
+        <div><div class="stage"><svg class="pring pfill" viewBox="0 0 28 28" style="width:44px;height:44px"><circle cx="14" cy="14" r="11" fill="none" stroke="rgba(0,0,0,.1)" stroke-width="2.5"/><circle class="a" cx="14" cy="14" r="11" fill="none" stroke="#0071E3" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="69.1" stroke-dashoffset="20" transform="rotate(-90 14 14)"/></svg></div><b>Progress ring</b><span>28 pt · photo on its way</span></div>
+        <div><div class="stage"><span class="dot"></span></div><b>Live dot</b><span>10 pt, #FF3B30 · session is on</span></div>
+      </div>
+      <p class="ann" style="margin:22px 0 10px">STATES</p>
+      <div class="states">
+        <div><div class="ring"><i><span class="ms f">photo_camera</span></i></div>Rest</div>
+        <div><div class="ring demo-press"><i><span class="ms f">photo_camera</span></i></div>Press (live)</div>
+        <div><div class="ring wait"><i style="background:var(--tint);color:var(--link)"><span class="ms f">photo_camera</span></i></div>Waiting for the other phone</div>
+        <div><div class="ring dis"><i><span class="ms f">photo_camera</span></i></div>Unavailable (in a session)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 HOME BOTH PLATFORMS -->
+  <section class="g-sec">
+    <p class="g-n">02</p>
+    <h3 class="g-s">Home, on both platforms</h3>
+    <p class="g-sd">Same brand, native chrome. The rings sit in thumb reach. During a session, Home turns into a live count with a big numeral, like a scoreboard for the moment.</p>
+    <div class="devs">
+      <figure class="dv ios"><div class="bz"><div class="cl"><div class="sc">
+        <div class="island"></div><div class="sb"><span>9:41</span><span style="display:flex;gap:6px;align-items:center"><svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor"><path d="M8 11.2l2.4-2.5a3.4 3.4 0 0 0-4.8 0z"/><path d="M3.6 6.6a6.2 6.2 0 0 1 8.8 0l1.4-1.5a8.3 8.3 0 0 0-11.6 0z"/><path d="M.7 3.6a10.4 10.4 0 0 1 14.6 0L16 2.1a12.5 12.5 0 0 0-16 0z"/></svg><svg width="27" height="13" viewBox="0 0 27 13" fill="currentColor"><rect x=".5" y=".5" width="23" height="12" rx="3.8" fill="none" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="20" height="9" rx="2.5"/><path d="M25 4.5v4a2 2 0 0 0 0-4z" opacity=".45"/></svg></span></div>
+        <div class="hd" style="top:60px"><h1 class="lt">Your photos</h1><div class="av">S</div></div>
+        <div class="sh" style="top:124px"><b>Today</b><span>Alex’s camera · 6</span></div>
+        <div class="gr" style="top:162px"><div style="background-position:22% 18%"></div><div style="background-position:78% 40%"></div><div style="background-position:40% 82%"></div><div style="background-position:96% 70%"></div><div style="background-position:8% 60%"></div><div style="background-position:60% 96%"></div></div>
+        <div class="sh" style="top:466px"><b>Saturday</b><span>Maya’s camera · 3</span></div>
+        <div class="gr" style="top:504px"><div style="background-position:50% 0%"></div><div style="background-position:0% 35%"></div><div style="background-position:88% 12%"></div></div>
+        <div class="rings"><div><div class="ring t"><i><span class="ms f">qr_code_2</span></i></div>Borrow a camera</div><div><div class="ring"><i><span class="ms f">photo_camera</span></i></div>Lend my camera</div></div>
+        <div class="home"></div>
+      </div></div></div><figcaption>iOS · Home<span>Rings replace the basic buttons. Same layout for first use, with an empty grid.</span></figcaption></figure>
+
+      <figure class="dv ios"><div class="bz"><div class="cl"><div class="sc">
+        <div class="island"></div><div class="sb"><span>9:41</span><span style="display:flex;gap:6px;align-items:center"><svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor"><path d="M8 11.2l2.4-2.5a3.4 3.4 0 0 0-4.8 0z"/><path d="M3.6 6.6a6.2 6.2 0 0 1 8.8 0l1.4-1.5a8.3 8.3 0 0 0-11.6 0z"/><path d="M.7 3.6a10.4 10.4 0 0 1 14.6 0L16 2.1a12.5 12.5 0 0 0-16 0z"/></svg><svg width="27" height="13" viewBox="0 0 27 13" fill="currentColor"><rect x=".5" y=".5" width="23" height="12" rx="3.8" fill="none" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="20" height="9" rx="2.5"/><path d="M25 4.5v4a2 2 0 0 0 0-4z" opacity=".45"/></svg></span></div>
+        <div class="hd" style="top:62px"><span style="font-size:17px;line-height:22px;font-weight:600;letter-spacing:-.43px;color:#0066CC;display:flex;align-items:center;gap:2px">Alex’s camera<span class="ms" style="font-size:20px">chevron_right</span></span><div class="av">S</div></div>
+        <div class="heroW" style="top:112px"><div class="hero">14<span class="dot"></span></div><div class="r"><b>photos</b>2 on the way</div></div>
+        <div class="gr" style="top:214px">
+          <div class="dev" style="background-position:8% 60%"><svg class="pring" viewBox="0 0 28 28"><circle cx="14" cy="14" r="11" fill="none" stroke="rgba(0,0,0,.14)" stroke-width="2.5"/><circle cx="14" cy="14" r="11" fill="none" stroke="#0071E3" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="69.1" stroke-dashoffset="26" transform="rotate(-90 14 14)"/></svg></div>
+          <div class="dev" style="background-position:60% 96%"><svg class="pring" viewBox="0 0 28 28"><circle cx="14" cy="14" r="11" fill="none" stroke="rgba(0,0,0,.14)" stroke-width="2.5"/><circle cx="14" cy="14" r="11" fill="none" stroke="#0071E3" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="69.1" stroke-dashoffset="58" transform="rotate(-90 14 14)"/></svg></div>
+          <div style="background-position:22% 18%"></div><div style="background-position:78% 40%"></div><div style="background-position:40% 82%"></div><div style="background-position:96% 70%"></div><div style="background-position:50% 0%"></div><div style="background-position:0% 35%"></div><div style="background-position:88% 12%"></div><div style="background-position:30% 30%"></div><div style="background-position:70% 70%"></div><div style="background-position:10% 90%"></div>
+        </div>
+        <div class="home"></div>
+      </div></div></div><figcaption>iOS · Home, live<span>Sarah watches photos arrive. The count is the hero; new photos develop from blur.</span></figcaption></figure>
+
+      <figure class="dv and"><div class="bz"><div class="cl"><div class="sc">
+        <div class="punch"></div><div class="sb"><span>9:41</span><span><span class="ms f">signal_cellular_alt</span> <span class="ms f">wifi</span> <span class="ms f">battery_full</span></span></div>
+        <div class="hd" style="top:60px"><h1 class="lt">Your photos</h1><div class="av">S</div></div>
+        <div class="sh" style="top:124px"><b>Today</b><span>Alex’s camera · 6</span></div>
+        <div class="gr" style="top:162px"><div style="background-position:22% 18%"></div><div style="background-position:78% 40%"></div><div style="background-position:40% 82%"></div><div style="background-position:96% 70%"></div><div style="background-position:8% 60%"></div><div style="background-position:60% 96%"></div></div>
+        <div class="sh" style="top:486px"><b>Saturday</b><span>Maya’s camera · 3</span></div>
+        <div class="gr" style="top:524px"><div style="background-position:50% 0%"></div><div style="background-position:0% 35%"></div><div style="background-position:88% 12%"></div></div>
+        <div class="rings" style="padding-bottom:40px"><div><div class="ring t"><i><span class="ms f">qr_code_2</span></i></div>Borrow a camera</div><div><div class="ring"><i><span class="ms f">photo_camera</span></i></div>Lend my camera</div></div>
+        <div class="home"></div>
+      </div></div></div><figcaption>Android · Home<span>Roboto, Material Symbols, 16 dp margins, gesture bar. Same rings, same tokens.</span></figcaption></figure>
+    </div>
+  </section>
+
+  <!-- 03 COLOR -->
+  <section class="g-sec">
+    <p class="g-n">03</p>
+    <h3 class="g-s">Color</h3>
+    <p class="g-sd">One accent for everything you can tap. Soft tinted labels for status, always with words. Every pair below is measured against WCAG 2.2 AA.</p>
+    <div class="acc">
+      <div><i style="background:#0071E3"></i><b>Accent</b><span>#0071E3 · fills, rings, focus<br>white on it 4.70:1 (iOS #007AFF fails at 4.02)</span></div>
+      <div><i style="background:#0066CC"></i><b>Accent text</b><span>#0066CC light · #2997FF dark<br>5.57:1 · 6.96:1</span></div>
+      <div><i style="background:linear-gradient(90deg,#1D1D1F 0 25%,#6E6E73 25% 50%,#F5F5F7 50% 75%,#fff 75%)"></i><b>Neutrals</b><span>ink #1D1D1F · ink2 #6E6E73 (5.07:1)<br>surface #F5F5F7 · background #FFFFFF</span></div>
+    </div>
+    <div class="card" style="padding:8px 22px 14px">
+      <div class="chiprow" style="font-weight:600;color:var(--text-secondary);font-size:13px"><span>Status label</span><span>Light</span><span>Dark</span><span>Meaning</span></div>
+      <div class="chiprow"><b>Live</b><span class="pv"><span class="chip c-live"><span class="dot" style="width:8px;height:8px"></span>Live · Alex’s camera</span></span><span class="pv dk"><span class="chip c-live"><span class="dot" style="width:8px;height:8px;background:#FF453A"></span>Live · Alex’s camera</span></span><span class="m">Session is on. #C4170C on #FFEAE8 · 5.23:1 · dark 5.84:1</span></div>
+      <div class="chiprow"><b>Sending</b><span class="pv"><span class="chip c-send"><span class="ms">arrow_upward</span>3 sending</span></span><span class="pv dk"><span class="chip c-send"><span class="ms">arrow_upward</span>3 sending</span></span><span class="m">On its way. 4.88:1 · dark 5.94:1</span></div>
+      <div class="chiprow"><b>Saved</b><span class="pv"><span class="chip c-saved"><span class="ms">check_circle</span>Saved to Photos</span></span><span class="pv dk"><span class="chip c-saved"><span class="ms">check_circle</span>Saved to Photos</span></span><span class="m">Safe in the phone’s gallery. 4.78:1 · dark 7.66:1</span></div>
+      <div class="chiprow"><b>Waiting</b><span class="pv"><span class="chip c-wait"><span class="ms">wifi_off</span>Waiting for internet</span></span><span class="pv dk"><span class="chip c-wait"><span class="ms">wifi_off</span>Waiting for internet</span></span><span class="m">Paused, not lost. 5.38:1 · dark 7.70:1</span></div>
+      <div class="chiprow" style="border-bottom:0"><b>In this app</b><span class="pv"><span class="chip c-neu"><span class="ms">smartphone</span>Only in this app</span></span><span class="pv dk"><span class="chip c-neu"><span class="ms">smartphone</span>Only in this app</span></span><span class="m">Received, not in Photos yet. 8.18:1 · dark 6.61:1</span></div>
+    </div>
+    <div class="rules"><span class="rule">Blue means tappable. Nothing else is blue.</span><span class="rule">Tints never carry meaning alone: icon + words, always.</span><span class="rule">One live dot per screen.</span><span class="rule">Camera controls are white; color belongs to the photo.</span></div>
+  </section>
+
+  <!-- 04 TYPE -->
+  <section class="g-sec">
+    <p class="g-n">04</p>
+    <h3 class="g-s">Type</h3>
+    <p class="g-sd">The phone’s own typeface: San Francisco on iOS, Roboto on Android. One expressive move, the big numeral, used only for counts that matter.</p>
+    <div class="card white" style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:16px;padding:26px">
+      <div class="hero" style="display:flex;align-items:flex-start;gap:8px">14<span class="dot" style="width:14px;height:14px;margin-top:10px"></span></div>
+      <div style="text-align:right;font-size:17px;line-height:22px;color:#6E6E73;padding-bottom:6px"><b style="display:block;color:#1D1D1F">photos</b>2 on the way</div>
+    </div>
+    <p class="ann" style="margin:0 0 16px">Numeral · 80 / 80 · Bold · tracking −2 · tabular figures · only for live counts (photos received, photos sent)</p>
+    <div class="tsp">
+      <div class="col"><h4>iOS · SF Pro · Dynamic Type</h4>
+        <div class="tl"><span style="font-size:34px;line-height:41px;font-weight:700">Your photos</span><span class="m">34/41 Bold</span></div>
+        <div class="tl"><span style="font-size:22px;line-height:28px;font-weight:700">Lend your camera?</span><span class="m">22/28 Bold</span></div>
+        <div class="tl"><span style="font-size:20px;line-height:25px;font-weight:600">Today</span><span class="m">20/25 Semibold</span></div>
+        <div class="tl"><span style="font-size:17px;line-height:22px;font-weight:600">Sarah’s phone</span><span class="m">17/22 Semibold</span></div>
+        <div class="tl"><span style="font-size:17px;line-height:22px">Photos go only to Sarah.</span><span class="m">17/22 Regular</span></div>
+        <div class="tl"><span style="font-size:15px;line-height:20px;color:var(--text-secondary)">@sarah · iPhone 11</span><span class="m">15/20 Regular</span></div>
+        <div class="tl"><span style="font-size:13px;line-height:18px;color:var(--text-secondary)">Nothing is saved here.</span><span class="m">13/18 · minimum</span></div>
+      </div>
+      <div class="col roboto"><h4 style="font-family:-apple-system,system-ui,sans-serif">Android · Roboto · font scale</h4>
+        <div class="tl"><span style="font-size:32px;line-height:40px;font-weight:700">Your photos</span><span class="m">32/40 Bold</span></div>
+        <div class="tl"><span style="font-size:22px;line-height:28px;font-weight:700">Lend your camera?</span><span class="m">22/28 Bold</span></div>
+        <div class="tl"><span style="font-size:20px;line-height:26px;font-weight:500">Today</span><span class="m">20/26 Medium</span></div>
+        <div class="tl"><span style="font-size:16px;line-height:24px;font-weight:500">Sarah’s phone</span><span class="m">16/24 Medium</span></div>
+        <div class="tl"><span style="font-size:16px;line-height:24px">Photos go only to Sarah.</span><span class="m">16/24 Regular</span></div>
+        <div class="tl"><span style="font-size:14px;line-height:20px;color:var(--text-secondary)">@sarah · Galaxy A15</span><span class="m">14/20 Regular</span></div>
+        <div class="tl"><span style="font-size:14px;line-height:20px;color:var(--text-secondary)">Nothing is saved here.</span><span class="m">14/20 · minimum</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 ICONS -->
+  <section class="g-sec">
+    <p class="g-n">05</p>
+    <h3 class="g-s">Icons: standard only</h3>
+    <p class="g-sd">No custom icons. iOS uses SF Symbols; Android uses Material Symbols Rounded (weight 400, outlined at rest, filled when selected or inside a ring). This page draws Material Symbols for both because Apple’s symbols can’t be published in our public repository.</p>
+    <div class="icg">
+      <div><span class="ms">photo_camera</span><b>Lend camera</b><span><em>camera</em> · photo_camera</span></div>
+      <div><span class="ms">qr_code_2</span><b>Borrow · invitation</b><span><em>qrcode</em> · qr_code_2</span></div>
+      <div><span class="ms">qr_code_scanner</span><b>Scan</b><span><em>qrcode.viewfinder</em> · qr_code_scanner</span></div>
+      <div><span class="ms">alternate_email</span><b>Type a username</b><span><em>at</em> · alternate_email</span></div>
+      <div><span class="ms">photo_library</span><b>Your photos</b><span><em>photo.on.rectangle</em> · photo_library</span></div>
+      <div><span class="ms">download</span><b>Save to gallery</b><span><em>square.and.arrow.down</em> · download</span></div>
+      <div><span class="ms">arrow_upward</span><b>Sending</b><span><em>arrow.up</em> · arrow_upward</span></div>
+      <div><span class="ms" style="color:#248A3D">check_circle</span><b>Saved · delivered</b><span><em>checkmark.circle</em> · check_circle</span></div>
+      <div><span class="ms" style="color:#C93400">schedule</span><b>Waiting</b><span><em>clock</em> · schedule</span></div>
+      <div><span class="ms" style="color:#C93400">wifi_off</span><b>No internet</b><span><em>wifi.slash</em> · wifi_off</span></div>
+      <div><span class="ms">wifi</span><b>Wi-Fi only</b><span><em>wifi</em> · wifi</span></div>
+      <div><span class="ms" style="color:#D70015">warning</span><b>Needs attention</b><span><em>exclamationmark.triangle</em> · warning</span></div>
+      <div><span class="ms">lock</span><b>Locked for owner</b><span><em>lock</em> · lock</span></div>
+      <div><span class="ms">fingerprint</span><b>Unlock</b><span><em>faceid</em> · fingerprint</span></div>
+      <div><span class="ms">flash_on</span><b>Flash on</b><span><em>bolt</em> · flash_on</span></div>
+      <div><span class="ms">flash_off</span><b>Flash off</b><span><em>bolt.slash</em> · flash_off</span></div>
+      <div><span class="ms">cameraswitch</span><b>Flip camera</b><span><em>arrow.triangle.2.circlepath.camera</em> · cameraswitch</span></div>
+      <div><span class="ms">close</span><b>Close</b><span><em>xmark</em> · close</span></div>
+      <div><span class="ms">arrow_back_ios_new</span><b>Back</b><span><em>chevron.left</em> · arrow_back</span></div>
+      <div><span class="ms">chevron_right</span><b>Open</b><span><em>chevron.right</em> · chevron_right</span></div>
+      <div><span class="ms">more_horiz</span><b>More</b><span><em>ellipsis</em> · more_horiz</span></div>
+      <div><span class="ms">delete</span><b>Delete</b><span><em>trash</em> · delete</span></div>
+      <div><span class="ms">account_circle</span><b>Account</b><span><em>person.crop.circle</em> · account_circle</span></div>
+      <div><span class="ms">smartphone</span><b>Devices</b><span><em>iphone</em> · smartphone</span></div>
+      <div><span class="ms">block</span><b>Blocked</b><span><em>nosign</em> · block</span></div>
+      <div><span class="ms">verified_user</span><b>Privacy</b><span><em>checkmark.shield</em> · verified_user</span></div>
+      <div><span class="ms">help</span><b>Help</b><span><em>questionmark.circle</em> · help</span></div>
+      <div><span class="ms">flag</span><b>Report</b><span><em>flag</em> · flag</span></div>
+      <div><span class="ms">hard_drive</span><b>Storage</b><span><em>internaldrive</em> · hard_drive</span></div>
+      <div><span class="ms">logout</span><b>Sign out</b><span><em>rectangle.portrait.and.arrow.right</em> · logout</span></div>
+    </div>
+    <p class="ann" style="margin:12px 0 0">Bold name = SF Symbol (iOS) · second name = Material Symbol (Android)</p>
+  </section>
+
+  <!-- 06 PLATFORMS -->
+  <section class="g-sec">
+    <p class="g-n">06</p>
+    <h3 class="g-s">One brand, two native apps</h3>
+    <p class="g-sd">Brand layer is shared: tokens, the ring, labels, copy and motion intent. Platform layer follows each system, so the app feels at home on both.</p>
+    <div class="scroll card" style="padding:14px 22px"><table class="pt">
+      <tr><th>Element</th><th>iOS (leads)</th><th>Android</th></tr>
+      <tr><td>Typeface</td><td>SF Pro, Dynamic Type to AX5</td><td>Roboto, font scale to 200%</td></tr>
+      <tr><td>Icons</td><td>SF Symbols</td><td>Material Symbols Rounded</td></tr>
+      <tr><td>Margins · targets</td><td>20 pt · 44 pt</td><td>16 dp · 48 dp</td></tr>
+      <tr><td>Panels</td><td>System sheet with detents and grabber</td><td>Modal bottom sheet with drag handle</td></tr>
+      <tr><td>Back</td><td>Edge swipe, chevron</td><td>Predictive back gesture, arrow</td></tr>
+      <tr><td>Floating controls</td><td>Liquid Glass material</td><td>Solid tonal surface (no blur, cheaper on budget phones)</td></tr>
+      <tr><td>Photos arriving, app closed</td><td>Live Activity on Lock Screen and Dynamic Island</td><td>Ongoing progress notification (Live Update on Android 16+)</td></tr>
+      <tr><td>Owner lock</td><td>Face ID or passcode</td><td>BiometricPrompt or screen lock</td></tr>
+      <tr><td>Save to gallery</td><td>Photos add-only access</td><td>MediaStore insert, no read permission</td></tr>
+      <tr><td>Haptics</td><td>Light impact on capture and connect</td><td>CONFIRM haptic on capture and connect</td></tr>
+      <tr><td>Budget phones</td><td>—</td><td>Develop effect becomes a fade below 4 GB RAM; thumbnails decode at screen size</td></tr>
+    </table></div>
+  </section>
+
+  <!-- 07 MOTION -->
+  <section class="g-sec">
+    <p class="g-n">07</p>
+    <h3 class="g-s">Motion</h3>
+    <p class="g-sd">Motion proves what happened and never delays a photo. Springs everywhere; Reduce Motion turns all of it into a 200 ms fade.</p>
+    <div class="mo">
+      <div><div class="st"><div class="devtile"></div></div><div class="bd"><h4>Develop</h4><p>A photo arrives on Sarah’s phone and resolves from blur, once.</p><dl><dt>Blur</dt><dd>16 → 0</dd><dt>Time</dt><dd>600 ms ease-out</dd></dl></div></div>
+      <div><div class="st"><div class="ring demo-press"><i><span class="ms f">photo_camera</span></i></div></div><div class="bd"><h4>Ring press</h4><p>The disc squeezes inside a still ring, like a real shutter.</p><dl><dt>Down</dt><dd>disc 92%, 100 ms</dd><dt>Up</dt><dd>spring 0.3 s · damping 0.7</dd></dl></div></div>
+      <div><div class="st"><svg class="pfill" viewBox="0 0 28 28" style="width:64px;height:64px"><circle cx="14" cy="14" r="11" fill="none" stroke="rgba(0,0,0,.1)" stroke-width="2.5"/><circle class="a" cx="14" cy="14" r="11" fill="none" stroke="#0071E3" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="69.1" transform="rotate(-90 14 14)"/></svg></div><div class="bd"><h4>Progress ring</h4><p>Fills as a photo travels. Never spins without progress.</p><dl><dt>Update</dt><dd>eased per chunk</dd><dt>Done</dt><dd>ring → develop</dd></dl></div></div>
+      <div><div class="st"><span class="chip c-live"><span class="dot" style="width:8px;height:8px"></span>Live · Alex’s camera</span></div><div class="bd"><h4>Live dot</h4><p>Breathes while a session is on. Stops the moment it ends.</p><dl><dt>Cycle</dt><dd>1.6 s, opacity 1 ↔ 0.35</dd><dt>Reduce</dt><dd>steady dot</dd></dl></div></div>
+    </div>
+  </section>
+</div>
+
+</body></html>

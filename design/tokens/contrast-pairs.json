@@ -1,0 +1,227 @@
+{
+  "$description": "Every foreground/background pair the UI uses, with its WCAG 2.2 AA threshold. Tested in both themes.",
+  "pairs": [
+    {
+      "fg": "color.ink",
+      "bg": "color.background",
+      "min": 4.5,
+      "note": "Body text"
+    },
+    {
+      "fg": "color.ink",
+      "bg": "color.surface",
+      "min": 4.5,
+      "note": "Text on grouped rows"
+    },
+    {
+      "fg": "color.ink2",
+      "bg": "color.background",
+      "min": 4.5,
+      "note": "Secondary lines"
+    },
+    {
+      "fg": "color.ink2",
+      "bg": "color.surface",
+      "min": 4.5,
+      "note": "Secondary lines on grouped rows"
+    },
+    {
+      "fg": "color.accentText",
+      "bg": "color.background",
+      "min": 4.5,
+      "note": "Links and text buttons"
+    },
+    {
+      "fg": "color.accentText",
+      "bg": "color.surface",
+      "min": 4.5,
+      "note": "Links on grouped rows"
+    },
+    {
+      "fg": "color.ink",
+      "bg": "color.surfaceElevated",
+      "min": 4.5,
+      "note": "Text on cards inside panels"
+    },
+    {
+      "fg": "color.ink2",
+      "bg": "color.surfaceElevated",
+      "min": 4.5,
+      "note": "Secondary lines on cards inside panels"
+    },
+    {
+      "fg": "color.accentText",
+      "bg": "color.surfaceElevated",
+      "min": 4.5,
+      "note": "Links on cards inside panels"
+    },
+    {
+      "fg": "color.accentText",
+      "bg": "color.accentTint",
+      "min": 4.5,
+      "note": "Tinted button label, Borrow ring icon"
+    },
+    {
+      "fg": "color.onAccent",
+      "bg": "color.accent",
+      "min": 4.5,
+      "note": "Filled button label"
+    },
+    {
+      "fg": "color.accent",
+      "bg": "color.background",
+      "min": 3,
+      "note": "Ring stroke and focus ring"
+    },
+    {
+      "fg": "color.fieldBorder",
+      "bg": "color.background",
+      "min": 3,
+      "note": "Text field outline"
+    },
+    {
+      "fg": "color.success",
+      "bg": "color.background",
+      "min": 3,
+      "note": "Saved icon"
+    },
+    {
+      "fg": "color.waiting",
+      "bg": "color.background",
+      "min": 3,
+      "note": "Waiting icon"
+    },
+    {
+      "fg": "color.danger",
+      "bg": "color.background",
+      "min": 4.5,
+      "note": "Destructive text"
+    },
+    {
+      "fg": "color.live",
+      "bg": "color.background",
+      "min": 3,
+      "note": "Live dot"
+    },
+    {
+      "fg": "label.live.fg",
+      "bg": "label.live.bg",
+      "min": 4.5,
+      "note": "Live label"
+    },
+    {
+      "fg": "label.sending.fg",
+      "bg": "label.sending.bg",
+      "min": 4.5,
+      "note": "Sending label"
+    },
+    {
+      "fg": "label.saved.fg",
+      "bg": "label.saved.bg",
+      "min": 4.5,
+      "note": "Saved label"
+    },
+    {
+      "fg": "label.waiting.fg",
+      "bg": "label.waiting.bg",
+      "min": 4.5,
+      "note": "Waiting label"
+    },
+    {
+      "fg": "label.neutral.fg",
+      "bg": "label.neutral.bg",
+      "min": 4.5,
+      "note": "Only in this app label"
+    },
+    {
+      "fg": "color.live",
+      "bg": "label.live.bg",
+      "min": 3,
+      "note": "Live dot inside the Live label (graphic)"
+    },
+    {
+      "fg": "color.background",
+      "bg": "color.ink",
+      "min": 4.5,
+      "note": "Toast text on its inverted capsule"
+    },
+    {
+      "fg": "color.ink",
+      "bg": "color.elevated",
+      "min": 4.5,
+      "note": "Panel and dialog text"
+    },
+    {
+      "fg": "color.ink2",
+      "bg": "color.elevated",
+      "min": 4.5,
+      "note": "Dialog messages"
+    },
+    {
+      "fg": "color.accentText",
+      "bg": "color.elevated",
+      "min": 4.5,
+      "note": "Dialog answers"
+    },
+    {
+      "fg": "color.danger",
+      "bg": "color.elevated",
+      "min": 4.5,
+      "note": "Destructive answers"
+    },
+    {
+      "fg": "color.ink",
+      "bg": "color.keyboardKey",
+      "min": 4.5,
+      "note": "Letters on keys"
+    },
+    {
+      "fg": "color.ink",
+      "bg": "color.keyboardKeyAlt",
+      "min": 4.5,
+      "note": "Labels on special keys"
+    },
+    {
+      "fg": "color.onCamera",
+      "bg": "color.deviceBody",
+      "min": 4.5,
+      "note": "Dynamic Island count"
+    },
+    {
+      "fg": "color.accentText",
+      "bg": "color.deviceBody",
+      "min": 3,
+      "note": "Dynamic Island glyph"
+    },
+    {
+      "fg": "color.success",
+      "bg": "color.deviceBody",
+      "min": 3,
+      "note": "Dynamic Island check when all arrived"
+    },
+    {
+      "fg": "color.signInAppleInk",
+      "bg": "color.signInAppleFill",
+      "min": 4.5,
+      "note": "Sign in with Apple's title"
+    },
+    {
+      "fg": "color.signInGoogleInk",
+      "bg": "color.signInGoogleFill",
+      "min": 4.5,
+      "note": "Sign in with Google's title"
+    },
+    {
+      "fg": "color.signInAppleFill",
+      "bg": "color.background",
+      "min": 3,
+      "note": "Sign in with Apple's edge on the screen"
+    },
+    {
+      "fg": "color.signInGoogleStroke",
+      "bg": "color.background",
+      "min": 3,
+      "note": "Sign in with Google's edge on the screen"
+    }
+  ]
+}

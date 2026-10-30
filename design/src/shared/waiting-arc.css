@@ -1,0 +1,30 @@
+.waiting-arc {
+  flex: none;
+  rotate: -90deg;
+  animation: waiting-arc-turn var(--motion-waiting-duration) linear infinite;
+}
+
+.waiting-arc circle {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+}
+
+@keyframes waiting-arc-turn {
+  from {
+    rotate: -90deg;
+  }
+  to {
+    rotate: 270deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .waiting-arc {
+    animation: none;
+  }
+}
+
+[data-reduce-motion="true"] .waiting-arc {
+  animation: none;
+}

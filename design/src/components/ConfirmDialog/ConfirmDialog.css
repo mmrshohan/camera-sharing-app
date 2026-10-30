@@ -1,0 +1,181 @@
+.confirm-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  background: var(--color-scrim);
+}
+
+.confirm {
+  position: absolute;
+  z-index: 31;
+  color: var(--color-ink);
+  outline: none;
+}
+
+.confirm__title,
+.confirm__message {
+  margin: 0;
+}
+
+.confirm__action {
+  min-height: var(--target);
+  padding: var(--space-2) var(--space-4);
+  border: 0;
+  background: none;
+  color: var(--color-accent-text);
+  font-family: var(--type-body-family);
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-line);
+  font-weight: var(--type-body-weight);
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.confirm__action:active {
+  background: var(--color-fill);
+}
+
+.confirm__action--destructive {
+  color: var(--color-danger);
+}
+
+/* Visible focus inside the portal (D12). */
+.confirm :focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* iOS alert: centered, 270 pt, title and message centered, two answers side by side. */
+.confirm--alert {
+  top: 50%;
+  left: 50%;
+  width: min(var(--dialog-width), calc(100% - var(--margin) * 2));
+  translate: -50% -50%;
+  overflow: hidden;
+  border-radius: var(--dialog-radius);
+  background: var(--color-elevated);
+  text-align: center;
+}
+
+.confirm--alert .confirm__text {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-5) var(--space-4) var(--space-4);
+}
+
+.confirm--alert .confirm__title {
+  font-family: var(--type-headline-family);
+  font-size: var(--type-headline-size);
+  line-height: var(--type-headline-line);
+  font-weight: var(--type-headline-weight);
+}
+
+.confirm__message {
+  color: var(--color-ink2);
+  font-family: var(--type-footnote-family);
+  font-size: var(--type-footnote-size);
+  line-height: var(--type-footnote-line);
+  font-weight: var(--type-footnote-weight);
+}
+
+.confirm--alert .confirm__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid var(--color-separator);
+}
+
+.confirm--alert .confirm__actions > * + * {
+  border-left: 1px solid var(--color-separator);
+}
+
+/* The safe answer is the emphasized one. */
+.confirm--alert .confirm__action--cancel,
+.confirm--sheet .confirm__action--cancel {
+  font-weight: var(--type-headline-weight);
+}
+
+/* iOS action sheet: two cards at the bottom; the destructive answer on top, Cancel apart below. */
+.confirm--sheet {
+  right: var(--space-2);
+  bottom: calc(var(--safe-bottom, 0px) + var(--space-2));
+  left: var(--space-2);
+  display: grid;
+  gap: var(--space-2);
+}
+
+.confirm__group {
+  display: grid;
+  overflow: hidden;
+  border-radius: var(--dialog-radius);
+  background: var(--color-elevated);
+  text-align: center;
+}
+
+.confirm--sheet .confirm__text {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--color-separator);
+}
+
+.confirm--sheet .confirm__title {
+  color: var(--color-ink2);
+  font-family: var(--type-footnote-family);
+  font-size: var(--type-footnote-size);
+  line-height: var(--type-footnote-line);
+  font-weight: var(--type-headline-weight);
+}
+
+.confirm--sheet .confirm__action {
+  min-height: calc(var(--target) + var(--space-3));
+  font-size: var(--type-title3-size);
+}
+
+/* Android: Material's alert dialog. 28 dp corners, start-aligned text, answers at the end. */
+[data-platform="android"] .confirm--alert {
+  padding: var(--space-6);
+  background: var(--color-surface);
+  text-align: start;
+}
+
+[data-platform="android"] .confirm--alert .confirm__text {
+  gap: var(--space-4);
+  padding: 0 0 var(--space-6);
+}
+
+[data-platform="android"] .confirm--alert .confirm__title {
+  font-family: var(--type-title2-family);
+  font-size: var(--type-title2-size);
+  line-height: var(--type-title2-line);
+  font-weight: var(--type-body-weight);
+}
+
+[data-platform="android"] .confirm--alert .confirm__message {
+  font-family: var(--type-subheadline-family);
+  font-size: var(--type-subheadline-size);
+  line-height: var(--type-subheadline-line);
+}
+
+[data-platform="android"] .confirm--alert .confirm__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  border-top: 0;
+}
+
+[data-platform="android"] .confirm--alert .confirm__actions > * + * {
+  border-left: 0;
+}
+
+[data-platform="android"] .confirm__action {
+  padding-inline: var(--space-3);
+  border-radius: 999px;
+  font-family: var(--type-label-family);
+  font-size: var(--type-label-size);
+  font-weight: var(--type-label-weight);
+}
+
+[data-platform="android"] .confirm--alert .confirm__action--cancel {
+  font-weight: var(--type-label-weight);
+}

@@ -1,0 +1,60 @@
+.inline-message {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  color: var(--color-ink);
+}
+
+.inline-message__icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  height: var(--type-headline-line);
+}
+
+.inline-message--neutral .inline-message__icon {
+  color: var(--color-ink2);
+}
+
+.inline-message--waiting .inline-message__icon {
+  color: var(--color-waiting);
+}
+
+.inline-message--problem .inline-message__icon {
+  color: var(--color-danger);
+}
+
+.inline-message__text {
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.inline-message__title,
+.inline-message__body {
+  margin: 0;
+}
+
+.inline-message__title {
+  font-family: var(--type-headline-family);
+  font-size: var(--type-headline-size);
+  line-height: var(--type-headline-line);
+  font-weight: var(--type-headline-weight);
+  letter-spacing: var(--type-headline-tracking);
+}
+
+.inline-message__body {
+  color: var(--color-ink2);
+  font-family: var(--type-subheadline-family);
+  font-size: var(--type-subheadline-size);
+  line-height: var(--type-subheadline-line);
+  font-weight: var(--type-subheadline-weight);
+  letter-spacing: var(--type-subheadline-tracking);
+}
+
+/* The text button's words line up with the message text. */
+.inline-message__action {
+  margin-inline-start: calc(var(--space-3) * -1);
+}

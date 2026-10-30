@@ -1,0 +1,110 @@
+.ring-button {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ring-label-gap);
+  max-width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-ink);
+  font: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ring-button:focus-visible {
+  outline: none;
+}
+
+.ring-button:focus-visible .ring-button__ring {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* Ring, gap and disc: 2.5 + 4.5 + 58 + 4.5 + 2.5 = 72. */
+.ring-button__ring {
+  position: relative;
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: var(--ring-size);
+  height: var(--ring-size);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 var(--ring-stroke) var(--color-accent);
+}
+
+.ring-button__disc {
+  display: grid;
+  place-items: center;
+  width: var(--ring-disc);
+  height: var(--ring-disc);
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.ring-button--tinted .ring-button__disc,
+.ring-button--waiting .ring-button__disc {
+  background: var(--color-accent-tint);
+  color: var(--color-accent-text);
+}
+
+.ring-button__label {
+  font-family: var(--type-ring-label-family);
+  font-size: var(--type-ring-label-size);
+  line-height: var(--type-ring-label-line);
+  font-weight: var(--type-ring-label-weight);
+  letter-spacing: var(--type-ring-label-tracking);
+  text-align: center;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+
+/* Waiting: the ring becomes a quarter arc turning on the track. */
+.ring-button--waiting {
+  cursor: progress;
+}
+
+.ring-button--waiting .ring-button__ring {
+  box-shadow: inset 0 0 0 var(--ring-stroke) var(--color-track);
+}
+
+.ring-button__arc {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--color-accent);
+}
+
+/* Unavailable: neutral, with the reason in words. */
+.ring-button--unavailable {
+  cursor: default;
+}
+
+.ring-button--unavailable .ring-button__ring {
+  box-shadow: inset 0 0 0 var(--ring-stroke) var(--color-ink3);
+}
+
+.ring-button--unavailable .ring-button__disc {
+  background: var(--color-surface);
+  color: var(--color-ink3);
+}
+
+.ring-button--unavailable .ring-button__label,
+.ring-button__reason {
+  color: var(--color-ink2);
+}
+
+.ring-button__reason {
+  margin-top: calc(var(--ring-label-gap) * -1 + var(--space-1));
+  font-family: var(--type-footnote-family);
+  font-size: var(--type-footnote-size);
+  line-height: var(--type-footnote-line);
+  font-weight: var(--type-footnote-weight);
+  letter-spacing: var(--type-footnote-tracking);
+  text-align: center;
+  text-wrap: balance;
+}

@@ -1,0 +1,51 @@
+{
+  "name": "camera-sharing-design",
+  "version": "1.1.0",
+  "private": true,
+  "description": "Design-system workspace and app prototype for Camera Sharing. Runs on 127.0.0.1 only.",
+  "type": "module",
+  "engines": {
+    "node": ">=24.12 <25"
+  },
+  "scripts": {
+    "tokens": "node scripts/build-tokens.ts",
+    "usage": "node scripts/build-usage.ts",
+    "predev": "npm run tokens && npm run usage",
+    "dev": "vite --host 127.0.0.1 --port 4300 --strictPort",
+    "serve:test": "npm run tokens && npm run usage && vite --host 127.0.0.1 --port 4301 --strictPort",
+    "build": "npm run tokens && npm run usage && tsc --noEmit && vite build",
+    "release:fetch": "node scripts/release-fetch.ts",
+    "typecheck": "tsc --noEmit",
+    "literals": "node scripts/check-literals.ts",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test:unit": "vitest run",
+    "test:e2e": "playwright test",
+    "check": "npm run tokens && npm run usage && npm run typecheck && npm run format:check && npm run literals && npm run test:unit && npm run test:e2e"
+  },
+  "dependencies": {
+    "@fontsource/roboto": "5.2.10",
+    "@radix-ui/react-dialog": "1.1.19",
+    "motion": "12.42.2",
+    "qrcode": "1.5.4",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "react-router": "8.5.1"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@playwright/test": "1.61.1",
+    "@types/node": "24.19.2",
+    "@types/qrcode": "1.5.6",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.3",
+    "prettier": "3.9.10",
+    "typescript": "7.0.2",
+    "vite": "8.1.6",
+    "vitest": "5.0.5"
+  },
+  "overrides": {
+    "playwright-core": "1.61.1"
+  }
+}

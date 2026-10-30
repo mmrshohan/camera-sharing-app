@@ -1,0 +1,67 @@
+/* Fixed system text: the status bar does not grow with the text size. */
+.status-bar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 30;
+  display: grid;
+  align-items: center;
+  color: var(--color-ink);
+  font-family: var(--type-headline-family);
+  font-size: var(--status-bar-text);
+  font-weight: var(--type-headline-weight);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+
+.status-bar__glyph {
+  fill: currentColor;
+}
+
+.status-bar__side {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.status-bar__side--end {
+  justify-self: end;
+}
+
+/* iPhones with an island: the clock in the left ear, the glyphs in the right. */
+.status-bar--ears {
+  grid-template-columns: 1fr 1fr;
+  padding: var(--space-3) 0 0;
+}
+
+.status-bar--ears .status-bar__time {
+  justify-self: center;
+  margin-left: calc(var(--space-4) * -1);
+}
+
+.status-bar--ears .status-bar__side--end {
+  justify-self: center;
+  margin-left: var(--space-4);
+}
+
+/* iPhone SE: the clock in the middle. */
+.status-bar--centered {
+  grid-template-columns: 1fr auto 1fr;
+  padding: 0 var(--space-2);
+  font-size: calc(var(--status-bar-text) - 5px);
+}
+
+/* Android: the clock at the start, the glyphs at the end. */
+.status-bar--android {
+  grid-template-columns: 1fr 1fr;
+  padding: 0 var(--space-4);
+  font-family: var(--type-subheadline-family);
+  font-weight: var(--type-label-weight);
+}
+
+/* Screens over photos or the camera ask for light glyphs. */
+.device__screen:has([data-status-bar="light"]) .status-bar {
+  color: var(--color-on-camera);
+}

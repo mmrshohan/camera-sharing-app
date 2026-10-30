@@ -1,2 +1,7 @@
 # macOS Finder metadata
 .DS_Store
+
+# Local tool scratch (design-session mockups, agent ledgers, preview launch config)
+.superpowers/
+.claude/launch.json
+.claude/worktrees/

@@ -1,0 +1,73 @@
+/* iOS: rows on a rounded surface card, separators inset to where the text starts. */
+.grouped-list {
+  display: grid;
+  gap: var(--space-2);
+  padding: 0 var(--margin);
+}
+
+.grouped-list__header,
+.grouped-list__footer {
+  margin: 0;
+  padding: 0 var(--space-4);
+  color: var(--color-ink2);
+  font-family: var(--type-footnote-family);
+  font-size: var(--type-footnote-size);
+  line-height: var(--type-footnote-line);
+  font-weight: var(--type-footnote-weight);
+  letter-spacing: var(--type-footnote-tracking);
+}
+
+.grouped-list__items {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  list-style: none;
+}
+
+.grouped-list__items > li {
+  position: relative;
+}
+
+.grouped-list__items > li + li::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: var(--space-4);
+  height: 1px;
+  background: var(--color-separator);
+}
+
+.grouped-list__items > li + li:has(.list-row__icon)::before {
+  left: calc(var(--space-4) + var(--icon-row) + var(--space-3));
+}
+
+/* Android: Material 3 lists sit on the background, with the section header in the accent. */
+[data-platform="android"] .grouped-list {
+  gap: 0;
+  padding: 0;
+}
+
+[data-platform="android"] .grouped-list__items {
+  border-radius: 0;
+  background: none;
+}
+
+[data-platform="android"] .grouped-list__items > li + li::before {
+  display: none;
+}
+
+[data-platform="android"] .grouped-list__header {
+  padding: var(--space-4) var(--space-4) var(--space-2);
+  color: var(--color-accent-text);
+  font-family: var(--type-label-family);
+  font-size: var(--type-label-size);
+  line-height: var(--type-label-line);
+  font-weight: var(--type-label-weight);
+}
+
+[data-platform="android"] .grouped-list__footer {
+  padding: var(--space-2) var(--space-4);
+}

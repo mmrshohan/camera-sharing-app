@@ -1,0 +1,79 @@
+/* Expanded: controls on one row, the large title below. Collapsed: one row, title inline. */
+.top-bar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  grid-template-areas:
+    "leading . trailing"
+    "title title title";
+  align-items: center;
+  padding: 0 var(--margin);
+  background: var(--color-background);
+  color: var(--color-ink);
+}
+
+.top-bar__leading,
+.top-bar__trailing {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--bar-height);
+}
+
+.top-bar__leading {
+  grid-area: leading;
+  justify-self: start;
+}
+
+.top-bar__trailing {
+  grid-area: trailing;
+  justify-self: end;
+}
+
+.top-bar__title {
+  grid-area: title;
+  margin: 0;
+  padding-bottom: var(--space-2);
+  font-family: var(--type-large-title-family);
+  font-size: var(--type-large-title-size);
+  line-height: var(--type-large-title-line);
+  font-weight: var(--type-large-title-weight);
+  letter-spacing: var(--type-large-title-tracking);
+  overflow-wrap: break-word;
+}
+
+.top-bar--collapsed {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) minmax(0, 1fr);
+  grid-template-areas: "leading title trailing";
+  box-shadow: 0 1px 0 var(--color-separator);
+}
+
+.top-bar--collapsed .top-bar__title {
+  padding: 0;
+  text-align: center;
+  font-family: var(--type-headline-family);
+  font-size: var(--type-headline-size);
+  line-height: var(--type-headline-line);
+  font-weight: var(--type-headline-weight);
+  letter-spacing: var(--type-headline-tracking);
+}
+
+/* Android: Material 3 top app bars. The large title sits lower; collapsed, it reads from the start. */
+[data-platform="android"] .top-bar__title {
+  padding-bottom: var(--space-4);
+}
+
+[data-platform="android"] .top-bar--collapsed {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  background: var(--color-surface);
+  box-shadow: none;
+}
+
+[data-platform="android"] .top-bar--collapsed .top-bar__title {
+  padding: 0;
+  text-align: start;
+  font-family: var(--type-title2-family);
+  font-size: var(--type-title2-size);
+  line-height: var(--type-title2-line);
+  font-weight: var(--type-title2-weight);
+  letter-spacing: var(--type-title2-tracking);
+}

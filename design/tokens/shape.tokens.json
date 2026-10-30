@@ -1,0 +1,578 @@
+{
+  "$description": "Corner radii and component dimensions. Points on iOS equal dp on Android for brand components.",
+  "shape": {
+    "radiusThumb": {
+      "$type": "dimension",
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "radiusCard": {
+      "$type": "dimension",
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "buttonHeight": {
+      "$type": "dimension",
+      "$value": {
+        "value": 50,
+        "unit": "px"
+      }
+    },
+    "textButtonHeight": {
+      "$type": "dimension",
+      "$value": {
+        "value": 44,
+        "unit": "px"
+      }
+    },
+    "ringSize": {
+      "$type": "dimension",
+      "$value": {
+        "value": 72,
+        "unit": "px"
+      }
+    },
+    "ringStroke": {
+      "$type": "dimension",
+      "$value": {
+        "value": 2.5,
+        "unit": "px"
+      }
+    },
+    "ringGap": {
+      "$type": "dimension",
+      "$value": {
+        "value": 4.5,
+        "unit": "px"
+      }
+    },
+    "ringDisc": {
+      "$type": "dimension",
+      "$value": {
+        "value": 58,
+        "unit": "px"
+      }
+    },
+    "iconRow": {
+      "$type": "dimension",
+      "$value": {
+        "value": 22,
+        "unit": "px"
+      },
+      "$description": "Icons in list rows."
+    },
+    "iconBar": {
+      "$type": "dimension",
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      },
+      "$description": "Icons in bars and icon buttons."
+    },
+    "iconChip": {
+      "$type": "dimension",
+      "$value": {
+        "value": 18,
+        "unit": "px"
+      },
+      "$description": "Icons inside chips and status lines."
+    },
+    "iconHero": {
+      "$type": "dimension",
+      "$value": {
+        "value": 48,
+        "unit": "px"
+      },
+      "$description": "The one icon that stands for an empty screen."
+    },
+    "ringIcon": {
+      "$type": "dimension",
+      "$value": {
+        "value": 28,
+        "unit": "px"
+      }
+    },
+    "ringLabelGap": {
+      "$type": "dimension",
+      "$value": {
+        "value": 9,
+        "unit": "px"
+      },
+      "$description": "Between a ring and its label."
+    },
+    "shutterSize": {
+      "$type": "dimension",
+      "$value": {
+        "value": 78,
+        "unit": "px"
+      }
+    },
+    "shutterStroke": {
+      "$type": "dimension",
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      }
+    },
+    "shutterDisc": {
+      "$type": "dimension",
+      "$value": {
+        "value": 64,
+        "unit": "px"
+      }
+    },
+    "qrSize": {
+      "$type": "dimension",
+      "$value": {
+        "value": 200,
+        "unit": "px"
+      },
+      "$description": "The invitation QR code, quiet zone included: large enough to scan from arm's length."
+    },
+    "wellSize": {
+      "$type": "dimension",
+      "$value": {
+        "value": 48,
+        "unit": "px"
+      },
+      "$description": "The last-shot well beside the shutter."
+    },
+    "zoomSize": {
+      "$type": "dimension",
+      "$value": {
+        "value": 30,
+        "unit": "px"
+      },
+      "$description": "A zoom level's circle."
+    },
+    "zoomSizeSelected": {
+      "$type": "dimension",
+      "$value": {
+        "value": 38,
+        "unit": "px"
+      },
+      "$description": "The chosen zoom level's circle."
+    },
+    "badgeSize": {
+      "$type": "dimension",
+      "$value": {
+        "value": 28,
+        "unit": "px"
+      },
+      "$description": "A status badge in a photo tile's corner."
+    },
+    "progressRingSize": {
+      "$type": "dimension",
+      "$value": {
+        "value": 28,
+        "unit": "px"
+      }
+    },
+    "progressRingStroke": {
+      "$type": "dimension",
+      "$value": {
+        "value": 2.5,
+        "unit": "px"
+      }
+    },
+    "liveDotSize": {
+      "$type": "dimension",
+      "$value": {
+        "value": 10,
+        "unit": "px"
+      }
+    },
+    "liveDotSizeInLabel": {
+      "$type": "dimension",
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "gridGap": {
+      "$type": "dimension",
+      "$value": {
+        "value": 2,
+        "unit": "px"
+      }
+    },
+    "labelHeight": {
+      "$type": "dimension",
+      "$value": {
+        "value": 30,
+        "unit": "px"
+      }
+    },
+    "labelPadX": {
+      "$type": "dimension",
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    }
+  },
+  "system": {
+    "$description": "System components follow each platform's metrics: iOS (UIKit/SwiftUI) and Android (Material 3).",
+    "fieldHeight": {
+      "$description": "Brand field on iOS; Material outlined field on Android.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 50,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 56,
+          "unit": "px"
+        }
+      }
+    },
+    "fieldRadius": {
+      "$description": "iOS brand field; Material outlined field (extra-small corner).",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 12,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 4,
+          "unit": "px"
+        }
+      }
+    },
+    "chipHeight": {
+      "$description": "Choice chips; the touch target still meets 44 pt and 48 dp.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 36,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 32,
+          "unit": "px"
+        }
+      }
+    },
+    "chipRadius": {
+      "$description": "A capsule on iOS; Material's small corner on Android.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 18,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 8,
+          "unit": "px"
+        }
+      }
+    },
+    "switchWidth": {
+      "$description": "UISwitch; Material 3 switch.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 51,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 52,
+          "unit": "px"
+        }
+      }
+    },
+    "switchHeight": {
+      "$description": "UISwitch; Material 3 switch.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 31,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 32,
+          "unit": "px"
+        }
+      }
+    },
+    "switchThumbOff": {
+      "$description": "The knob is constant on iOS; Material's thumb grows when on.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 27,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 16,
+          "unit": "px"
+        }
+      }
+    },
+    "switchThumbOn": {
+      "$description": "The knob is constant on iOS; Material's thumb grows when on.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 27,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 24,
+          "unit": "px"
+        }
+      }
+    },
+    "rowHeight": {
+      "$description": "A one-line list row: UITableView's 44 pt; Material's 56 dp list item.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 44,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 56,
+          "unit": "px"
+        }
+      }
+    },
+    "barHeight": {
+      "$description": "The top bar's control row: the iOS navigation bar; Material's top app bar.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 44,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 64,
+          "unit": "px"
+        }
+      }
+    },
+    "panelRadius": {
+      "$description": "Top corners of a sheet: the iOS sheet; Material's modal bottom sheet.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 38,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 28,
+          "unit": "px"
+        }
+      }
+    },
+    "platterRadius": {
+      "$description": "Corners of system notification surfaces: the Lock Screen Live Activity (approximate); Material's notification card (28 dp).",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 24,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 28,
+          "unit": "px"
+        }
+      }
+    },
+    "handleWidth": {
+      "$description": "The iOS grabber; Material's drag handle.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 36,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 32,
+          "unit": "px"
+        }
+      }
+    },
+    "handleHeight": {
+      "$description": "The iOS grabber; Material's drag handle.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 5,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 4,
+          "unit": "px"
+        }
+      }
+    },
+    "dialogRadius": {
+      "$description": "An alert: UIAlertController; Material's dialog.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 14,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 28,
+          "unit": "px"
+        }
+      }
+    },
+    "dialogWidth": {
+      "$description": "An alert's width on a phone: UIAlertController; Material's dialog.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 270,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 312,
+          "unit": "px"
+        }
+      }
+    },
+    "statusBarText": {
+      "$description": "The status bar's clock: fixed, it does not follow the text size.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 17,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 14,
+          "unit": "px"
+        }
+      }
+    },
+    "keyboardHeight": {
+      "$description": "The on-screen keyboard: the iOS keyboard; Gboard on Android (approximate).",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 291,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 280,
+          "unit": "px"
+        }
+      }
+    },
+    "keyHeight": {
+      "$description": "One key of the on-screen keyboard (approximate).",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 42,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 46,
+          "unit": "px"
+        }
+      }
+    },
+    "keyRadius": {
+      "$description": "A key's corners (approximate).",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 5,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 8,
+          "unit": "px"
+        }
+      }
+    },
+    "keyText": {
+      "$description": "A letter on a key: fixed, it does not follow the text size.",
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 22,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 21,
+          "unit": "px"
+        }
+      }
+    }
+  }
+}

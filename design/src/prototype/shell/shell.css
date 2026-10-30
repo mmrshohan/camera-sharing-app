@@ -1,0 +1,364 @@
+/* The review shell at /prototype: workspace chrome around the phones. */
+html.proto-route,
+html.proto-route body {
+  height: 100%;
+  overflow: hidden;
+}
+
+/* The header, then the shell filling the rest of the window. */
+html.proto-route #root {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+}
+
+html.proto-route .ws-main--full {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  width: 100%;
+}
+
+.proto {
+  display: grid;
+  flex: 1;
+  grid-template-columns: 264px minmax(0, 1fr);
+  min-height: 0;
+  background: var(--ws-bg);
+}
+
+.proto--present {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.proto-presenting .ws-header {
+  display: none;
+}
+
+/* Scenarios by journey, scrolling on their own: a sidebar, as in Finder or Linear. */
+.proto-nav {
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--space-4) var(--space-3) var(--space-8);
+  border-right: 1px solid var(--ws-border);
+  background: var(--ws-bg);
+}
+
+.proto-nav__group + .proto-nav__group {
+  margin-top: var(--space-5);
+}
+
+.proto-nav__title {
+  margin: 0 0 var(--space-1);
+  padding: 0 var(--space-3);
+  color: var(--ws-text-2);
+  font-size: var(--type-footnote-size);
+  line-height: var(--type-footnote-line);
+  font-weight: var(--type-headline-weight);
+}
+
+.proto-nav__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.proto-nav__list a {
+  display: block;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--ws-radius-small);
+  color: var(--ws-text);
+  font-size: var(--type-footnote-size);
+  line-height: var(--type-footnote-line);
+  text-decoration: none;
+  transition:
+    color var(--ws-quick) var(--ws-ease),
+    background-color var(--ws-quick) var(--ws-ease);
+}
+
+/* Hover is a neutral tint; blue means chosen. */
+.proto-nav__list a:hover {
+  background: var(--ws-fill);
+}
+
+.proto-nav__list a:active {
+  background: var(--ws-fill-strong);
+}
+
+.proto-nav__list a[aria-current="page"] {
+  background: var(--ws-accent-tint);
+  color: var(--ws-accent);
+}
+
+/* The toolbar, any notice, then the stage taking the rest. */
+.proto-main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.proto-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+  min-height: var(--ws-header-height);
+  padding: var(--space-2) var(--space-5);
+  border-bottom: 1px solid var(--ws-border);
+  background: var(--ws-bg);
+}
+
+.proto-toolbar__end {
+  display: flex;
+  gap: var(--space-2);
+  margin-left: auto;
+}
+
+.proto-clock {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.proto-clock__time {
+  min-width: 9.5em;
+  padding: 0 var(--space-2);
+  color: var(--ws-text);
+  font-size: var(--type-footnote-size);
+  font-weight: var(--type-headline-weight);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+/* Toolbar buttons: a soft fill, no outline. Quiet ones show their fill only on hover. */
+.proto-button {
+  min-height: 28px;
+  padding: 0 var(--space-3);
+  border: 0;
+  border-radius: var(--ws-radius-small);
+  background: var(--ws-fill);
+  color: var(--ws-text);
+  font: inherit;
+  font-size: var(--type-footnote-size);
+  font-weight: var(--type-headline-weight);
+  cursor: pointer;
+  transition:
+    color var(--ws-quick) var(--ws-ease),
+    background-color var(--ws-quick) var(--ws-ease),
+    transform var(--ws-quick) var(--ws-ease);
+}
+
+.proto-button:hover {
+  background: var(--ws-fill-strong);
+}
+
+.proto-button--quiet {
+  background: transparent;
+  color: var(--ws-text-2);
+}
+
+.proto-button--quiet:hover {
+  background: var(--ws-fill);
+  color: var(--ws-text);
+}
+
+/* The press answers at once, before release: a deeper fill, and a slight give. */
+.proto-button:active {
+  background: var(--ws-fill-pressed);
+  transform: scale(var(--press-scale-button));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proto-button:active {
+    transform: none;
+  }
+}
+
+/* A button that opens a menu: its word, then a chevron. Held while the menu is open. */
+.proto-button--menu {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.proto-button__chevron {
+  width: 10px;
+  height: 6px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.proto-phone__head:has(> .proto-popover:popover-open) > .proto-button--menu {
+  background: var(--ws-fill-strong);
+}
+
+/* Two words in one place: the button is as wide as the longer, whichever is showing. */
+.proto-swap {
+  display: inline-grid;
+}
+
+.proto-swap > * {
+  grid-area: 1 / 1;
+}
+
+.proto-swap__hidden {
+  visibility: hidden;
+}
+
+.proto-notice {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: 0;
+  padding: var(--space-2) var(--space-5);
+  border-bottom: 1px solid var(--ws-border);
+  background: var(--label-waiting-bg);
+  color: var(--label-waiting-fg);
+  font-size: var(--type-footnote-size);
+}
+
+.proto-notice span {
+  flex: 1;
+}
+
+/* The phones, centered, scaled by the Stage to fit. */
+.proto-stage {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  padding: 24px;
+}
+
+.proto-phones {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 32px;
+  height: 100%;
+}
+
+.proto-phone {
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  min-width: 0;
+}
+
+.proto-phone__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  max-width: 100%;
+  height: 44px;
+}
+
+.proto-phone__name {
+  margin: 0;
+  color: var(--ws-text);
+  font-size: var(--type-subheadline-size);
+  font-weight: var(--type-headline-weight);
+}
+
+.proto-phone__model {
+  overflow: hidden;
+  color: var(--ws-text-2);
+  font-size: var(--type-footnote-size);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.proto-phone__frame {
+  display: block;
+  border: 0;
+  background: transparent;
+  /* Matches the phone's own document, so its background stays see-through. */
+  color-scheme: light;
+}
+
+/* A menu lifted off the page, as on macOS: a two-column form, names on the left and the
+   controls lined up on the right, then the one action. */
+.proto-popover {
+  --proto-form-names: 92px;
+  position: fixed;
+  inset: auto;
+  display: none;
+  gap: var(--space-2);
+  width: max-content;
+  max-width: calc(100vw - 16px);
+  margin: 0;
+  padding: var(--space-4);
+  border: 0;
+  border-radius: var(--ws-radius);
+  background: var(--ws-elevated);
+  box-shadow: var(--ws-shadow-pop);
+  color: var(--ws-text);
+}
+
+.proto-popover:popover-open {
+  display: grid;
+}
+
+.proto-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-size: var(--type-footnote-size);
+  color: var(--ws-text-2);
+}
+
+.proto-field select {
+  min-height: 28px;
+  padding: 0 var(--space-2);
+  border: 0;
+  border-radius: var(--ws-radius-small);
+  background: var(--ws-fill);
+  color: var(--ws-text);
+  font: inherit;
+}
+
+.proto-popover .proto-field,
+.proto-popover .ws-segmented {
+  justify-content: flex-start;
+  gap: 0;
+}
+
+.proto-popover .proto-field > span,
+.proto-popover .ws-segmented legend {
+  flex: none;
+  width: var(--proto-form-names);
+  color: var(--ws-text-2);
+  font-size: var(--type-footnote-size);
+  font-weight: var(--type-footnote-weight);
+}
+
+.proto-popover .proto-field select,
+.proto-popover .ws-segmented__track {
+  flex: 1;
+}
+
+.proto-popover > .proto-button {
+  margin-top: var(--space-2);
+}
+
+.proto-exit {
+  position: fixed;
+  top: var(--space-3);
+  right: var(--space-3);
+  z-index: 21;
+}
+
+@media (max-width: 720px) {
+  .proto:not(.proto--present) {
+    grid-template-columns: 200px minmax(0, 1fr);
+  }
+}

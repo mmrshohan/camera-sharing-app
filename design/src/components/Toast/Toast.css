@@ -1,0 +1,43 @@
+/* Positioned in its screen. Screens set --toast-above-controls to the height of their controls. */
+.toast-region {
+  position: absolute;
+  right: var(--margin);
+  left: var(--margin);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.toast-region--top {
+  top: var(--toast-top, var(--space-4));
+}
+
+.toast-region--above-controls {
+  bottom: var(--toast-above-controls, calc(var(--shutter-size) + var(--space-12)));
+}
+
+.toast {
+  max-width: 100%;
+  padding: var(--space-2) var(--space-4);
+  border-radius: 999px;
+  background: var(--color-ink);
+  color: var(--color-background);
+  font-family: var(--type-subheadline-family);
+  font-size: var(--type-subheadline-size);
+  line-height: var(--type-subheadline-line);
+  font-weight: var(--type-headline-weight);
+  letter-spacing: var(--type-subheadline-tracking);
+  text-align: center;
+  animation: toast-in var(--motion-fade-duration) ease-out;
+}
+
+.toast[hidden] {
+  display: none;
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+  }
+}

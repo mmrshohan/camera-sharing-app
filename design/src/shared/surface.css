@@ -1,0 +1,10 @@
+.surface {
+  background: var(--color-background);
+  color: var(--color-ink);
+  font-family: var(--type-body-family);
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-line);
+  letter-spacing: var(--type-body-tracking);
+  font-weight: var(--type-body-weight);
+  -webkit-font-smoothing: antialiased;
+}

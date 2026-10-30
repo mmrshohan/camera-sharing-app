@@ -1,0 +1,27 @@
+.avatar {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  border-radius: 50%;
+  background: var(--color-fill);
+  color: var(--color-ink);
+  font-family: var(--type-headline-family);
+  font-size: calc(var(--avatar-size) * 0.4);
+  font-weight: var(--type-headline-weight);
+  line-height: 1;
+  user-select: none;
+}
+
+.avatar--36 {
+  --avatar-size: 36px;
+}
+
+.avatar--40 {
+  --avatar-size: 40px;
+}
+
+.avatar--44 {
+  --avatar-size: 44px;
+}

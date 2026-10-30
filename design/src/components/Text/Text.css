@@ -1,0 +1,102 @@
+/* Every value comes from the type tokens; platform and text size switch them (data attributes). */
+.text {
+  margin: 0;
+  overflow-wrap: break-word;
+}
+
+.text--numeral {
+  font-family: var(--type-numeral-family);
+  font-size: var(--type-numeral-size);
+  line-height: var(--type-numeral-line);
+  font-weight: var(--type-numeral-weight);
+  letter-spacing: var(--type-numeral-tracking);
+  font-variant-numeric: tabular-nums;
+}
+
+.text--large-title {
+  font-family: var(--type-large-title-family);
+  font-size: var(--type-large-title-size);
+  line-height: var(--type-large-title-line);
+  font-weight: var(--type-large-title-weight);
+  letter-spacing: var(--type-large-title-tracking);
+}
+
+.text--title2 {
+  font-family: var(--type-title2-family);
+  font-size: var(--type-title2-size);
+  line-height: var(--type-title2-line);
+  font-weight: var(--type-title2-weight);
+  letter-spacing: var(--type-title2-tracking);
+}
+
+.text--title3 {
+  font-family: var(--type-title3-family);
+  font-size: var(--type-title3-size);
+  line-height: var(--type-title3-line);
+  font-weight: var(--type-title3-weight);
+  letter-spacing: var(--type-title3-tracking);
+}
+
+.text--headline {
+  font-family: var(--type-headline-family);
+  font-size: var(--type-headline-size);
+  line-height: var(--type-headline-line);
+  font-weight: var(--type-headline-weight);
+  letter-spacing: var(--type-headline-tracking);
+}
+
+.text--body {
+  font-family: var(--type-body-family);
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-line);
+  font-weight: var(--type-body-weight);
+  letter-spacing: var(--type-body-tracking);
+}
+
+.text--subheadline {
+  font-family: var(--type-subheadline-family);
+  font-size: var(--type-subheadline-size);
+  line-height: var(--type-subheadline-line);
+  font-weight: var(--type-subheadline-weight);
+  letter-spacing: var(--type-subheadline-tracking);
+}
+
+.text--footnote {
+  font-family: var(--type-footnote-family);
+  font-size: var(--type-footnote-size);
+  line-height: var(--type-footnote-line);
+  font-weight: var(--type-footnote-weight);
+  letter-spacing: var(--type-footnote-tracking);
+}
+
+.text--label {
+  font-family: var(--type-label-family);
+  font-size: var(--type-label-size);
+  line-height: var(--type-label-line);
+  font-weight: var(--type-label-weight);
+  letter-spacing: var(--type-label-tracking);
+}
+
+.text--ring-label {
+  font-family: var(--type-ring-label-family);
+  font-size: var(--type-ring-label-size);
+  line-height: var(--type-ring-label-line);
+  font-weight: var(--type-ring-label-weight);
+  letter-spacing: var(--type-ring-label-tracking);
+}
+
+.text--tone-ink {
+  color: var(--color-ink);
+}
+
+.text--tone-ink2 {
+  color: var(--color-ink2);
+}
+
+.text--tone-accent-text {
+  color: var(--color-accent-text);
+}
+
+.text--tone-danger {
+  color: var(--color-danger);
+}

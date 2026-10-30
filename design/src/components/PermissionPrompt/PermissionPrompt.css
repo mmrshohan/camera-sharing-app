@@ -1,0 +1,94 @@
+/* Android: the permission dialog. An icon, the question, the answers stacked full width. */
+.permission-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  background: var(--color-scrim);
+  animation: permission-in var(--motion-fade-duration) ease-out;
+}
+
+.permission {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 31;
+  display: grid;
+  justify-items: center;
+  gap: var(--space-4);
+  width: min(var(--dialog-width), calc(100% - var(--margin) * 2));
+  padding: var(--space-6);
+  border-radius: var(--dialog-radius);
+  translate: -50% -50%;
+  background: var(--color-elevated);
+  color: var(--color-ink);
+  text-align: center;
+  outline: none;
+  animation: permission-in var(--motion-fade-duration) ease-out;
+}
+
+.permission-scrim[data-state="closed"],
+.permission[data-state="closed"] {
+  animation: permission-out var(--motion-fade-duration) ease-in forwards;
+}
+
+.permission__icon {
+  display: grid;
+  color: var(--color-accent-text);
+}
+
+.permission__title {
+  margin: 0;
+  font-family: var(--type-title3-family);
+  font-size: var(--type-title3-size);
+  line-height: var(--type-title3-line);
+  font-weight: var(--type-body-weight);
+  letter-spacing: var(--type-title3-tracking);
+}
+
+.permission__title strong {
+  font-weight: var(--type-title3-weight);
+}
+
+/* One rounded group: the first answer rounds its top, the last its bottom. */
+.permission__answers {
+  display: grid;
+  gap: 2px;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+}
+
+.permission__answer {
+  min-height: var(--target);
+  padding: var(--space-2) var(--space-4);
+  border: 0;
+  background: var(--color-accent-tint);
+  color: var(--color-accent-text);
+  font-family: var(--type-label-family);
+  font-size: var(--type-label-size);
+  line-height: var(--type-label-line);
+  font-weight: var(--type-label-weight);
+  cursor: pointer;
+}
+
+/* Material's pressed state layer. */
+.permission__answer:active {
+  background: color-mix(in srgb, var(--color-accent-text) 12%, var(--color-accent-tint));
+}
+
+.permission__answer:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -2px;
+}
+
+@keyframes permission-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes permission-out {
+  to {
+    opacity: 0;
+  }
+}

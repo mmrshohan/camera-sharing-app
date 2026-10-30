@@ -1,0 +1,59 @@
+/* Number on the left with the live dot at its shoulder; words on the right, on its baseline. */
+.numeral {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  color: var(--color-ink);
+}
+
+.numeral__value {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-family: var(--type-numeral-family);
+  font-size: var(--type-numeral-size);
+  line-height: var(--type-numeral-line);
+  font-weight: var(--type-numeral-weight);
+  letter-spacing: var(--type-numeral-tracking);
+  font-variant-numeric: tabular-nums;
+}
+
+.numeral__value .live-dot {
+  margin-top: calc(var(--type-numeral-size) * 0.15);
+}
+
+.numeral__text {
+  display: grid;
+  padding-bottom: calc(var(--type-numeral-line) * 0.075);
+  text-align: end;
+}
+
+.numeral__caption {
+  font-family: var(--type-headline-family);
+  font-size: var(--type-headline-size);
+  line-height: var(--type-headline-line);
+  font-weight: var(--type-headline-weight);
+  letter-spacing: var(--type-headline-tracking);
+}
+
+.numeral__detail {
+  color: var(--color-ink2);
+  font-family: var(--type-body-family);
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-line);
+  font-weight: var(--type-body-weight);
+  letter-spacing: var(--type-body-tracking);
+}
+
+/* At the largest text sizes the words move under the number instead of crowding it. */
+[data-text-size="largest"] .numeral {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+[data-text-size="largest"] .numeral__text {
+  padding-bottom: 0;
+  text-align: start;
+}

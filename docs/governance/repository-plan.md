@@ -18,6 +18,7 @@ The following tree is illustrative, not an instruction to scaffold it. Create on
   apps/
     ios/                       # native Xcode/Swift app, local README, tests
     android/                   # native Gradle/Kotlin app, local README, tests
+  design/                      # design-system workspace (tokens, Library, prototype); web, localhost only
   backend/
     src/                       # modular API and worker, one codebase
     tests/                     # domain, DB/integration and boundary tests
@@ -61,6 +62,7 @@ Native project-local source/test structures follow the selected toolchain rather
 | Build/run/test instructions | Root and relevant component README, verified on pinned toolchain | Placeholder commands that have never run |
 | Work and review evidence | `docs/work/`/`docs/releases/` index plus controlled artifact storage | Committing large videos, private photos, secrets or raw crash dumps |
 | Tool-specific configuration | Minimal native tool files only when authorized | Duplicated engineering policies under `.codex/` and `.claude/` |
+| Design tokens, components and prototype | `design/` (approved design system; `tokens/` is the single value source) | Re-typing values in native code instead of generating from tokens |
 
 External evidence belongs in access-controlled storage with stable artifact IDs/digests and a retention policy. The repository keeps sanitized summaries and durable references; expired evidence must be reacquired if still required by a gate. Never commit genuine user photos to make a test reproducible. Keep secrets/local machine settings/build outputs out of version control once ignore rules are authorized and created.
 

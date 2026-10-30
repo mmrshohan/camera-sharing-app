@@ -1,0 +1,96 @@
+.list-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: var(--row-height);
+  padding: var(--space-2) var(--space-4);
+  border: 0;
+  background: none;
+  color: var(--color-ink);
+  font: inherit;
+  text-align: start;
+}
+
+button.list-row {
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button.list-row:active {
+  background: var(--color-fill);
+}
+
+button.list-row:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -2px;
+}
+
+.list-row__icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  color: var(--color-ink2);
+}
+
+.list-row__text {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+}
+
+.list-row__title,
+.list-row__value {
+  font-family: var(--type-body-family);
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-line);
+  font-weight: var(--type-body-weight);
+  letter-spacing: var(--type-body-tracking);
+  overflow-wrap: break-word;
+}
+
+.list-row__subtitle {
+  color: var(--color-ink2);
+  font-family: var(--type-footnote-family);
+  font-size: var(--type-footnote-size);
+  line-height: var(--type-footnote-line);
+  font-weight: var(--type-footnote-weight);
+  letter-spacing: var(--type-footnote-tracking);
+}
+
+.list-row__value {
+  max-width: 50%;
+  color: var(--color-ink2);
+  text-align: end;
+}
+
+.list-row__label {
+  display: flex;
+  flex: none;
+  max-width: 60%;
+}
+
+.list-row__chevron {
+  display: grid;
+  flex: none;
+  place-items: center;
+  color: var(--color-ink3);
+}
+
+.list-row--destructive {
+  color: var(--color-danger);
+}
+
+.list-row--destructive .list-row__icon {
+  color: var(--color-danger);
+}
+
+/* Android lists show no chevrons; the row itself says it opens. */
+[data-platform="android"] .list-row__chevron {
+  display: none;
+}
+
+[data-platform="android"] .list-row {
+  gap: var(--space-4);
+}

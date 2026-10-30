@@ -1,0 +1,37 @@
+.camera-status-line {
+  display: inline-grid;
+  place-items: center;
+  max-width: 100%;
+  min-height: var(--target);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-on-camera);
+  font: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.camera-status-line__text {
+  padding: var(--space-1) var(--label-pad-x);
+  border-radius: 999px;
+  background: var(--color-camera-scrim);
+  font-family: var(--type-footnote-family);
+  font-size: var(--type-footnote-size);
+  line-height: var(--type-footnote-line);
+  font-weight: var(--type-headline-weight);
+  letter-spacing: var(--type-footnote-tracking);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.camera-status-line:focus-visible {
+  outline: none;
+}
+
+.camera-status-line:focus-visible .camera-status-line__text {
+  outline: 2px solid var(--color-on-camera);
+  outline-offset: 2px;
+}

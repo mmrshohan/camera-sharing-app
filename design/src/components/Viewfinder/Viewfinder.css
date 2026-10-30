@@ -1,0 +1,100 @@
+/* Fills its container. Examples and screens set --viewfinder-preview to stand in for the camera. */
+.viewfinder {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  min-height: 240px;
+  overflow: hidden;
+  background: var(--color-background);
+  color: var(--color-on-camera);
+}
+
+.viewfinder__preview {
+  position: absolute;
+  inset: 0;
+  background: var(--viewfinder-preview, var(--color-background));
+}
+
+/* Four white corners around where the code should go. */
+.viewfinder__frame {
+  position: relative;
+  width: 62%;
+  aspect-ratio: 1;
+}
+
+.viewfinder__frame i {
+  position: absolute;
+  width: 22%;
+  height: 22%;
+  border: var(--shutter-stroke) solid var(--color-on-camera);
+}
+
+.viewfinder__frame i:nth-child(1) {
+  top: 0;
+  left: 0;
+  border-right: 0;
+  border-bottom: 0;
+  border-top-left-radius: var(--radius-card);
+}
+
+.viewfinder__frame i:nth-child(2) {
+  top: 0;
+  right: 0;
+  border-bottom: 0;
+  border-left: 0;
+  border-top-right-radius: var(--radius-card);
+}
+
+.viewfinder__frame i:nth-child(3) {
+  bottom: 0;
+  left: 0;
+  border-top: 0;
+  border-right: 0;
+  border-bottom-left-radius: var(--radius-card);
+}
+
+.viewfinder__frame i:nth-child(4) {
+  right: 0;
+  bottom: 0;
+  border-top: 0;
+  border-left: 0;
+  border-bottom-right-radius: var(--radius-card);
+}
+
+.viewfinder--invalid .viewfinder__frame i {
+  border-color: var(--color-danger);
+}
+
+.viewfinder__message {
+  position: absolute;
+  bottom: var(--space-5);
+  left: 50%;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  width: max-content;
+  max-width: calc(100% - var(--margin) * 2);
+  min-height: var(--label-height);
+  margin: 0;
+  padding: var(--space-1) var(--label-pad-x);
+  border-radius: 999px;
+  translate: -50% 0;
+  background: var(--color-camera-scrim);
+  font-family: var(--type-subheadline-family);
+  font-size: var(--type-subheadline-size);
+  line-height: var(--type-subheadline-line);
+  font-weight: var(--type-headline-weight);
+  letter-spacing: var(--type-subheadline-tracking);
+  text-align: center;
+}
+
+/* Without a camera there is nothing to frame: the words take the center. */
+.viewfinder--denied .viewfinder__message,
+.viewfinder--unavailable .viewfinder__message {
+  bottom: auto;
+  top: 50%;
+  translate: -50% -50%;
+  background: none;
+}

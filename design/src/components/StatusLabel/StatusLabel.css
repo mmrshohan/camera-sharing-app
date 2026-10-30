@@ -1,0 +1,45 @@
+.status-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  max-width: 100%;
+  min-height: var(--label-height);
+  padding: var(--space-1) var(--label-pad-x) var(--space-1)
+    calc(var(--label-pad-x) - var(--space-1));
+  border-radius: 999px;
+  font-family: var(--type-label-family);
+  font-size: var(--type-label-size);
+  line-height: var(--type-label-line);
+  font-weight: var(--type-label-weight);
+  letter-spacing: var(--type-label-tracking);
+  text-wrap: balance;
+}
+
+.status-label > :first-child {
+  flex: none;
+}
+
+.status-label--live {
+  color: var(--label-live-fg);
+  background: var(--label-live-bg);
+}
+
+.status-label--sending {
+  color: var(--label-sending-fg);
+  background: var(--label-sending-bg);
+}
+
+.status-label--saved {
+  color: var(--label-saved-fg);
+  background: var(--label-saved-bg);
+}
+
+.status-label--waiting {
+  color: var(--label-waiting-fg);
+  background: var(--label-waiting-bg);
+}
+
+.status-label--neutral {
+  color: var(--label-neutral-fg);
+  background: var(--label-neutral-bg);
+}

@@ -1,0 +1,65 @@
+/* Pinned to Android: a Material notification card in the shade. */
+.progress-notification {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-4);
+  border-radius: var(--platter-radius);
+  background: var(--color-surface);
+  color: var(--color-ink);
+}
+
+.progress-notification__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-1);
+  color: var(--color-ink2);
+  font-family: var(--type-footnote-family);
+  font-size: var(--type-footnote-size);
+  line-height: var(--type-footnote-line);
+}
+
+.progress-notification__app {
+  display: grid;
+  place-items: center;
+  width: var(--icon-bar);
+  height: var(--icon-bar);
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.progress-notification__title,
+.progress-notification__text {
+  margin: 0;
+}
+
+.progress-notification__title {
+  font-family: var(--type-headline-family);
+  font-size: var(--type-headline-size);
+  line-height: var(--type-headline-line);
+  font-weight: var(--type-headline-weight);
+}
+
+.progress-notification__text {
+  color: var(--color-ink2);
+  font-family: var(--type-subheadline-family);
+  font-size: var(--type-subheadline-size);
+  line-height: var(--type-subheadline-line);
+}
+
+.progress-notification__bar {
+  display: block;
+  height: 4px;
+  margin-top: var(--space-2);
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--color-track);
+}
+
+.progress-notification__bar > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--color-accent);
+}

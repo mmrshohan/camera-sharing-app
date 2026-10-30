@@ -1,0 +1,238 @@
+<!doctype html>
+<!-- Archived from the 28 October 2026 design session. Static reference only. -->
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Structure board — Part 1 (approved 28 Oct 2026)</title>
+<style>:root{--bg-primary:#f5f5f7;--bg-secondary:#fff;--bg-tertiary:#e5e5e7;--border:#d1d1d6;--text-primary:#1d1d1f;--text-secondary:#86868b;--text-tertiary:#aeaeb2;--accent:#0071e3}*{box-sizing:border-box}body{margin:0;padding:32px;background:var(--bg-primary);color:var(--text-primary);font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.5}</style>
+</head><body>
+<style>
+  .cs{--blue:#0071E3;--link:#0066CC;--tint:#E8F1FC;--ink:#1D1D1F;--ink2:#6E6E73;--ink3:#AEAEB2;--sep:#D2D2D7;--fill:#F5F5F7;
+      font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",system-ui,sans-serif;-webkit-font-smoothing:antialiased;max-width:1180px;margin:0 auto}
+  .cs-h{font-size:30px;line-height:36px;font-weight:700;letter-spacing:-.4px;color:var(--text-primary);margin:0 0 6px}
+  .cs-sub{font-size:17px;line-height:24px;color:var(--text-secondary);max-width:760px;margin:0 0 28px}
+  .cs-k{font-size:13px;line-height:18px;font-weight:600;color:var(--text-secondary);letter-spacing:.2px;margin:0 0 12px}
+  .cs-stat{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 28px}
+  .cs-pill{font-size:15px;line-height:20px;padding:8px 14px;border-radius:999px;background:var(--bg-secondary);border:1px solid var(--border);color:var(--text-primary)}
+  .cs-pill b{font-weight:600}
+  /* flow map */
+  .cs-map{display:grid;gap:12px;margin:0 0 14px}
+  .cs-lane{display:grid;grid-template-columns:132px 1fr;gap:14px;align-items:center}
+  .cs-ll{font-size:15px;line-height:20px;font-weight:600;color:var(--text-primary)}
+  .cs-ll span{display:block;font-weight:400;font-size:13px;color:var(--text-secondary)}
+  .cs-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+  .cs-n{font-size:14px;line-height:18px;font-weight:500;padding:7px 11px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg-secondary);color:var(--text-primary);white-space:nowrap}
+  .cs-n.p{border-style:dashed}
+  .cs-n.s{border-style:dotted;color:var(--text-secondary);font-weight:400}
+  .cs-a{color:var(--text-tertiary);font-size:14px}
+  .cs-legend{display:flex;flex-wrap:wrap;gap:16px;font-size:13px;color:var(--text-secondary);margin:0 0 30px}
+  .cs-legend i{display:inline-block;width:22px;height:12px;border-radius:4px;border:1.5px solid var(--text-tertiary);vertical-align:-1px;margin-right:6px}
+  .cs-legend i.p{border-style:dashed}.cs-legend i.s{border-style:dotted}
+  @media (max-width:640px){.cs-lane{grid-template-columns:1fr;gap:6px}}
+  /* devices */
+  .cs-devs{display:flex;flex-wrap:wrap;gap:36px 40px;justify-content:center;margin:8px 0 26px}
+  .cs-dev{--s:.7;margin:0;display:flex;flex-direction:column;align-items:center;gap:14px;width:calc(393px * var(--s) + 22px)}
+  .cs-bez{padding:11px;border-radius:calc(55px * var(--s) + 11px);background:#1C1C1E;box-shadow:inset 0 0 0 1.5px #3A3A3C,0 28px 60px -24px rgba(0,0,0,.45)}
+  .cs-clip{position:relative;overflow:hidden;width:calc(393px * var(--s));height:calc(852px * var(--s));border-radius:calc(55px * var(--s))}
+  .cs-scr{position:absolute;inset:0 auto auto 0;width:393px;height:852px;transform:scale(var(--s));transform-origin:0 0;background:#fff;color:var(--ink);overflow:hidden}
+  .cs-cap{text-align:center;font-size:15px;line-height:20px;color:var(--text-primary);font-weight:600}
+  .cs-cap span{display:block;font-weight:400;font-size:13px;line-height:18px;color:var(--text-secondary);max-width:270px;margin-top:4px}
+  /* iOS chrome */
+  .di{position:absolute;top:11px;left:50%;width:126px;height:37px;margin-left:-63px;border-radius:19px;background:#000;z-index:9}
+  .sb{position:absolute;top:0;left:0;right:0;height:54px;display:flex;align-items:center;justify-content:space-between;padding:4px 30px 0 52px;font-size:17px;font-weight:600;letter-spacing:-.2px;z-index:8}
+  .sb .ic{display:flex;gap:6px;align-items:center}
+  .hi{position:absolute;bottom:8px;left:50%;width:134px;height:5px;margin-left:-67px;border-radius:3px;background:#000;z-index:9}
+  .dark .sb{color:#fff}.dark .hi{background:#fff}
+  /* type */
+  .lt{font-size:34px;line-height:41px;font-weight:700;letter-spacing:.37px;margin:0}
+  .t2{font-size:22px;line-height:28px;font-weight:700;letter-spacing:.35px;margin:0}
+  .t3{font-size:20px;line-height:25px;font-weight:600;letter-spacing:.38px;margin:0}
+  .hd{font-size:17px;line-height:22px;font-weight:600;letter-spacing:-.43px}
+  .bd{font-size:17px;line-height:22px;letter-spacing:-.43px}
+  .sh{font-size:15px;line-height:20px;letter-spacing:-.23px}
+  .fn{font-size:13px;line-height:18px;letter-spacing:-.08px}
+  .i2{color:var(--ink2)}
+  /* components */
+  .av{display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--fill);color:var(--ink);font-weight:600}
+  .btn{display:flex;align-items:center;justify-content:center;height:50px;border-radius:25px;font-size:17px;font-weight:600;letter-spacing:-.43px}
+  .btn.fill{background:var(--blue);color:#fff}
+  .btn.tint{background:var(--tint);color:var(--link)}
+  .btn.text{height:44px;background:none;color:var(--link);font-weight:400}
+  /* home */
+  .h-top{position:absolute;top:54px;left:0;right:0;padding:6px 20px 0;display:flex;align-items:center;justify-content:space-between}
+  .h-sec{position:absolute;top:116px;left:20px;right:20px;display:flex;align-items:baseline;justify-content:space-between}
+  .grid{position:absolute;top:154px;left:0;right:0;display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+  .tile{position:relative;overflow:hidden;aspect-ratio:1;background:url(coast.jpg) no-repeat;background-size:290%}
+  .tile .bdg{position:absolute;right:6px;bottom:6px;width:22px;height:22px;border-radius:11px;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center}
+  .tile.arr{filter:blur(0)}
+  .tile.arr::before{content:"";position:absolute;inset:0;background:inherit;filter:blur(10px) saturate(.6);opacity:.9}
+  .tile.arr::after{content:"";position:absolute;inset:0;background:rgba(255,255,255,.35)}
+  .ring{position:absolute;left:50%;top:50%;width:28px;height:28px;margin:-14px 0 0 -14px;z-index:2}
+  .h-sec2{position:absolute;top:458px;left:20px;right:20px;display:flex;align-items:baseline;justify-content:space-between}
+  .grid2{position:absolute;top:496px;left:0;right:0;display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+  .h-bar{position:absolute;left:0;right:0;bottom:0;padding:28px 20px 42px;display:grid;grid-template-columns:1fr 1fr;gap:12px;background:linear-gradient(to bottom,rgba(255,255,255,0),#fff 34%)}
+  /* camera */
+  .dark{background:#000;color:#fff}
+  .c-top{position:absolute;top:54px;left:0;right:0;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 12px}
+  .c-ib{width:44px;height:44px;display:flex;align-items:center;justify-content:center}
+  .dest{display:flex;align-items:center;gap:8px;height:34px;padding:0 14px 0 5px;border-radius:17px;background:rgba(255,255,255,.16)}
+  .dest .av{width:24px;height:24px;font-size:13px;background:#fff;color:#000}
+  .c-end{height:44px;display:flex;align-items:center;padding:0 10px;font-size:17px;font-weight:600;letter-spacing:-.43px}
+  .c-pv{position:absolute;top:110px;left:0;width:393px;height:524px;background:url(coast.jpg) center/cover}
+  .zoom{position:absolute;top:578px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px}
+  .zoom span{width:34px;height:34px;border-radius:17px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#fff;background:rgba(0,0,0,.5)}
+  .zoom span.on{width:42px;height:42px;border-radius:21px;font-size:15px;background:rgba(0,0,0,.62)}
+  .c-ctl{position:absolute;top:658px;left:0;right:0;height:80px;display:flex;align-items:center;justify-content:space-between;padding:0 34px}
+  .thumb{width:52px;height:52px;border-radius:12px;background:url(coast.jpg) 30% 70%/260%;box-shadow:0 0 0 1.5px rgba(255,255,255,.28)}
+  .shut{width:78px;height:78px;border-radius:50%;box-shadow:inset 0 0 0 4px #fff;display:flex;align-items:center;justify-content:center}
+  .shut i{width:64px;height:64px;border-radius:50%;background:#fff;display:block}
+  .flip{width:52px;height:52px;border-radius:26px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center}
+  .c-st{position:absolute;top:760px;left:0;right:0;text-align:center;color:rgba(255,255,255,.72)}
+  /* connect */
+  .k-bg{position:absolute;inset:0;background:url(coast.jpg) center 30%/cover}
+  .k-bg::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.55)}
+  .vf{position:absolute;top:96px;left:96px;width:200px;height:200px;z-index:2}
+  .sheet{position:absolute;left:0;right:0;bottom:0;top:226px;background:#fff;color:var(--ink);border-radius:38px 38px 0 0;padding:28px 20px 0;z-index:5}
+  .grab{position:absolute;top:6px;left:50%;width:36px;height:5px;margin-left:-18px;border-radius:3px;background:#C7C7CC}
+  .who{display:grid;grid-template-columns:44px 1fr;gap:4px 14px;align-items:center;margin:22px 0 0}
+  .who .av{width:44px;height:44px;font-size:17px}
+  .who .ln{grid-column:1;justify-self:center;width:2px;height:18px;background:var(--sep);border-radius:1px}
+  .words{margin:22px 0 0;background:var(--fill);border-radius:16px;padding:14px 16px 16px;text-align:center}
+  .words .w{margin-top:8px;font-size:20px;line-height:28px;font-weight:600;letter-spacing:.38px;word-spacing:10px}
+  .k-act{position:absolute;left:20px;right:20px;bottom:40px;display:grid;gap:4px}
+  /* map table */
+  .cs details{border-top:1px solid var(--border);padding-top:16px;margin-top:6px}
+  .cs summary{cursor:pointer;font-size:15px;font-weight:600;color:var(--text-primary)}
+  .cs table{border-collapse:collapse;width:100%;margin-top:12px;font-size:14px;line-height:19px}
+  .cs th{text-align:left;font-weight:600;color:var(--text-secondary);padding:6px 10px 6px 0;border-bottom:1px solid var(--border)}
+  .cs td{padding:6px 10px 6px 0;border-bottom:1px solid var(--border);color:var(--text-primary);vertical-align:top}
+  .cs td:nth-child(3){color:var(--text-secondary)}
+</style>
+
+<div class="cs">
+  <p class="cs-k">PART 1 OF 3 · STRUCTURE</p>
+  <h2 class="cs-h">One home. One camera. One lock.</h2>
+  <p class="cs-sub">The whole app on one page. Every feature stays; only the packaging shrinks. Things that only explain, wait or confirm become a panel or a line on an existing screen.</p>
+
+  <div class="cs-stat">
+    <span class="cs-pill">Today <b>31 screens</b></span>
+    <span class="cs-pill">Proposed <b>8 screens · 4 panels · 8 settings pages</b></span>
+    <span class="cs-pill">Tab bar <b>removed</b></span>
+    <span class="cs-pill">Custom permission screens <b>removed</b></span>
+  </div>
+
+  <div class="cs-map">
+    <div class="cs-lane"><div class="cs-ll">First time<span>both people</span></div>
+      <div class="cs-row"><span class="cs-n">Welcome · sign in</span><span class="cs-a">→</span><span class="cs-n">Username</span><span class="cs-a">→</span><span class="cs-n">Home</span></div></div>
+    <div class="cs-lane"><div class="cs-ll">Sarah borrows<span>the album phone</span></div>
+      <div class="cs-row"><span class="cs-n">Home</span><span class="cs-a">→</span><span class="cs-n p">Invitation</span><span class="cs-a">→</span><span class="cs-n p">Connect</span><span class="cs-a">→</span><span class="cs-n">Home · photos arrive</span><span class="cs-a">→</span><span class="cs-n">Photo</span><span class="cs-a">→</span><span class="cs-n s">Photos access</span></div></div>
+    <div class="cs-lane"><div class="cs-ll">Alex lends<span>the studio phone</span></div>
+      <div class="cs-row"><span class="cs-n">Home</span><span class="cs-a">→</span><span class="cs-n s">Camera access</span><span class="cs-a">→</span><span class="cs-n">Scanner</span><span class="cs-a">→</span><span class="cs-n p">Connect</span><span class="cs-a">→</span><span class="cs-n">Camera</span><span class="cs-a">→</span><span class="cs-n p">Session</span><span class="cs-a">→</span><span class="cs-n">Lock</span><span class="cs-a">→</span><span class="cs-n">Home</span></div></div>
+    <div class="cs-lane"><div class="cs-ll">Only if needed<span>offline photos</span></div>
+      <div class="cs-row"><span class="cs-n p">Recovery</span><span class="cs-a">— same panel on both phones, after a session ends with photos taken offline</span></div></div>
+    <div class="cs-lane"><div class="cs-ll">Account<span>from your avatar</span></div>
+      <div class="cs-row"><span class="cs-n">Settings</span><span class="cs-a">→</span><span class="cs-n">Sign-in</span><span class="cs-n">Devices</span><span class="cs-n">Blocked</span><span class="cs-n">Storage</span><span class="cs-n">Privacy</span><span class="cs-n">Help</span><span class="cs-n">Report</span><span class="cs-n">Delete account</span></div></div>
+  </div>
+  <div class="cs-legend"><span><i></i>Screen</span><span><i class="p"></i>Panel that slides up over a screen</span><span><i class="s"></i>iPhone's own permission prompt</span></div>
+
+  <p class="cs-k">THREE KEY SCREENS · DRAWN IN THE FINAL STYLE</p>
+  <div class="cs-devs">
+
+    <!-- HOME · Sarah -->
+    <figure class="cs-dev">
+      <div class="cs-bez"><div class="cs-clip"><div class="cs-scr">
+        <div class="di"></div>
+        <div class="sb"><span>9:41</span><span class="ic">
+          <svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+          <svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 11.2l2.4-2.5a3.4 3.4 0 0 0-4.8 0z"/><path d="M3.6 6.6a6.2 6.2 0 0 1 8.8 0l1.4-1.5a8.3 8.3 0 0 0-11.6 0z"/><path d="M.7 3.6a10.4 10.4 0 0 1 14.6 0L16 2.1a12.5 12.5 0 0 0-16 0z" opacity=".99"/></svg>
+          <svg width="27" height="13" viewBox="0 0 27 13"><rect x=".5" y=".5" width="23" height="12" rx="3.8" fill="none" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="20" height="9" rx="2.5"/><path d="M25 4.5v4a2 2 0 0 0 0-4z" opacity=".45"/></svg></span></div>
+        <div class="h-top"><h1 class="lt">Your photos</h1><div class="av" style="width:36px;height:36px;font-size:15px">S</div></div>
+        <div class="h-sec"><span class="t3">Today</span><span class="sh i2">Alex’s camera · 6</span></div>
+        <div class="grid">
+          <div class="tile" style="background-position:22% 18%"></div>
+          <div class="tile" style="background-position:78% 40%"></div>
+          <div class="tile" style="background-position:40% 82%"><span class="bdg"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg></span></div>
+          <div class="tile" style="background-position:96% 70%"></div>
+          <div class="tile arr" style="background-position:8% 60%"><svg class="ring" viewBox="0 0 28 28"><circle cx="14" cy="14" r="11" fill="none" stroke="rgba(0,0,0,.14)" stroke-width="3"/><circle cx="14" cy="14" r="11" fill="none" stroke="#0071E3" stroke-width="3" stroke-linecap="round" stroke-dasharray="69.1" stroke-dashoffset="24" transform="rotate(-90 14 14)"/></svg></div>
+          <div class="tile arr" style="background-position:60% 96%"><svg class="ring" viewBox="0 0 28 28"><circle cx="14" cy="14" r="11" fill="none" stroke="rgba(0,0,0,.14)" stroke-width="3"/><circle cx="14" cy="14" r="11" fill="none" stroke="#0071E3" stroke-width="3" stroke-linecap="round" stroke-dasharray="69.1" stroke-dashoffset="55" transform="rotate(-90 14 14)"/></svg></div>
+        </div>
+        <div class="h-sec2"><span class="t3">Saturday</span><span class="sh i2">Maya’s camera · 3</span></div>
+        <div class="grid2">
+          <div class="tile" style="background-position:50% 0%"></div>
+          <div class="tile" style="background-position:0% 35%"></div>
+          <div class="tile" style="background-position:88% 12%"></div>
+        </div>
+        <div class="h-bar"><div class="btn tint">Borrow a camera</div><div class="btn tint">Lend my camera</div></div>
+        <div class="hi"></div>
+      </div></div></div>
+      <figcaption class="cs-cap">Home · Sarah<span>Her photos are the page. Two equal actions sit in thumb reach. No tab bar.</span></figcaption>
+    </figure>
+
+    <!-- CONNECT · Alex -->
+    <figure class="cs-dev">
+      <div class="cs-bez"><div class="cs-clip"><div class="cs-scr dark">
+        <div class="k-bg"></div>
+        <svg class="vf" viewBox="0 0 200 200" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"><path d="M4 44V18A14 14 0 0 1 18 4h26M156 4h26a14 14 0 0 1 14 14v26M196 156v26a14 14 0 0 1-14 14h-26M44 196H18A14 14 0 0 1 4 182v-26"/></svg>
+        <div class="di"></div>
+        <div class="sb"><span>9:41</span><span class="ic" style="fill:#fff"><svg width="18" height="12" viewBox="0 0 18 12" fill="#fff"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg width="27" height="13" viewBox="0 0 27 13" fill="#fff"><rect x=".5" y=".5" width="23" height="12" rx="3.8" fill="none" stroke="#fff" opacity=".4"/><rect x="2" y="2" width="20" height="9" rx="2.5"/></svg></span></div>
+        <div class="sheet">
+          <div class="grab"></div>
+          <h2 class="t2">Lend your camera to Sarah?</h2>
+          <div class="who">
+            <div class="av">A</div><div><div class="hd">Your camera</div><div class="sh i2">Alex · iPhone 16 Pro</div></div>
+            <div class="ln"></div><div></div>
+            <div class="av">S</div><div><div class="hd">Sarah’s phone</div><div class="sh i2">@sarah · iPhone 11</div></div>
+          </div>
+          <div class="words"><div class="sh i2">Sarah should see the same six words</div><div class="w">river amber maple<br>cloud piano lemon</div></div>
+          <p class="fn i2" style="margin:16px 4px 0">Photos go only to Sarah’s phone. Nothing is saved to your Photos. Whoever holds this phone can see the preview.</p>
+          <div class="k-act"><div class="btn fill">Lend camera</div><div class="btn text">Not now</div></div>
+          <div class="hi" style="background:#000"></div>
+        </div>
+      </div></div></div>
+      <figcaption class="cs-cap">Connect · Alex<span>Same people, same phone, same six words on both screens. Sarah’s side asks “Use Alex’s camera?”</span></figcaption>
+    </figure>
+
+    <!-- CAMERA · Alex -->
+    <figure class="cs-dev">
+      <div class="cs-bez"><div class="cs-clip"><div class="cs-scr dark">
+        <div class="di"></div>
+        <div class="sb"><span>9:41</span><span class="ic"><svg width="18" height="12" viewBox="0 0 18 12" fill="#fff"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg width="27" height="13" viewBox="0 0 27 13" fill="#fff"><rect x=".5" y=".5" width="23" height="12" rx="3.8" fill="none" stroke="#fff" opacity=".4"/><rect x="2" y="2" width="20" height="9" rx="2.5"/></svg></span></div>
+        <div class="c-top">
+          <div class="c-ib"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.75" stroke-linejoin="round"><path d="M13 2.75 5.5 13.25h6L10.75 21.25l7.75-10.5h-6z"/><path d="M3.5 3.5l17 17" stroke-linecap="round"/></svg></div>
+          <div class="dest"><div class="av">S</div><span class="sh" style="font-weight:600">Sending to Sarah</span></div>
+          <div class="c-end">End</div>
+        </div>
+        <div class="c-pv"></div>
+        <div class="zoom"><span>.5</span><span class="on">1×</span><span>2</span></div>
+        <div class="c-ctl">
+          <div class="thumb"></div>
+          <div class="shut"><i></i></div>
+          <div class="flip"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 10a7.75 7.75 0 0 1 13.4-3.4L20 9"/><path d="M20 4.5V9h-4.5"/><path d="M19.5 14a7.75 7.75 0 0 1-13.4 3.4L4 15"/><path d="M4 19.5V15h4.5"/></svg></div>
+        </div>
+        <div class="c-st fn">4 sent · 1 sending</div>
+        <div class="hi"></div>
+      </div></div></div>
+      <figcaption class="cs-cap">Camera · Alex’s phone, lent<span>Where photos go is always on screen. White controls only; color is left to the photo.</span></figcaption>
+    </figure>
+  </div>
+
+  <details>
+    <summary>Where each of today’s 31 screens goes</summary>
+    <table>
+      <tr><th>Today</th><th>Becomes</th><th>Why</th></tr>
+      <tr><td>Start · Received photos</td><td>Home</td><td>One page: your photos plus the two actions</td></tr>
+      <tr><td>Welcome · Sign in</td><td>Welcome · sign in</td><td>One screen, one decision</td></tr>
+      <tr><td>Choose username</td><td>Username</td><td>Live “available” check, no error-after-submit</td></tr>
+      <tr><td>Camera permission · Save to Photos permission · Notifications</td><td>iPhone’s own prompt, at the moment it’s needed</td><td>Denied states become one line with “Open Settings”</td></tr>
+      <tr><td>Receive invitation</td><td>Invitation panel (Sarah)</td><td>Opened from Home, dismissed by swipe</td></tr>
+      <tr><td>Scan invitation · Find by username</td><td>Scanner (Alex)</td><td>“Type a username” sits inside the scanner</td></tr>
+      <tr><td>Session request · Approve both phones</td><td>Connect panel</td><td>Incoming, waiting, declined, expired and mismatch become states of one panel</td></tr>
+      <tr><td>Camera · Last photo</td><td>Camera</td><td>Last photo opens over the camera and closes with a swipe</td></tr>
+      <tr><td>Session details · Transfer activity</td><td>Session panel (Alex) · Home row (Sarah)</td><td>Counts and problems only; no photo thumbnails on Alex’s phone</td></tr>
+      <tr><td>Session ended · Return to owner</td><td>Lock</td><td>One screen: “Phone returned to Alex”, with what is still sending</td></tr>
+      <tr><td>Approve recovery</td><td>Recovery panel</td><td>Appears only when a session ends with offline photos</td></tr>
+      <tr><td>Photo viewer</td><td>Photo</td><td>Full-bleed photo, one action: Save to Photos</td></tr>
+      <tr><td>Storage &amp; deletion</td><td>Settings › Storage</td><td>Rarely visited; out of the main path</td></tr>
+      <tr><td>Profile &amp; settings + 7 account pages</td><td>Settings + 8 pages</td><td>One grouped list; Sign out becomes a confirmation</td></tr>
+    </table>
+  </details>
+</div>
+
+</body></html>

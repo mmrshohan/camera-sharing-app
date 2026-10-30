@@ -1,0 +1,10 @@
+/* A phone's own document inside the review shell: nothing but the phone. */
+html.proto-phone-doc,
+html.proto-phone-doc body {
+  overflow: hidden;
+  background: transparent;
+}
+
+.proto-screen {
+  height: 100%;
+}

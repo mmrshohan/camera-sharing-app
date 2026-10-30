@@ -1,0 +1,63 @@
+.zoom-control {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Each level has a full touch target around its small circle. */
+.zoom-control__option {
+  display: grid;
+  place-items: center;
+  min-width: var(--target);
+  min-height: var(--target);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-on-camera);
+  font: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.zoom-control__label {
+  display: grid;
+  place-items: center;
+  width: var(--zoom-size);
+  height: var(--zoom-size);
+  border-radius: 50%;
+  background: var(--color-camera-scrim);
+  font-family: var(--type-label-family);
+  font-size: var(--type-label-size);
+  line-height: 1;
+  font-weight: var(--type-label-weight);
+  font-variant-numeric: tabular-nums;
+  transition:
+    width var(--motion-fade-duration) ease-out,
+    height var(--motion-fade-duration) ease-out;
+}
+
+.zoom-control__option--chosen .zoom-control__label {
+  width: var(--zoom-size-selected);
+  height: var(--zoom-size-selected);
+  background: var(--color-camera-scrim-selected);
+  font-weight: var(--type-headline-weight);
+}
+
+.zoom-control__option:focus-visible {
+  outline: none;
+}
+
+.zoom-control__option:focus-visible .zoom-control__label {
+  outline: 2px solid var(--color-on-camera);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zoom-control__label {
+    transition: none;
+  }
+}
+
+[data-reduce-motion="true"] .zoom-control__label {
+  transition: none;
+}

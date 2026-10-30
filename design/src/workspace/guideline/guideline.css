@@ -1,0 +1,656 @@
+/* Guideline page. Values shown come from tokens; this file only lays them out. */
+
+.g-page {
+  max-width: 1120px;
+}
+
+/* Contents: a quiet, solid strip that stays under the header, like the component pages' settings. */
+.g-contents {
+  position: sticky;
+  top: var(--ws-header-height);
+  z-index: 4;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  margin: 0 0 56px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--ws-border);
+  background: var(--ws-bg);
+}
+
+.g-contents a {
+  padding: 5px 10px;
+  border-radius: var(--ws-radius-small);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ws-text-2);
+  text-decoration: none;
+  transition:
+    color var(--ws-quick) var(--ws-ease),
+    background-color var(--ws-quick) var(--ws-ease);
+}
+
+.g-contents a:hover {
+  color: var(--ws-text);
+  background: var(--ws-fill);
+}
+
+.g-section {
+  margin: 0 0 64px;
+  scroll-margin-top: 120px;
+}
+
+.g-section > h2 {
+  font-size: 28px;
+  line-height: 34px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 0 0 8px;
+}
+
+.g-lede {
+  margin: 0 0 22px;
+  max-width: 760px;
+  font-size: 16px;
+  line-height: 23px;
+  color: var(--ws-text-2);
+}
+
+.g-muted {
+  color: var(--ws-text-2);
+}
+
+.g-pass {
+  color: var(--label-saved-fg);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.g-fail {
+  color: var(--color-danger);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.g-cards {
+  display: grid;
+  gap: 14px;
+  margin: 0 0 18px;
+}
+
+.g-cards--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.g-cards--three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+@media (max-width: 860px) {
+  .g-cards--two,
+  .g-cards--three {
+    grid-template-columns: 1fr;
+  }
+}
+
+.g-card {
+  padding: 18px 20px;
+  border-radius: var(--ws-radius);
+  background: var(--ws-panel);
+  box-shadow: inset 0 0 0 1px var(--ws-border);
+}
+
+.g-card > h3 {
+  margin: 0 0 8px;
+  font-size: 17px;
+  line-height: 22px;
+  font-weight: 600;
+}
+
+.g-card > p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 21px;
+  color: var(--ws-text-2);
+}
+
+.g-table-wrap {
+  position: relative;
+  overflow-x: auto;
+  border-radius: var(--ws-radius);
+  background: var(--ws-panel);
+  box-shadow: inset 0 0 0 1px var(--ws-border);
+}
+
+.g-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.g-table th,
+.g-table td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--ws-border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.g-table thead th {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ws-text-2);
+}
+
+.g-table tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+.g-table code,
+.g-facts code,
+.g-icons code,
+.g-scale code,
+.g-radii code {
+  font:
+    12.5px/18px ui-monospace,
+    "SF Mono",
+    Menlo,
+    monospace;
+}
+
+.g-swatch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.g-swatch__chip {
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  background: var(--swatch);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ws-text) 22%, transparent);
+}
+
+/* Alpha colors sit on a checkerboard so their transparency shows in both themes. */
+.g-swatch__chip--alpha {
+  background:
+    linear-gradient(var(--swatch), var(--swatch)),
+    conic-gradient(#d2d2d7 25%, #ffffff 0 50%, #d2d2d7 0 75%, #ffffff 0) 0 0 / 8px 8px;
+}
+
+.g-results {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.g-results li + li {
+  margin-top: 6px;
+}
+
+.g-results__on {
+  display: block;
+  color: var(--ws-text-2);
+}
+
+.g-results__values {
+  white-space: nowrap;
+}
+
+.g-rules {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.g-rules li {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 14px;
+  background: var(--ws-panel);
+  box-shadow: inset 0 0 0 1px var(--ws-border);
+}
+
+.g-chip-values {
+  display: block;
+  margin-top: 6px;
+  color: var(--ws-text-2);
+}
+
+.g-type-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.g-type-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-separator);
+}
+
+.g-type-list li:last-child {
+  border-bottom: 0;
+}
+
+.g-type-meta {
+  font:
+    12.5px/18px ui-monospace,
+    "SF Mono",
+    Menlo,
+    monospace;
+  color: var(--color-ink2);
+}
+
+.g-scale {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+  min-height: 80px;
+}
+
+.g-scale > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.g-scale__bar {
+  display: block;
+  width: 14px;
+  border-radius: 3px;
+  background: var(--color-accent);
+}
+
+.g-facts {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  font-size: 15px;
+  line-height: 21px;
+}
+
+.g-facts dt {
+  font-weight: 600;
+}
+
+.g-facts dd {
+  margin: 2px 0 0;
+  color: var(--ws-text-2);
+}
+
+.g-facts--grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
+  gap: 16px 24px;
+}
+
+.g-facts--wide {
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+  gap: 14px;
+}
+
+.g-facts--wide > div {
+  padding: 16px 18px;
+  border-radius: var(--ws-radius);
+  background: var(--ws-panel);
+  box-shadow: inset 0 0 0 1px var(--ws-border);
+}
+
+.g-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.g-tags li {
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: var(--ws-fill);
+}
+
+.g-tags code {
+  font:
+    12.5px/18px ui-monospace,
+    "SF Mono",
+    Menlo,
+    monospace;
+}
+
+.g-radii {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.g-radii figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--ws-text-2);
+}
+
+.g-radius {
+  display: block;
+  width: 96px;
+  height: 64px;
+  background: var(--ws-fill);
+}
+
+.g-icons {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(170px, 100%), 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.g-icons li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 10px 12px;
+  border-radius: var(--ws-radius);
+  background: var(--ws-panel);
+  box-shadow: inset 0 0 0 1px var(--ws-border);
+  text-align: center;
+}
+
+.g-icons strong {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.g-icons span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: var(--ws-text-2);
+  overflow-wrap: anywhere;
+}
+
+.g-icons .g-sf {
+  color: var(--ws-text);
+}
+
+.g-demos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+  gap: 14px;
+  margin: 0 0 18px;
+}
+
+/* The hairline is drawn over the stage, which paints its own background. */
+.g-demo {
+  margin: 0;
+  border-radius: var(--ws-radius);
+  overflow: hidden;
+  background: var(--ws-panel);
+  outline: 1px solid var(--ws-border);
+  outline-offset: -1px;
+}
+
+.g-demo__stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 168px;
+  background: var(--color-background);
+}
+
+.g-demo figcaption {
+  padding: 12px 14px 14px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--ws-text-2);
+}
+
+.g-demo figcaption strong {
+  color: var(--ws-text);
+}
+
+.g-demo-develop {
+  display: block;
+  width: 120px;
+  height: 120px;
+  background: url("/images/coast.jpg") 30% 60% / 300%;
+  animation: g-develop calc(var(--motion-develop-duration) * 5) var(--motion-develop-easing)
+    infinite;
+}
+
+@keyframes g-develop {
+  0%,
+  30% {
+    filter: blur(var(--motion-develop-blur)) saturate(var(--motion-develop-saturation));
+    opacity: 0.55;
+  }
+  52%,
+  100% {
+    filter: none;
+    opacity: 1;
+  }
+}
+
+.g-demo-press {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--button-height);
+  padding: 0 40px;
+  border-radius: 999px;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-weight: 600;
+  animation: g-press calc(var(--motion-press-duration) * 24) ease-in-out infinite;
+}
+
+@keyframes g-press {
+  0%,
+  40%,
+  100% {
+    transform: scale(1);
+  }
+  48%,
+  58% {
+    transform: scale(var(--press-scale-button));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .g-demos * {
+    animation: none !important;
+  }
+}
+
+[data-reduce-motion="true"] .g-demos * {
+  animation: none !important;
+}
+
+.g-subhead {
+  margin: 28px 0 12px;
+  font-size: 17px;
+  line-height: 22px;
+  font-weight: 600;
+}
+
+/* The ring's anatomy: a figure drawn from tokens, with a numbered legend. */
+.g-anatomy {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: 24px 32px;
+  align-items: center;
+  padding: 24px;
+  border-radius: var(--ws-radius);
+  background: var(--ws-panel);
+  box-shadow: inset 0 0 0 1px var(--ws-border);
+}
+
+@media (max-width: 860px) {
+  .g-anatomy {
+    grid-template-columns: 1fr;
+  }
+}
+
+.g-anatomy__figure {
+  justify-self: center;
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+}
+
+.g-anatomy__ring {
+  fill: none;
+  stroke: var(--color-accent);
+}
+
+.g-anatomy__disc {
+  fill: var(--color-accent);
+}
+
+.g-anatomy__icon {
+  color: var(--color-on-accent);
+}
+
+.g-anatomy__label {
+  fill: var(--color-ink);
+  font-family: var(--type-ring-label-family);
+  font-weight: var(--type-ring-label-weight);
+}
+
+.g-anatomy__leader {
+  stroke: var(--color-ink);
+  stroke-width: 1.25;
+}
+
+.g-anatomy__dot {
+  fill: var(--color-ink);
+  stroke: var(--color-background);
+  stroke-width: 1.5;
+}
+
+.g-anatomy__marker {
+  fill: var(--color-ink);
+}
+
+.g-anatomy__number {
+  fill: var(--color-background);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.g-anatomy__legend {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: part;
+}
+
+.g-anatomy__legend li {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 10px;
+  align-items: start;
+  counter-increment: part;
+  font-size: 15px;
+  line-height: 21px;
+  color: var(--ws-text-2);
+}
+
+.g-anatomy__legend li::before {
+  content: counter(part);
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-ink);
+  color: var(--color-background);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.g-anatomy__legend strong {
+  color: var(--ws-text);
+  font-weight: 600;
+}
+
+.g-demo__stage .ex-camera {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  border-radius: 0;
+}
+
+/* A small piece of a phone surface: the real component, in the theme and platform it names. */
+.g-surface {
+  display: inline-flex;
+  padding: var(--space-2);
+  border-radius: var(--ws-radius);
+  background: var(--color-background);
+  box-shadow: inset 0 0 0 1px var(--color-separator);
+}
+
+.g-surface--block {
+  display: block;
+  padding: var(--space-5);
+  border-radius: var(--ws-radius);
+}
+
+.g-numeral-card {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.g-demo--panel {
+  margin-bottom: 18px;
+}
+
+.g-demo__stage--tall {
+  height: auto;
+  padding: var(--space-5);
+}
+
+.g-panel-screen {
+  width: min(100%, 402px);
+  height: 360px;
+}
+
+.g-demo__stage .g-send-demo {
+  width: min(100%, 402px);
+  height: auto;
+  min-height: 300px;
+  border-radius: var(--ws-radius);
+  grid-template-rows: 1fr auto;
+  padding: var(--space-5) var(--space-5) var(--space-6);
+}
+
+.g-send-demo__bar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  justify-items: start;
+  width: 100%;
+}
+
+.g-send-demo__bar > :nth-child(2) {
+  justify-self: center;
+}

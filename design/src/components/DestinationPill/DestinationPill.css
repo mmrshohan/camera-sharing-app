@@ -1,0 +1,39 @@
+/* The button is the full touch target; the pill is what you see. */
+.destination-pill {
+  display: inline-grid;
+  place-items: center;
+  min-height: var(--target);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-on-camera);
+  font: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.destination-pill__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: var(--label-height);
+  padding: var(--space-1) var(--label-pad-x) var(--space-1)
+    calc(var(--label-pad-x) - var(--space-1));
+  border-radius: 999px;
+  background: var(--color-camera-scrim);
+  font-family: var(--type-label-family);
+  font-size: var(--type-label-size);
+  line-height: var(--type-label-line);
+  font-weight: var(--type-label-weight);
+  letter-spacing: var(--type-label-tracking);
+}
+
+.destination-pill:focus-visible {
+  outline: none;
+}
+
+.destination-pill:focus-visible .destination-pill__pill {
+  outline: 2px solid var(--color-on-camera);
+  outline-offset: 2px;
+}
