@@ -289,15 +289,13 @@ test("release notes run at a comfortable measure: 45 to 75 characters a line", a
       .locator(".ws-notes li")
       .first()
       .evaluate((li) => {
-        // The notes' own words, set on one line in their own type, give the average character.
-        const words = [...(li.closest(".ws-notes")?.querySelectorAll("li") ?? [])]
-          .map((item) => item.textContent ?? "")
-          .join(" ");
+        // Characters are counted as typographers count them, by the lowercase alphabet in the
+        // notes' own type, so the measure doesn't depend on what this release's notes say.
         const probe = document.createElement("span");
         probe.style.cssText = "position: absolute; visibility: hidden; white-space: nowrap";
-        probe.textContent = words;
+        probe.textContent = "abcdefghijklmnopqrstuvwxyz";
         li.append(probe);
-        const average = probe.getBoundingClientRect().width / words.length;
+        const average = probe.getBoundingClientRect().width / 26;
         probe.remove();
         return li.getBoundingClientRect().width / average;
       });
